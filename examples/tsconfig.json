@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "@pinax/sdk": ["../dist/index.d.ts"]
+      "@pinax/sdk": ["../dist"]
     }
   },
   "include": ["./*.ts"]

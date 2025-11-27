@@ -25,7 +25,8 @@ async function main() {
   console.log("Fetching latest USDT transfers on Tron network...\n");
 
   // Get transfers using the low-level client
-  // This demonstrates the expected API pattern for TVM transfers
+  // Note: Using type assertion because the TVM endpoint follows the same pattern as EVM
+  // The "/v1/tvm/transfers" endpoint will be available when TVM support is fully released
   const { data, error } = await client.GET("/v1/tvm/transfers" as "/v1/evm/transfers", {
     params: {
       query: {

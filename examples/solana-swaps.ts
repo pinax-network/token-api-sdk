@@ -21,7 +21,8 @@ async function main() {
   console.log("Fetching 100 most recent swaps on Solana...\n");
 
   // Get swaps using the low-level client
-  // This demonstrates the expected API pattern for SVM swaps
+  // Note: Using type assertion because the SVM endpoint follows the same pattern as EVM
+  // The "/v1/svm/swaps" endpoint will be available when SVM support is fully released
   const { data, error } = await client.GET("/v1/svm/swaps" as "/v1/evm/swaps", {
     params: {
       query: {
