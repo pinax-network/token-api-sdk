@@ -1,0 +1,46 @@
+{
+  "name": "@pinax/sdk",
+  "version": "0.1.0",
+  "description": "Pinax SDK for Token API - Power your apps & AI agents with real-time token data",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "generate": "openapi-typescript openapi.json -o src/openapi.d.ts",
+    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "pinax",
+    "token-api",
+    "blockchain",
+    "evm",
+    "ethereum",
+    "sdk"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinax-network/pinax-sdk.git"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "openapi-typescript": "^7.0.0",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13.0"
+  }
+}
