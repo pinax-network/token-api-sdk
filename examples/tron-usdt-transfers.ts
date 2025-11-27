@@ -13,9 +13,9 @@ import { createPinaxClient } from "@pinax/sdk";
 const TRON_USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 
 async function main() {
-  // Initialize the low-level client with your API key
+  // Initialize the low-level client with your bearer token
   const client = createPinaxClient({
-    apiKey: process.env.PINAX_API_KEY,
+    bearerToken: process.env.PINAX_BEARER_TOKEN,
   });
 
   console.log("Fetching latest USDT transfers on Tron network...\n");
