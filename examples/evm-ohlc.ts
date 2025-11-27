@@ -26,8 +26,8 @@ async function main() {
   const ohlc = await sdk.evm.dexs.getPoolOHLC({
     network: "mainnet",
     pool: USDT_ETH_POOL,
-    interval: "1h", // 1 hour candles
-    limit: 24, // Last 24 hours
+    interval: "4h", // 4 hour candles
+    limit: 10, // Last 10 intervals
   });
 
   console.log(`Found ${ohlc.data?.length ?? 0} OHLC candles:\n`);

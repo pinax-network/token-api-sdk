@@ -19,7 +19,7 @@ async function main() {
   // Get swaps using the high-level SDK
   const data = await sdk.svm.dexs.getSwaps({
     network: "solana",
-    limit: 100,
+    limit: 10,
   });
 
   console.log(`Found ${data?.data?.length ?? 0} swaps:\n`);
