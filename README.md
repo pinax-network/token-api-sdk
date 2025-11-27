@@ -1,13 +1,13 @@
-# @pinax/sdk
+# @pinax/token-api
 
-Pinax SDK for Token API - Power your apps & AI agents with real-time token data.
+Pinax Token API - Power your apps & AI agents with real-time token data.
 
-[![npm version](https://img.shields.io/npm/v/@pinax/sdk.svg)](https://www.npmjs.com/package/@pinax/sdk)
+[![npm version](https://img.shields.io/npm/v/@pinax/token-api.svg)](https://www.npmjs.com/package/@pinax/token-api)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Overview
 
-The `@pinax/sdk` provides a type-safe TypeScript client for [The Graph's Token API](https://thegraph.com/docs/en/token-api/quick-start/). Access blockchain token information including:
+The `@pinax/token-api` provides a type-safe TypeScript client for [The Graph's Token API](https://thegraph.com/docs/en/token-api/quick-start/). Access blockchain token information including:
 
 - **Token Transfers** - ERC-20 and native token transfers
 - **DEX Swaps** - Uniswap and other DEX swap events
@@ -49,16 +49,16 @@ The `@pinax/sdk` provides a type-safe TypeScript client for [The Graph's Token A
 
 ```bash
 # Using Bun (recommended)
-bun add @pinax/sdk
+bun add @pinax/token-api
 
 # Using npm
-npm install @pinax/sdk
+npm install @pinax/token-api
 
 # Using yarn
-yarn add @pinax/sdk
+yarn add @pinax/token-api
 
 # Using pnpm
-pnpm add @pinax/sdk
+pnpm add @pinax/token-api
 ```
 
 ### Authentication
@@ -68,7 +68,7 @@ Get your API key from [The Graph Market](https://thegraph.market).
 ### Basic Usage
 
 ```typescript
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 // Initialize the SDK
 const sdk = new PinaxSDK({
@@ -91,7 +91,7 @@ console.log(transfers.data);
 Retrieve ERC-20 and native token transfers for a specific address:
 
 ```typescript
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 const sdk = new PinaxSDK({
   apiKey: process.env.PINAX_API_KEY,
@@ -120,7 +120,7 @@ for (const transfer of transfers.data ?? []) {
 Retrieve DEX swap events from Uniswap and other protocols:
 
 ```typescript
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 const sdk = new PinaxSDK({
   apiKey: process.env.PINAX_API_KEY,
@@ -148,7 +148,7 @@ for (const swap of swaps.data ?? []) {
 ### Get Token Balances
 
 ```typescript
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 const sdk = new PinaxSDK({
   apiKey: process.env.PINAX_API_KEY,
@@ -168,7 +168,7 @@ for (const balance of balances.data ?? []) {
 ### Get Token Prices
 
 ```typescript
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 const sdk = new PinaxSDK({
   apiKey: process.env.PINAX_API_KEY,
@@ -192,7 +192,7 @@ for (const price of prices.data ?? []) {
 For more control, you can use the underlying `openapi-fetch` client:
 
 ```typescript
-import { createPinaxClient } from "@pinax/sdk";
+import { createPinaxClient } from "@pinax/token-api";
 
 const client = createPinaxClient({
   apiKey: "your-api-key",
@@ -298,7 +298,7 @@ import type {
   TvmNetwork,
   DexProtocol,
   OhlcInterval,
-} from "@pinax/sdk";
+} from "@pinax/token-api";
 ```
 
 ## Development
@@ -307,8 +307,8 @@ import type {
 
 ```bash
 # Clone the repository
-git clone https://github.com/pinax-network/pinax-sdk.git
-cd pinax-sdk
+git clone https://github.com/pinax-network/pinax-token-api-sdk.git
+cd pinax-token-api-sdk
 
 # Install dependencies
 bun install
@@ -316,7 +316,7 @@ bun install
 # Generate types from OpenAPI spec
 bun run generate
 
-# Build the SDK
+# Build the package
 bun run build
 ```
 

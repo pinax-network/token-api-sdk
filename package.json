@@ -1,7 +1,7 @@
 {
-  "name": "@pinax/sdk",
+  "name": "@pinax/token-api",
   "version": "0.1.0",
-  "description": "Pinax SDK for Token API - Power your apps & AI agents with real-time token data",
+  "description": "Pinax Token API - Power your apps & AI agents with real-time token data",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pinax-network/pinax-sdk.git"
+    "url": "git+https://github.com/pinax-network/pinax-token-api-sdk.git"
   },
   "devDependencies": {
     "@types/bun": "latest",

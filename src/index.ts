@@ -1,5 +1,5 @@
 /**
- * @pinax/sdk - Pinax SDK for Token API
+ * @pinax/token-api - Pinax Token API
  *
  * Power your apps & AI agents with real-time token data.
  *
@@ -59,7 +59,7 @@ export type DexProtocol = "uniswap_v2" | "uniswap_v3";
 export type OhlcInterval = "1m" | "5m" | "15m" | "1h" | "4h" | "1d" | "1w";
 
 /**
- * Configuration options for the Pinax SDK client
+ * Configuration options for the Pinax Token API client
  */
 export interface PinaxClientOptions {
   /**
@@ -101,11 +101,11 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
 }
 
 /**
- * Create a Pinax SDK client for accessing the Token API
+ * Create a Pinax Token API client for accessing the Token API
  *
  * @example
  * ```typescript
- * import { createPinaxClient } from "@pinax/sdk";
+ * import { createPinaxClient } from "@pinax/token-api";
  *
  * const client = createPinaxClient({
  *   apiKey: "your-api-key"
@@ -480,7 +480,7 @@ class TvmApi {
  *
  * @example
  * ```typescript
- * import { PinaxSDK } from "@pinax/sdk";
+ * import { PinaxSDK } from "@pinax/token-api";
  *
  * const sdk = new PinaxSDK({ apiKey: "your-api-key" });
  *
