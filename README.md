@@ -65,15 +65,41 @@ pnpm add @pinax/token-api
 
 Get your API key from [The Graph Market](https://thegraph.market).
 
+The SDK automatically loads environment variables from `.env` files using [dotenv](https://github.com/motdotla/dotenv). You can configure authentication via:
+
+**Option 1: Environment variables (recommended)**
+
+Create a `.env` file in your project root:
+
+```env
+PINAX_API_KEY=your-api-key
+```
+
+**Option 2: Direct configuration**
+
+Pass the API key directly to the SDK:
+
+```typescript
+const sdk = new PinaxSDK({
+  apiKey: "your-api-key",
+});
+```
+
+**Supported environment variables:**
+
+| Variable | Description |
+|----------|-------------|
+| `PINAX_API_KEY` | API key for authentication |
+| `PINAX_BEARER_TOKEN` | Bearer token for authentication (alternative to API key) |
+| `PINAX_BASE_URL` | Custom base URL for the API |
+
 ### Basic Usage
 
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Initialize the SDK
-const sdk = new PinaxSDK({
-  apiKey: "your-api-key",
-});
+// Initialize the SDK (uses PINAX_API_KEY from .env automatically)
+const sdk = new PinaxSDK();
 
 // Get EVM token transfers
 const transfers = await sdk.evm.tokens.getTransfers({
@@ -93,9 +119,8 @@ Retrieve ERC-20 and native token transfers for a specific address:
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-const sdk = new PinaxSDK({
-  apiKey: process.env.PINAX_API_KEY,
-});
+// Uses PINAX_API_KEY from .env automatically
+const sdk = new PinaxSDK();
 
 // Get transfers to Vitalik's address
 const transfers = await sdk.evm.tokens.getTransfers({
@@ -122,9 +147,7 @@ Retrieve DEX swap events from Uniswap and other protocols:
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-const sdk = new PinaxSDK({
-  apiKey: process.env.PINAX_API_KEY,
-});
+const sdk = new PinaxSDK();
 
 // Get swaps from the USDC/WETH pool
 const swaps = await sdk.evm.dexs.getSwaps({
@@ -150,9 +173,7 @@ for (const swap of swaps.data ?? []) {
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-const sdk = new PinaxSDK({
-  apiKey: process.env.PINAX_API_KEY,
-});
+const sdk = new PinaxSDK();
 
 // Get token balances for a wallet
 const balances = await sdk.evm.tokens.getBalances({
@@ -170,9 +191,7 @@ for (const balance of balances.data ?? []) {
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-const sdk = new PinaxSDK({
-  apiKey: process.env.PINAX_API_KEY,
-});
+const sdk = new PinaxSDK();
 
 // Get token prices
 const prices = await sdk.evm.tokens.getPrices({
@@ -194,9 +213,8 @@ For more control, you can use the underlying `openapi-fetch` client:
 ```typescript
 import { createPinaxClient } from "@pinax/token-api";
 
-const client = createPinaxClient({
-  apiKey: "your-api-key",
-});
+// Uses PINAX_API_KEY from .env, or pass explicitly
+const client = createPinaxClient();
 
 // Direct API call with full type safety
 const { data, error, response } = await client.GET("/v1/evm/transfers", {
