@@ -15,9 +15,9 @@ import { PinaxSDK } from "@pinax/sdk";
 const USDT_ETH_POOL = "0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36";
 
 async function main() {
-  // Initialize the SDK with your API key
+  // Initialize the SDK with your bearer token
   const sdk = new PinaxSDK({
-    apiKey: process.env.PINAX_API_KEY,
+    bearerToken: process.env.PINAX_BEARER_TOKEN,
   });
 
   console.log("Fetching OHLC data for USDT/ETH Uniswap V3 pool...\n");
