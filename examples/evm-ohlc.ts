@@ -23,9 +23,9 @@ async function main() {
   console.log("Fetching OHLC data for USDT/ETH Uniswap V3 pool...\n");
 
   // Get OHLC candlestick data
-  const ohlc = await sdk.evm.tokens.getPoolOHLC({
+  const ohlc = await sdk.evm.dexs.getPoolOHLC({
     network: "mainnet",
-    contract: USDT_ETH_POOL,
+    pool: USDT_ETH_POOL,
     interval: "1h", // 1 hour candles
     limit: 24, // Last 24 hours
   });

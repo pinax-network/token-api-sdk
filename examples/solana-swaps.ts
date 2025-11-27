@@ -6,31 +6,21 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { createPinaxClient } from "@pinax/token-api";
+import { PinaxSDK } from "@pinax/token-api";
 
 async function main() {
-  // Initialize the low-level client with your bearer token
-  const client = createPinaxClient({
+  // Initialize the SDK with your bearer token
+  const sdk = new PinaxSDK({
     bearerToken: process.env.PINAX_BEARER_TOKEN,
   });
 
   console.log("Fetching 100 most recent swaps on Solana...\n");
 
-  // Get swaps using the low-level client
-  const { data, error } = await client.GET("/v1/svm/swaps", {
-    params: {
-      query: {
-        network: "solana",
-        limit: 100,
-        order: "DESC",
-      },
-    },
+  // Get swaps using the high-level SDK
+  const data = await sdk.svm.dexs.getSwaps({
+    network: "solana",
+    limit: 100,
   });
-
-  if (error) {
-    console.error("Error fetching swaps:", error);
-    return;
-  }
 
   console.log(`Found ${data?.data?.length ?? 0} swaps:\n`);
 
