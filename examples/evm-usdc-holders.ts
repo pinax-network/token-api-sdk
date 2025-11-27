@@ -7,21 +7,21 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { PinaxSDK } from "@pinax/token-api";
+import { TokenClient } from "@pinax/token-api";
 
 // USDC Token Contract Address on Ethereum Mainnet
 const USDC_CONTRACT = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
 
 async function main() {
-  // Initialize the SDK with your bearer token
-  const sdk = new PinaxSDK({
+  // Initialize the client with your bearer token
+  const client = new TokenClient({
     apiToken: process.env.GRAPH_API_TOKEN,
   });
 
   console.log("Fetching top USDC holders on Ethereum mainnet...\n");
 
   // Get top holders of USDC
-  const holders = await sdk.evm.tokens.getHolders({
+  const holders = await client.evm.tokens.getHolders({
     network: "mainnet",
     contract: USDC_CONTRACT,
     limit: 10,
