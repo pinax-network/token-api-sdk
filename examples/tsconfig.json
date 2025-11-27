@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
@@ -10,8 +12,12 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "@pinax/sdk": ["../dist"]
+      "@pinax/token-api": [
+        "../dist"
+      ]
     }
   },
-  "include": ["./*.ts"]
+  "include": [
+    "./*.ts"
+  ]
 }

@@ -7,7 +7,7 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { createPinaxClient } from "@pinax/sdk";
+import { createPinaxClient } from "@pinax/token-api";
 
 // USDT Token Contract Address on Tron Network
 const TRON_USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";

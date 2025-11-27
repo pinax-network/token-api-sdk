@@ -7,7 +7,7 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 // USDC Token Contract Address on Ethereum Mainnet
 const USDC_CONTRACT = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
@@ -31,7 +31,7 @@ async function main() {
 
   for (const holder of holders.data ?? []) {
     console.log(`
-      Address: ${holder.owner}
+      Address: ${holder.address}
       Balance: ${holder.value} ${holder.symbol}
       Contract: ${holder.contract}
     `);

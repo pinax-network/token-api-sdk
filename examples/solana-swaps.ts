@@ -6,7 +6,7 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { createPinaxClient } from "@pinax/sdk";
+import { createPinaxClient } from "@pinax/token-api";
 
 async function main() {
   // Initialize the low-level client with your bearer token
@@ -38,11 +38,10 @@ async function main() {
     console.log(`
       Block: ${swap.block_num}
       Time: ${swap.datetime}
-      Pool: ${swap.pool}
-      Input: ${swap.input_value} ${swap.input_token?.symbol}
-      Output: ${swap.output_value} ${swap.output_token?.symbol}
-      Protocol: ${swap.protocol}
-      Transaction: ${swap.transaction_id}
+      Pool: ${swap.amm_pool}
+      Input: ${swap.input_amount} ${swap.input_mint}
+      Output: ${swap.output_amount} ${swap.output_mint}
+      Signature: ${swap.signature}
     `);
   }
 }

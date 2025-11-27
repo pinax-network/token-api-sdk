@@ -9,7 +9,7 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { PinaxSDK } from "@pinax/sdk";
+import { PinaxSDK } from "@pinax/token-api";
 
 // USDT/ETH Uniswap V3 Pool Contract Address
 const USDT_ETH_POOL = "0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36";
@@ -23,7 +23,7 @@ async function main() {
   console.log("Fetching OHLC data for USDT/ETH Uniswap V3 pool...\n");
 
   // Get OHLC candlestick data
-  const ohlc = await sdk.evm.tokens.getOhlc({
+  const ohlc = await sdk.evm.tokens.getPoolOHLC({
     network: "mainnet",
     contract: USDT_ETH_POOL,
     interval: "1h", // 1 hour candles
