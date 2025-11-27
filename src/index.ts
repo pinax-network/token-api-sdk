@@ -7,6 +7,7 @@
  * @license Apache-2.0
  */
 
+import "dotenv/config";
 import createClient, { type Middleware } from "openapi-fetch";
 import type { paths, components } from "./openapi.d.ts";
 
@@ -60,21 +61,30 @@ export type OhlcInterval = "1m" | "5m" | "15m" | "1h" | "4h" | "1d" | "1w";
 
 /**
  * Configuration options for the Pinax SDK client
+ *
+ * Environment variables are automatically loaded from `.env` files via dotenv.
+ * Options can be set via environment variables:
+ * - `PINAX_API_KEY` - API key for authentication
+ * - `PINAX_BEARER_TOKEN` - Bearer token for authentication
+ * - `PINAX_BASE_URL` - Custom base URL for the API
  */
 export interface PinaxClientOptions {
   /**
    * API key for authentication
    * Get your API key at https://thegraph.market
+   * Falls back to `PINAX_API_KEY` environment variable
    */
   apiKey?: string;
 
   /**
    * Bearer token for authentication (alternative to API key)
+   * Falls back to `PINAX_BEARER_TOKEN` environment variable
    */
   bearerToken?: string;
 
   /**
    * Base URL for the API (defaults to production)
+   * Falls back to `PINAX_BASE_URL` environment variable
    */
   baseUrl?: string;
 
@@ -88,12 +98,15 @@ export interface PinaxClientOptions {
  * Create a middleware that adds authentication headers
  */
 function createAuthMiddleware(options: PinaxClientOptions): Middleware {
+  const bearerToken = options.bearerToken ?? process.env.PINAX_BEARER_TOKEN;
+  const apiKey = options.apiKey ?? process.env.PINAX_API_KEY;
+
   return {
     async onRequest({ request }) {
-      if (options.bearerToken) {
-        request.headers.set("Authorization", `Bearer ${options.bearerToken}`);
-      } else if (options.apiKey) {
-        request.headers.set("X-Api-Key", options.apiKey);
+      if (bearerToken) {
+        request.headers.set("Authorization", `Bearer ${bearerToken}`);
+      } else if (apiKey) {
+        request.headers.set("X-Api-Key", apiKey);
       }
       return request;
     },
@@ -102,6 +115,12 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
 
 /**
  * Create a Pinax SDK client for accessing the Token API
+ *
+ * Environment variables are automatically loaded from `.env` files.
+ * Supported environment variables:
+ * - `PINAX_API_KEY` - API key for authentication
+ * - `PINAX_BEARER_TOKEN` - Bearer token for authentication
+ * - `PINAX_BASE_URL` - Custom base URL for the API
  *
  * @example
  * ```typescript
@@ -128,7 +147,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * ```
  */
 export function createPinaxClient(options: PinaxClientOptions = {}) {
-  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = options.baseUrl ?? process.env.PINAX_BASE_URL ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
     baseUrl,
