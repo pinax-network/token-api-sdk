@@ -1,6 +1,6 @@
-# @pinax/token-api
+# Token API Client `@pinax/token-api`
 
-Pinax Token API - Power your apps & AI agents with real-time token data.
+> Power your apps & AI agents with real-time token data.
 
 [![npm version](https://img.shields.io/npm/v/@pinax/token-api.svg)](https://www.npmjs.com/package/@pinax/token-api)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
