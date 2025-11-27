@@ -177,7 +177,6 @@ class EvmTokens {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/evm/transfers", {
       params: { query: params },
@@ -297,7 +296,6 @@ class EvmDexs {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/evm/swaps", {
       params: { query: params },
@@ -444,7 +442,6 @@ class EvmNfts {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/evm/nft/sales", {
       params: { query: params },
@@ -469,7 +466,6 @@ class EvmNfts {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/evm/nft/transfers", {
       params: { query: params },
@@ -517,7 +513,6 @@ class SvmTokens {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/svm/transfers", {
       params: { query: params },
@@ -739,7 +734,6 @@ class TvmTokens {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/tvm/transfers", {
       params: { query: params },
@@ -809,7 +803,6 @@ class TvmDexs {
     end_block?: number;
     page?: number;
     limit?: number;
-    order?: "ASC" | "DESC";
   }) {
     const { data, error } = await this.client.GET("/v1/tvm/swaps", {
       params: { query: params },
