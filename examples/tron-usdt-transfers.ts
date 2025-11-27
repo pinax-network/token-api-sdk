@@ -4,10 +4,6 @@
  * This example retrieves the latest USDT (TRC-20) transfers on the Tron network.
  * USDT Contract on Tron: TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
  *
- * Note: This example uses the low-level client to demonstrate the API pattern
- * for TVM networks. The endpoint will be available when the Token API adds
- * full support for Tron token operations.
- *
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
@@ -25,11 +21,10 @@ async function main() {
   console.log("Fetching latest USDT transfers on Tron network...\n");
 
   // Get transfers using the low-level client
-  // Note: Using type assertion because the TVM endpoint follows the same pattern as EVM
-  // The "/v1/tvm/transfers" endpoint will be available when TVM support is fully released
-  const { data, error } = await client.GET("/v1/tvm/transfers" as "/v1/evm/transfers", {
+  const { data, error } = await client.GET("/v1/tvm/transfers", {
     params: {
       query: {
+        network: "tron",
         contract: TRON_USDT_CONTRACT,
         limit: 10,
         order: "DESC",

@@ -39,11 +39,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID (e.g., mainnet, base, arbitrum-one)",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -154,11 +153,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID (e.g., mainnet, base, arbitrum-one)",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -282,11 +280,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -343,11 +340,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -405,11 +401,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -459,11 +454,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -513,11 +507,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -580,11 +573,10 @@
           {
             "name": "network",
             "in": "query",
-            "required": false,
+            "required": true,
             "description": "Network ID",
             "schema": {
               "type": "string",
-              "default": "mainnet",
               "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
             }
           },
@@ -628,6 +620,346 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/PoolsResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/svm/swaps": {
+      "get": {
+        "operationId": "getSvmSwaps",
+        "summary": "Swap Events",
+        "description": "Returns DEX swap transactions from Solana DEXs with token amounts and prices.",
+        "tags": ["SVM DEXs"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": true,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "enum": ["solana"]
+            }
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction signature (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "pool",
+            "in": "query",
+            "required": false,
+            "description": "Filter by pool address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "caller",
+            "in": "query",
+            "required": false,
+            "description": "Filter by caller address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "sender",
+            "in": "query",
+            "required": false,
+            "description": "Filter by sender address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "recipient",
+            "in": "query",
+            "required": false,
+            "description": "Filter by recipient address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start slot number",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "end_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end slot number",
+            "schema": { "type": "integer", "default": 9999999999 }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ASC or DESC by timestamp)",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SwapsResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/svm/transfers": {
+      "get": {
+        "operationId": "getSvmTransfers",
+        "summary": "Token Transfers",
+        "description": "Returns SPL and native token transfers with transaction and block data.",
+        "tags": ["SVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": true,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "enum": ["solana"]
+            }
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction signature (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Filter by token mint address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "from_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by sender address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "to_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by recipient address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start slot number",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "end_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end slot number",
+            "schema": { "type": "integer", "default": 9999999999 }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ASC or DESC by timestamp)",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TransfersResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/tvm/transfers": {
+      "get": {
+        "operationId": "getTvmTransfers",
+        "summary": "Token Transfers",
+        "description": "Returns TRC-20 and native token transfers with transaction and block data.",
+        "tags": ["TVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": true,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "enum": ["tron"]
+            }
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction hash (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Filter by token contract address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "from_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by sender address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "to_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by recipient address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start block number",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "end_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end block number",
+            "schema": { "type": "integer", "default": 9999999999 }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ASC or DESC by timestamp)",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TransfersResponse" }
               }
             }
           },
@@ -1015,6 +1347,18 @@
     {
       "name": "EVM DEXs",
       "description": "Decentralized exchange operations on EVM networks"
+    },
+    {
+      "name": "SVM Tokens",
+      "description": "SPL and native token operations on Solana"
+    },
+    {
+      "name": "SVM DEXs",
+      "description": "Decentralized exchange operations on Solana"
+    },
+    {
+      "name": "TVM Tokens",
+      "description": "TRC-20 and native token operations on Tron"
     },
     {
       "name": "System",
