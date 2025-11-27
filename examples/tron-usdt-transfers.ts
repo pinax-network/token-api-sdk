@@ -1,7 +1,7 @@
 /**
- * Tron Transfers Example - Latest USDT Transfers
+ * Tron Transfers Example - USDT Transfers
  *
- * This example retrieves the latest USDT (TRC-20) transfers on the Tron network.
+ * This example retrieves USDT (TRC-20) transfers on the Tron network.
  * USDT Contract on Tron: TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
  *
  * @see https://thegraph.com/docs/en/token-api/quick-start/
@@ -18,7 +18,7 @@ async function main() {
     bearerToken: process.env.PINAX_BEARER_TOKEN,
   });
 
-  console.log("Fetching latest USDT transfers on Tron network...\n");
+  console.log("Fetching USDT transfers on Tron network...\n");
 
   // Get transfers using the high-level SDK
   const data = await sdk.tvm.tokens.getTransfers({
