@@ -72,7 +72,7 @@ The SDK automatically loads environment variables from `.env` files using [doten
 Create a `.env` file in your project root:
 
 ```env
-PINAX_BEARER_TOKEN=your-token
+GRAPH_API_TOKEN=your-token
 ```
 
 **Option 2: Direct configuration**
@@ -81,7 +81,7 @@ Pass the bearer token directly to the SDK:
 
 ```typescript
 const sdk = new PinaxSDK({
-  bearerToken: "your-token",
+  apiToken: "your-token",
 });
 ```
 
@@ -89,15 +89,15 @@ const sdk = new PinaxSDK({
 
 | Variable | Description |
 |----------|-------------|
-| `PINAX_BEARER_TOKEN` | Bearer token for authentication |
-| `PINAX_BASE_URL` | Custom base URL for the API |
+| `GRAPH_API_TOKEN` | API Token (Authentication JWT) |
+| `TOKEN_API_BASE_URL` | Custom base URL for the Token API |
 
 ### Basic Usage
 
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Initialize the SDK (uses PINAX_BEARER_TOKEN from .env automatically)
+// Initialize the SDK (uses GRAPH_API_TOKEN from .env automatically)
 const sdk = new PinaxSDK();
 
 // Get EVM token transfers
@@ -118,7 +118,7 @@ Retrieve ERC-20 and native token transfers for a specific address:
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Uses PINAX_BEARER_TOKEN from .env automatically
+// Uses GRAPH_API_TOKEN from .env automatically
 const sdk = new PinaxSDK();
 
 // Get transfers to Vitalik's address

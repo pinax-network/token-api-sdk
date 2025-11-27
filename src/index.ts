@@ -58,20 +58,20 @@ export type DexProtocol = "uniswap_v2" | "uniswap_v3";
  *
  * Environment variables are automatically loaded from `.env` files via dotenv.
  * Options can be set via environment variables:
- * - `PINAX_BEARER_TOKEN` - Bearer token for authentication
- * - `PINAX_BASE_URL` - Custom base URL for the API
+ * - `GRAPH_API_TOKEN` - Bearer token for authentication
+ * - `TOKEN_API_BASE_URL` - Custom base URL for the API
  */
 export interface PinaxClientOptions {
   /**
    * Bearer token for authentication
-   * Get your API key at https://thegraph.market
-   * Falls back to `PINAX_BEARER_TOKEN` environment variable
+   * Get your API token at https://thegraph.market
+   * Falls back to `GRAPH_API_TOKEN` environment variable
    */
-  bearerToken?: string;
+  apiToken?: string;
 
   /**
    * Base URL for the API (defaults to production)
-   * Falls back to `PINAX_BASE_URL` environment variable
+   * Falls back to `TOKEN_API_BASE_URL` environment variable
    */
   baseUrl?: string;
 
@@ -85,12 +85,12 @@ export interface PinaxClientOptions {
  * Create a middleware that adds authentication headers
  */
 function createAuthMiddleware(options: PinaxClientOptions): Middleware {
-  const bearerToken = options.bearerToken ?? process.env.PINAX_BEARER_TOKEN;
+  const apiToken = options.apiToken ?? process.env.GRAPH_API_TOKEN;
 
   return {
     async onRequest({ request }) {
-      if (bearerToken) {
-        request.headers.set("Authorization", `Bearer ${bearerToken}`);
+      if (apiToken) {
+        request.headers.set("Authorization", `Bearer ${apiToken}`);
       }
       return request;
     },
@@ -102,15 +102,15 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  *
  * Environment variables are automatically loaded from `.env` files.
  * Supported environment variables:
- * - `PINAX_BEARER_TOKEN` - Bearer token for authentication
- * - `PINAX_BASE_URL` - Custom base URL for the API
+ * - `GRAPH_API_TOKEN` - API Token (Authentication JWT)
+ * - `TOKEN_API_BASE_URL` - Custom base URL for the Token API
  *
  * @example
  * ```typescript
  * import { createPinaxClient } from "@pinax/token-api";
  *
  * const client = createPinaxClient({
- *   bearerToken: "your-token"
+ *   apiToken: "your-api-token-jwt"
  * });
  *
  * // Get token transfers
@@ -130,7 +130,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * ```
  */
 export function createPinaxClient(options: PinaxClientOptions = {}) {
-  const baseUrl = options.baseUrl ?? process.env.PINAX_BASE_URL ?? DEFAULT_BASE_URL;
+  const baseUrl = options.baseUrl ?? process.env.TOKEN_API_BASE_URL ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
     baseUrl,
@@ -160,7 +160,7 @@ function handleResponse<T>(data: T | undefined | null, error: unknown): T {
  * EVM Tokens API - Token operations on EVM networks
  */
 class EvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get ERC-20 and native token transfers
@@ -278,7 +278,7 @@ class EvmTokens {
  * EVM DEXs API - Decentralized exchange operations on EVM networks
  */
 class EvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -361,7 +361,7 @@ class EvmDexs {
  * EVM NFTs API - NFT operations on EVM networks
  */
 class EvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get NFT collection metadata and stats
@@ -498,7 +498,7 @@ class EvmApi {
  * SVM Tokens API - Token operations on Solana Virtual Machine networks
  */
 class SvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get SPL token transfers
@@ -614,7 +614,7 @@ class SvmTokens {
  * SVM DEXs API - Decentralized exchange operations on Solana Virtual Machine networks
  */
 class SvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -700,7 +700,7 @@ class SvmDexs {
  * Methods will be added when the Token API adds support for Solana NFT operations.
  */
 class SvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 }
 
 /**
@@ -722,7 +722,7 @@ class SvmApi {
  * TVM Tokens API - Token operations on Tron Virtual Machine networks
  */
 class TvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get TRC-20 token transfers
@@ -791,7 +791,7 @@ class TvmTokens {
  * TVM DEXs API - Decentralized exchange operations on Tron Virtual Machine networks
  */
 class TvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -859,7 +859,7 @@ class TvmDexs {
  * Methods will be added when the Token API adds support for Tron NFT operations.
  */
 class TvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+  constructor(private client: ReturnType<typeof createPinaxClient>) { }
 }
 
 /**
@@ -884,7 +884,7 @@ class TvmApi {
  * ```typescript
  * import { PinaxSDK } from "@pinax/token-api";
  *
- * const sdk = new PinaxSDK({ bearerToken: "your-token" });
+ * const sdk = new PinaxSDK({ apiToken: "your-token" });
  *
  * // Get EVM transfers
  * const transfers = await sdk.evm.tokens.getTransfers({

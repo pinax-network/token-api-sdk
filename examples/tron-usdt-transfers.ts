@@ -15,7 +15,7 @@ const TRON_USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 async function main() {
   // Initialize the SDK with your bearer token
   const sdk = new PinaxSDK({
-    bearerToken: process.env.PINAX_BEARER_TOKEN,
+    apiToken: process.env.GRAPH_API_TOKEN,
   });
 
   console.log("Fetching USDT transfers on Tron network...\n");

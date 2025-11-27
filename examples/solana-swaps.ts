@@ -11,7 +11,7 @@ import { PinaxSDK } from "@pinax/token-api";
 async function main() {
   // Initialize the SDK with your bearer token
   const sdk = new PinaxSDK({
-    bearerToken: process.env.PINAX_BEARER_TOKEN,
+    apiToken: process.env.GRAPH_API_TOKEN,
   });
 
   console.log("Fetching 100 most recent swaps on Solana...\n");
