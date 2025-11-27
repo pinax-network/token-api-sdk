@@ -144,11 +144,14 @@ export function createPinaxClient(options: PinaxClientOptions = {}) {
 /**
  * Helper function to handle API responses and errors
  */
-function handleResponse<T>(data: T | undefined, error: unknown): T {
+function handleResponse<T>(data: T | undefined | null, error: unknown): T {
   if (error) {
     throw new Error(`API Error: ${JSON.stringify(error)}`);
   }
-  return data as T;
+  if (data === undefined || data === null) {
+    throw new Error("API Error: No data returned");
+  }
+  return data;
 }
 
 /**
@@ -318,12 +321,19 @@ class EvmDexs {
 }
 
 /**
- * EVM NFTs API - NFT operations on EVM networks (placeholder for future implementation)
+ * EVM NFTs API - NFT operations on EVM networks
+ *
+ * @remarks
+ * This class is a placeholder for future NFT functionality on EVM networks.
+ * Methods will be added when the Token API adds support for NFT operations.
+ *
+ * Planned features include:
+ * - NFT transfers and ownership history
+ * - NFT metadata and collection information
+ * - NFT holders and balances
  */
 class EvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // NFT methods will be added when the API supports them
 }
 
 /**
@@ -342,30 +352,50 @@ class EvmApi {
 }
 
 /**
- * SVM Tokens API - Token operations on SVM networks (placeholder for future implementation)
+ * SVM Tokens API - Token operations on Solana Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future token functionality on SVM networks (Solana).
+ * Methods will be added when the Token API adds support for Solana token operations.
+ *
+ * Planned features include:
+ * - SPL token transfers
+ * - Token metadata and balances
+ * - Token holders and prices
  */
 class SvmTokens {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // SVM token methods will be added when the API supports them
 }
 
 /**
- * SVM DEXs API - Decentralized exchange operations on SVM networks (placeholder for future implementation)
+ * SVM DEXs API - Decentralized exchange operations on Solana Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future DEX functionality on SVM networks (Solana).
+ * Methods will be added when the Token API adds support for Solana DEX operations.
+ *
+ * Planned features include:
+ * - Swap events from Raydium, Orca, and other Solana DEXs
+ * - Liquidity pool information
  */
 class SvmDexs {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // SVM DEX methods will be added when the API supports them
 }
 
 /**
- * SVM NFTs API - NFT operations on SVM networks (placeholder for future implementation)
+ * SVM NFTs API - NFT operations on Solana Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future NFT functionality on SVM networks (Solana).
+ * Methods will be added when the Token API adds support for Solana NFT operations.
+ *
+ * Planned features include:
+ * - Metaplex NFT transfers and metadata
+ * - NFT collection information
+ * - NFT holders and ownership history
  */
 class SvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // SVM NFT methods will be added when the API supports them
 }
 
 /**
@@ -384,30 +414,50 @@ class SvmApi {
 }
 
 /**
- * TVM Tokens API - Token operations on TVM networks (placeholder for future implementation)
+ * TVM Tokens API - Token operations on Tron Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future token functionality on TVM networks (Tron).
+ * Methods will be added when the Token API adds support for Tron token operations.
+ *
+ * Planned features include:
+ * - TRC-20 token transfers
+ * - Token metadata and balances
+ * - Token holders and prices
  */
 class TvmTokens {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // TVM token methods will be added when the API supports them
 }
 
 /**
- * TVM DEXs API - Decentralized exchange operations on TVM networks (placeholder for future implementation)
+ * TVM DEXs API - Decentralized exchange operations on Tron Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future DEX functionality on TVM networks (Tron).
+ * Methods will be added when the Token API adds support for Tron DEX operations.
+ *
+ * Planned features include:
+ * - Swap events from SunSwap and other Tron DEXs
+ * - Liquidity pool information
  */
 class TvmDexs {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // TVM DEX methods will be added when the API supports them
 }
 
 /**
- * TVM NFTs API - NFT operations on TVM networks (placeholder for future implementation)
+ * TVM NFTs API - NFT operations on Tron Virtual Machine networks
+ *
+ * @remarks
+ * This class is a placeholder for future NFT functionality on TVM networks (Tron).
+ * Methods will be added when the Token API adds support for Tron NFT operations.
+ *
+ * Planned features include:
+ * - TRC-721 NFT transfers and metadata
+ * - NFT collection information
+ * - NFT holders and ownership history
  */
 class TvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
-
-  // TVM NFT methods will be added when the API supports them
 }
 
 /**
