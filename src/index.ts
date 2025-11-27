@@ -13,6 +13,9 @@ import type { paths, components } from "./openapi.d.ts";
 // Re-export types
 export type * from "./openapi.d.ts";
 
+// Constants
+export const DEFAULT_BASE_URL = "https://token-api.thegraph.com";
+
 // Type aliases for convenience
 export type Transfer = components["schemas"]["Transfer"];
 export type Swap = components["schemas"]["Swap"];
@@ -121,7 +124,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * ```
  */
 export function createPinaxClient(options: PinaxClientOptions = {}) {
-  const baseUrl = options.baseUrl ?? "https://token-api.thegraph.com";
+  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
     baseUrl,
@@ -171,6 +174,16 @@ export class PinaxSDK {
   }
 
   /**
+   * Helper method to handle API responses and errors
+   */
+  private handleResponse<T>(data: T | undefined, error: unknown): T {
+    if (error) {
+      throw new Error(`API Error: ${JSON.stringify(error)}`);
+    }
+    return data as T;
+  }
+
+  /**
    * Get ERC-20 and native token transfers
    */
   async getTransfers(params?: {
@@ -187,15 +200,11 @@ export class PinaxSDK {
     limit?: number;
     order?: "ASC" | "DESC";
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/transfers", {
+    const { data, error } = await this.client.GET("/v1/evm/transfers", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -217,15 +226,11 @@ export class PinaxSDK {
     limit?: number;
     order?: "ASC" | "DESC";
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/swaps", {
+    const { data, error } = await this.client.GET("/v1/evm/swaps", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -238,15 +243,11 @@ export class PinaxSDK {
     page?: number;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/tokens", {
+    const { data, error } = await this.client.GET("/v1/evm/tokens", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -259,15 +260,11 @@ export class PinaxSDK {
     page?: number;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/balances", {
+    const { data, error } = await this.client.GET("/v1/evm/balances", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -279,15 +276,11 @@ export class PinaxSDK {
     page?: number;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/holders", {
+    const { data, error } = await this.client.GET("/v1/evm/holders", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -299,15 +292,11 @@ export class PinaxSDK {
     page?: number;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/prices", {
+    const { data, error } = await this.client.GET("/v1/evm/prices", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -321,15 +310,11 @@ export class PinaxSDK {
     end_time?: string;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/ohlc", {
+    const { data, error } = await this.client.GET("/v1/evm/ohlc", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
@@ -343,54 +328,38 @@ export class PinaxSDK {
     page?: number;
     limit?: number;
   }) {
-    const { data, error, response } = await this.client.GET("/v1/evm/pools", {
+    const { data, error } = await this.client.GET("/v1/evm/pools", {
       params: { query: params },
     });
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
    * Check API health status
    */
   async getHealth() {
-    const { data, error, response } = await this.client.GET("/health");
+    const { data, error } = await this.client.GET("/health");
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
    * Get API version information
    */
   async getVersion() {
-    const { data, error, response } = await this.client.GET("/version");
+    const { data, error } = await this.client.GET("/version");
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 
   /**
    * Get list of supported networks
    */
   async getNetworks() {
-    const { data, error, response } = await this.client.GET("/networks");
+    const { data, error } = await this.client.GET("/networks");
 
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-
-    return data;
+    return this.handleResponse(data, error);
   }
 }
 
