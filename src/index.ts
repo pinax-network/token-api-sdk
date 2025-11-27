@@ -882,24 +882,24 @@ class TvmApi {
  *
  * @example
  * ```typescript
- * import { PinaxSDK } from "@pinax/token-api";
+ * import { TokenClient } from "@pinax/token-api";
  *
- * const sdk = new PinaxSDK({ apiToken: "your-token" });
+ * const client = new TokenClient({ apiToken: "your-token" });
  *
  * // Get EVM transfers
- * const transfers = await sdk.evm.tokens.getTransfers({
+ * const transfers = await client.evm.tokens.getTransfers({
  *   network: "mainnet",
  *   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
  * });
  *
  * // Get EVM swaps
- * const swaps = await sdk.evm.dexs.getSwaps({
+ * const swaps = await client.evm.dexs.getSwaps({
  *   network: "mainnet",
  *   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"
  * });
  * ```
  */
-export class PinaxSDK {
+export class TokenClient {
   private client: ReturnType<typeof createPinaxClient>;
 
   /**
@@ -962,4 +962,4 @@ export class PinaxSDK {
 }
 
 // Default export
-export default PinaxSDK;
+export default TokenClient;

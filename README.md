@@ -80,7 +80,7 @@ GRAPH_API_TOKEN=your-token
 Pass the bearer token directly to the SDK:
 
 ```typescript
-const sdk = new PinaxSDK({
+const client = new TokenClient({
   apiToken: "your-token",
 });
 ```
@@ -95,13 +95,13 @@ const sdk = new PinaxSDK({
 ### Basic Usage
 
 ```typescript
-import { PinaxSDK } from "@pinax/token-api";
+import { TokenClient } from "@pinax/token-api";
 
-// Initialize the SDK (uses GRAPH_API_TOKEN from .env automatically)
-const sdk = new PinaxSDK();
+// Initialize the client (uses GRAPH_API_TOKEN from .env automatically)
+const client = new TokenClient();
 
 // Get EVM token transfers
-const transfers = await sdk.evm.tokens.getTransfers({
+const transfers = await client.evm.tokens.getTransfers({
   network: "mainnet",
   limit: 10,
 });
@@ -116,13 +116,13 @@ console.log(transfers.data);
 Retrieve ERC-20 and native token transfers for a specific address:
 
 ```typescript
-import { PinaxSDK } from "@pinax/token-api";
+import { TokenClient } from "@pinax/token-api";
 
 // Uses GRAPH_API_TOKEN from .env automatically
-const sdk = new PinaxSDK();
+const client = new TokenClient();
 
 // Get transfers to Vitalik's address
-const transfers = await sdk.evm.tokens.getTransfers({
+const transfers = await client.evm.tokens.getTransfers({
   network: "mainnet",
   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", // Vitalik's address
   limit: 10,
@@ -144,12 +144,12 @@ for (const transfer of transfers.data ?? []) {
 Retrieve DEX swap events from Uniswap and other protocols:
 
 ```typescript
-import { PinaxSDK } from "@pinax/token-api";
+import { TokenClient } from "@pinax/token-api";
 
-const sdk = new PinaxSDK();
+const client = new TokenClient();
 
 // Get swaps from the USDC/WETH pool
-const swaps = await sdk.evm.dexs.getSwaps({
+const swaps = await client.evm.dexs.getSwaps({
   network: "mainnet",
   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640", // Uniswap V3 USDC/WETH pool
   limit: 10,
@@ -170,12 +170,12 @@ for (const swap of swaps.data ?? []) {
 ### Get Token Balances
 
 ```typescript
-import { PinaxSDK } from "@pinax/token-api";
+import { TokenClient } from "@pinax/token-api";
 
-const sdk = new PinaxSDK();
+const client = new TokenClient();
 
 // Get token balances for a wallet
-const balances = await sdk.evm.tokens.getBalances({
+const balances = await client.evm.tokens.getBalances({
   network: "mainnet",
   owner: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", // Vitalik's address
 });
