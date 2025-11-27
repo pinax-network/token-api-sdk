@@ -107,9 +107,9 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  *
  * @example
  * ```typescript
- * import { createPinaxClient } from "@pinax/token-api";
+ * import { createTokenClient } from "@pinax/token-api";
  *
- * const client = createPinaxClient({
+ * const client = createTokenClient({
  *   apiToken: "your-api-token-jwt"
  * });
  *
@@ -129,7 +129,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * }
  * ```
  */
-export function createPinaxClient(options: PinaxClientOptions = {}) {
+export function createTokenClient(options: PinaxClientOptions = {}) {
   const baseUrl = options.baseUrl ?? process.env.TOKEN_API_BASE_URL ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
@@ -160,7 +160,7 @@ function handleResponse<T>(data: T | undefined | null, error: unknown): T {
  * EVM Tokens API - Token operations on EVM networks
  */
 class EvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get ERC-20 and native token transfers
@@ -278,7 +278,7 @@ class EvmTokens {
  * EVM DEXs API - Decentralized exchange operations on EVM networks
  */
 class EvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -361,7 +361,7 @@ class EvmDexs {
  * EVM NFTs API - NFT operations on EVM networks
  */
 class EvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get NFT collection metadata and stats
@@ -487,7 +487,7 @@ class EvmApi {
   public readonly dexs: EvmDexs;
   public readonly nfts: EvmNfts;
 
-  constructor(client: ReturnType<typeof createPinaxClient>) {
+  constructor(client: ReturnType<typeof createTokenClient>) {
     this.tokens = new EvmTokens(client);
     this.dexs = new EvmDexs(client);
     this.nfts = new EvmNfts(client);
@@ -498,7 +498,7 @@ class EvmApi {
  * SVM Tokens API - Token operations on Solana Virtual Machine networks
  */
 class SvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get SPL token transfers
@@ -614,7 +614,7 @@ class SvmTokens {
  * SVM DEXs API - Decentralized exchange operations on Solana Virtual Machine networks
  */
 class SvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -700,7 +700,7 @@ class SvmDexs {
  * Methods will be added when the Token API adds support for Solana NFT operations.
  */
 class SvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 }
 
 /**
@@ -711,7 +711,7 @@ class SvmApi {
   public readonly dexs: SvmDexs;
   public readonly nfts: SvmNfts;
 
-  constructor(client: ReturnType<typeof createPinaxClient>) {
+  constructor(client: ReturnType<typeof createTokenClient>) {
     this.tokens = new SvmTokens(client);
     this.dexs = new SvmDexs(client);
     this.nfts = new SvmNfts(client);
@@ -722,7 +722,7 @@ class SvmApi {
  * TVM Tokens API - Token operations on Tron Virtual Machine networks
  */
 class TvmTokens {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get TRC-20 token transfers
@@ -791,7 +791,7 @@ class TvmTokens {
  * TVM DEXs API - Decentralized exchange operations on Tron Virtual Machine networks
  */
 class TvmDexs {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 
   /**
    * Get DEX swap transactions
@@ -859,7 +859,7 @@ class TvmDexs {
  * Methods will be added when the Token API adds support for Tron NFT operations.
  */
 class TvmNfts {
-  constructor(private client: ReturnType<typeof createPinaxClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) { }
 }
 
 /**
@@ -870,7 +870,7 @@ class TvmApi {
   public readonly dexs: TvmDexs;
   public readonly nfts: TvmNfts;
 
-  constructor(client: ReturnType<typeof createPinaxClient>) {
+  constructor(client: ReturnType<typeof createTokenClient>) {
     this.tokens = new TvmTokens(client);
     this.dexs = new TvmDexs(client);
     this.nfts = new TvmNfts(client);
@@ -900,7 +900,7 @@ class TvmApi {
  * ```
  */
 export class TokenClient {
-  private client: ReturnType<typeof createPinaxClient>;
+  private client: ReturnType<typeof createTokenClient>;
 
   /**
    * EVM (Ethereum Virtual Machine) API - Ethereum, Base, Arbitrum, etc.
@@ -918,7 +918,7 @@ export class TokenClient {
   public readonly tvm: TvmApi;
 
   constructor(options: PinaxClientOptions = {}) {
-    this.client = createPinaxClient(options);
+    this.client = createTokenClient(options);
     this.evm = new EvmApi(this.client);
     this.svm = new SvmApi(this.client);
     this.tvm = new TvmApi(this.client);
