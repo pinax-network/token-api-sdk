@@ -1,5 +1,5 @@
 /**
- * @pinax/sdk - Pinax SDK for Token API
+ * @pinax/token-api - Pinax Token API
  *
  * Power your apps & AI agents with real-time token data.
  *
@@ -114,7 +114,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
 }
 
 /**
- * Create a Pinax SDK client for accessing the Token API
+ * Create a Pinax Token API client for accessing the Token API
  *
  * Environment variables are automatically loaded from `.env` files.
  * Supported environment variables:
@@ -124,7 +124,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  *
  * @example
  * ```typescript
- * import { createPinaxClient } from "@pinax/sdk";
+ * import { createPinaxClient } from "@pinax/token-api";
  *
  * const client = createPinaxClient({
  *   apiKey: "your-api-key"
@@ -499,7 +499,7 @@ class TvmApi {
  *
  * @example
  * ```typescript
- * import { PinaxSDK } from "@pinax/sdk";
+ * import { PinaxSDK } from "@pinax/token-api";
  *
  * const sdk = new PinaxSDK({ apiKey: "your-api-key" });
  *
