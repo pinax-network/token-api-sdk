@@ -268,6 +268,18 @@ describe("API methods with mocked fetch", () => {
     expect(capturedRequest!.headers.get("Authorization")).toBe("Bearer my-test-token");
   });
 
+  it("should include referrer header in all requests", async () => {
+    const client = new TokenClient({ apiToken: "test-token" });
+
+    await client.evm.tokens.getTransfers({
+      network: "mainnet",
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.headers.get("Referer")).toBe("@pinax/token-api");
+  });
+
   it("should use custom base URL when provided", async () => {
     const customUrl = "https://custom-api.example.com";
     const client = new TokenClient({

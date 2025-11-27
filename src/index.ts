@@ -82,7 +82,7 @@ export interface PinaxClientOptions {
 }
 
 /**
- * Create a middleware that adds authentication headers
+ * Create a middleware that adds authentication headers and referrer
  */
 function createAuthMiddleware(options: PinaxClientOptions): Middleware {
   const apiToken = options.apiToken ?? process.env.GRAPH_API_TOKEN;
@@ -92,6 +92,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
       if (apiToken) {
         request.headers.set("Authorization", `Bearer ${apiToken}`);
       }
+      request.headers.set("Referer", "@pinax/token-api");
       return request;
     },
   };
