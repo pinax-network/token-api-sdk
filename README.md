@@ -72,16 +72,16 @@ The SDK automatically loads environment variables from `.env` files using [doten
 Create a `.env` file in your project root:
 
 ```env
-PINAX_API_KEY=your-api-key
+PINAX_BEARER_TOKEN=your-token
 ```
 
 **Option 2: Direct configuration**
 
-Pass the API key directly to the SDK:
+Pass the bearer token directly to the SDK:
 
 ```typescript
 const sdk = new PinaxSDK({
-  apiKey: "your-api-key",
+  bearerToken: "your-token",
 });
 ```
 
@@ -89,8 +89,7 @@ const sdk = new PinaxSDK({
 
 | Variable | Description |
 |----------|-------------|
-| `PINAX_API_KEY` | API key for authentication |
-| `PINAX_BEARER_TOKEN` | Bearer token for authentication (alternative to API key) |
+| `PINAX_BEARER_TOKEN` | Bearer token for authentication |
 | `PINAX_BASE_URL` | Custom base URL for the API |
 
 ### Basic Usage
@@ -98,7 +97,7 @@ const sdk = new PinaxSDK({
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Initialize the SDK (uses PINAX_API_KEY from .env automatically)
+// Initialize the SDK (uses PINAX_BEARER_TOKEN from .env automatically)
 const sdk = new PinaxSDK();
 
 // Get EVM token transfers
@@ -119,7 +118,7 @@ Retrieve ERC-20 and native token transfers for a specific address:
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Uses PINAX_API_KEY from .env automatically
+// Uses PINAX_BEARER_TOKEN from .env automatically
 const sdk = new PinaxSDK();
 
 // Get transfers to Vitalik's address
@@ -213,7 +212,7 @@ For more control, you can use the underlying `openapi-fetch` client:
 ```typescript
 import { createPinaxClient } from "@pinax/token-api";
 
-// Uses PINAX_API_KEY from .env, or pass explicitly
+// Uses PINAX_BEARER_TOKEN from .env, or pass explicitly
 const client = createPinaxClient();
 
 // Direct API call with full type safety
@@ -238,16 +237,8 @@ if (error) {
 
 ```typescript
 const sdk = new PinaxSDK({
-  apiKey: "your-api-key",
+  bearerToken: "your-token",
   baseUrl: "https://your-custom-endpoint.com",
-});
-```
-
-### Using Bearer Token
-
-```typescript
-const sdk = new PinaxSDK({
-  bearerToken: "your-jwt-token",
 });
 ```
 
