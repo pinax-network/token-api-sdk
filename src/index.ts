@@ -236,7 +236,42 @@ class EvmTokens {
     return handleResponse(data, error);
   }
 
+  /**
+   * Get native token balances for wallet addresses
+   */
+  async getNativeBalances(params: {
+    network: EvmNetwork;
+    address: string | string[];
+    include_null_balances?: boolean;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/balances/native", {
+      params: { query: params },
+    });
 
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get historical token balance changes over time in OHLCV format
+   */
+  async getHistoricalBalances(params: {
+    network: EvmNetwork;
+    address: string;
+    contract?: string | string[];
+    interval?: "1h" | "4h" | "1d" | "1w";
+    start_time?: string;
+    end_time?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/balances/historical", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
@@ -288,22 +323,160 @@ class EvmDexs {
 
     return handleResponse(data, error);
   }
+
+  /**
+   * Get supported DEXs
+   */
+  async getDexes(params: {
+    network: EvmNetwork;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/dexes", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get OHLCV price data for liquidity pools
+   */
+  async getPoolOHLC(params: {
+    network: EvmNetwork;
+    pool: string;
+    interval?: "1h" | "4h" | "1d" | "1w";
+    start_time?: string;
+    end_time?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/pools/ohlc", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
  * EVM NFTs API - NFT operations on EVM networks
- *
- * @remarks
- * This class is a placeholder for future NFT functionality on EVM networks.
- * Methods will be added when the Token API adds support for NFT operations.
- *
- * Planned features include:
- * - NFT transfers and ownership history
- * - NFT metadata and collection information
- * - NFT holders and balances
  */
 class EvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  /**
+   * Get NFT collection metadata and stats
+   */
+  async getCollections(params: {
+    network: EvmNetwork;
+    contract: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/collections", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get NFT holders for a collection
+   */
+  async getHolders(params: {
+    network: EvmNetwork;
+    contract: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/holders", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get NFT items with metadata
+   */
+  async getItems(params: {
+    network: EvmNetwork;
+    contract: string;
+    token_id?: string | string[];
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/items", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get NFT ownerships by wallet address
+   */
+  async getOwnerships(params: {
+    network: EvmNetwork;
+    address: string | string[];
+    contract?: string | string[];
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/ownerships", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get NFT sales data
+   */
+  async getSales(params: {
+    network: EvmNetwork;
+    contract?: string | string[];
+    token_id?: string | string[];
+    buyer?: string | string[];
+    seller?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+    order?: "ASC" | "DESC";
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/sales", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get NFT transfers
+   */
+  async getTransfers(params: {
+    network: EvmNetwork;
+    transaction_id?: string | string[];
+    contract?: string | string[];
+    token_id?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+    order?: "ASC" | "DESC";
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/nft/transfers", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
@@ -323,33 +496,200 @@ class EvmApi {
 
 /**
  * SVM Tokens API - Token operations on Solana Virtual Machine networks
- *
- * @remarks
- * This class is a placeholder for future token functionality on SVM networks (Solana).
- * Methods will be added when the Token API adds support for Solana token operations.
- *
- * Planned features include:
- * - SPL token transfers
- * - Token metadata and balances
- * - Token holders and prices
  */
 class SvmTokens {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  /**
+   * Get SPL token transfers
+   */
+  async getTransfers(params: {
+    network: SvmNetwork;
+    signature?: string | string[];
+    mint?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
+    from_owner?: string | string[];
+    to_owner?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+    order?: "ASC" | "DESC";
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/transfers", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token metadata
+   */
+  async getTokens(params: {
+    network: SvmNetwork;
+    mint: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/tokens", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token balances for a wallet address
+   */
+  async getBalances(params: {
+    network: SvmNetwork;
+    owner: string | string[];
+    mint?: string | string[];
+    include_null_balances?: boolean;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/balances", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native SOL balances for wallet addresses
+   */
+  async getNativeBalances(params: {
+    network: SvmNetwork;
+    address: string | string[];
+    include_null_balances?: boolean;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/balances/native", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token holders
+   */
+  async getHolders(params: {
+    network: SvmNetwork;
+    mint: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/holders", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get account owner lookup
+   */
+  async getAccountOwner(params: {
+    network: SvmNetwork;
+    account: string | string[];
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/owner", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
  * SVM DEXs API - Decentralized exchange operations on Solana Virtual Machine networks
- *
- * @remarks
- * This class is a placeholder for future DEX functionality on SVM networks (Solana).
- * Methods will be added when the Token API adds support for Solana DEX operations.
- *
- * Planned features include:
- * - Swap events from Raydium, Orca, and other Solana DEXs
- * - Liquidity pool information
  */
 class SvmDexs {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  /**
+   * Get DEX swap transactions
+   */
+  async getSwaps(params: {
+    network: SvmNetwork;
+    signature?: string | string[];
+    amm?: string | string[];
+    amm_pool?: string | string[];
+    user?: string | string[];
+    input_mint?: string | string[];
+    output_mint?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/swaps", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get DEX liquidity pools
+   */
+  async getPools(params: {
+    network: SvmNetwork;
+    amm_pool?: string | string[];
+    base_mint?: string | string[];
+    quote_mint?: string | string[];
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/pools", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get supported DEXs
+   */
+  async getDexes(params: {
+    network: SvmNetwork;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/dexes", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get OHLCV price data for liquidity pools
+   */
+  async getPoolOHLC(params: {
+    network: SvmNetwork;
+    amm_pool: string;
+    interval?: "1h" | "4h" | "1d" | "1w";
+    start_time?: string;
+    end_time?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/svm/pools/ohlc", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
@@ -358,11 +698,6 @@ class SvmDexs {
  * @remarks
  * This class is a placeholder for future NFT functionality on SVM networks (Solana).
  * Methods will be added when the Token API adds support for Solana NFT operations.
- *
- * Planned features include:
- * - Metaplex NFT transfers and metadata
- * - NFT collection information
- * - NFT holders and ownership history
  */
 class SvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
@@ -385,33 +720,135 @@ class SvmApi {
 
 /**
  * TVM Tokens API - Token operations on Tron Virtual Machine networks
- *
- * @remarks
- * This class is a placeholder for future token functionality on TVM networks (Tron).
- * Methods will be added when the Token API adds support for Tron token operations.
- *
- * Planned features include:
- * - TRC-20 token transfers
- * - Token metadata and balances
- * - Token holders and prices
  */
 class TvmTokens {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  /**
+   * Get TRC-20 token transfers
+   */
+  async getTransfers(params: {
+    network: TvmNetwork;
+    transaction_id?: string | string[];
+    contract?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+    order?: "ASC" | "DESC";
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/transfers", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native TRX transfers
+   */
+  async getNativeTransfers(params: {
+    network: TvmNetwork;
+    transaction_id?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/transfers/native", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token metadata
+   */
+  async getTokens(params: {
+    network: TvmNetwork;
+    contract: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/tokens", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
  * TVM DEXs API - Decentralized exchange operations on Tron Virtual Machine networks
- *
- * @remarks
- * This class is a placeholder for future DEX functionality on TVM networks (Tron).
- * Methods will be added when the Token API adds support for Tron DEX operations.
- *
- * Planned features include:
- * - Swap events from SunSwap and other Tron DEXs
- * - Liquidity pool information
  */
 class TvmDexs {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  /**
+   * Get DEX swap transactions
+   */
+  async getSwaps(params: {
+    network: TvmNetwork;
+    transaction_id?: string | string[];
+    pool?: string | string[];
+    caller?: string | string[];
+    sender?: string | string[];
+    recipient?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+    order?: "ASC" | "DESC";
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/swaps", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get supported DEXs
+   */
+  async getDexes(params: {
+    network: TvmNetwork;
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/dexes", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get OHLCV price data for liquidity pools
+   */
+  async getPoolOHLC(params: {
+    network: TvmNetwork;
+    pool: string;
+    interval?: "1h" | "4h" | "1d" | "1w";
+    start_time?: string;
+    end_time?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/tvm/pools/ohlc", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
 }
 
 /**
@@ -420,11 +857,6 @@ class TvmDexs {
  * @remarks
  * This class is a placeholder for future NFT functionality on TVM networks (Tron).
  * Methods will be added when the Token API adds support for Tron NFT operations.
- *
- * Planned features include:
- * - TRC-721 NFT transfers and metadata
- * - NFT collection information
- * - NFT holders and ownership history
  */
 class TvmNfts {
   constructor(private client: ReturnType<typeof createPinaxClient>) {}
