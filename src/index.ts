@@ -50,6 +50,10 @@ export type EvmNetwork =
   | "avalanche"
   | "unichain";
 
+export type SvmNetwork = "solana";
+
+export type TvmNetwork = "tron";
+
 export type DexProtocol = "uniswap_v2" | "uniswap_v3";
 
 export type OhlcInterval = "1m" | "5m" | "15m" | "1h" | "4h" | "1d" | "1w";
@@ -138,50 +142,20 @@ export function createPinaxClient(options: PinaxClientOptions = {}) {
 }
 
 /**
- * High-level wrapper for common Token API operations
- *
- * @example
- * ```typescript
- * import { PinaxSDK } from "@pinax/sdk";
- *
- * const sdk = new PinaxSDK({ apiKey: "your-api-key" });
- *
- * // Get transfers
- * const transfers = await sdk.getTransfers({
- *   network: "mainnet",
- *   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
- * });
- *
- * // Get swaps
- * const swaps = await sdk.getSwaps({
- *   network: "mainnet",
- *   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"
- * });
- * ```
+ * Helper function to handle API responses and errors
  */
-export class PinaxSDK {
-  private client: ReturnType<typeof createPinaxClient>;
-
-  constructor(options: PinaxClientOptions = {}) {
-    this.client = createPinaxClient(options);
+function handleResponse<T>(data: T | undefined, error: unknown): T {
+  if (error) {
+    throw new Error(`API Error: ${JSON.stringify(error)}`);
   }
+  return data as T;
+}
 
-  /**
-   * Get the underlying openapi-fetch client for advanced usage
-   */
-  getClient() {
-    return this.client;
-  }
-
-  /**
-   * Helper method to handle API responses and errors
-   */
-  private handleResponse<T>(data: T | undefined, error: unknown): T {
-    if (error) {
-      throw new Error(`API Error: ${JSON.stringify(error)}`);
-    }
-    return data as T;
-  }
+/**
+ * EVM Tokens API - Token operations on EVM networks
+ */
+class EvmTokens {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
 
   /**
    * Get ERC-20 and native token transfers
@@ -204,8 +178,99 @@ export class PinaxSDK {
       params: { query: params },
     });
 
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
+
+  /**
+   * Get token metadata
+   */
+  async getTokens(params?: {
+    network?: EvmNetwork;
+    contract?: string;
+    symbol?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/tokens", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token balances for a wallet address
+   */
+  async getBalances(params: {
+    owner: string;
+    network?: EvmNetwork;
+    contract?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/balances", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get token holders
+   */
+  async getHolders(params: {
+    contract: string;
+    network?: EvmNetwork;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/holders", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get current token prices in USD
+   */
+  async getPrices(params?: {
+    network?: EvmNetwork;
+    contract?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/prices", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get OHLCV candlestick data
+   */
+  async getOhlc(params: {
+    contract: string;
+    network?: EvmNetwork;
+    interval?: OhlcInterval;
+    start_time?: string;
+    end_time?: string;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET("/v1/evm/ohlc", {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+}
+
+/**
+ * EVM DEXs API - Decentralized exchange operations on EVM networks
+ */
+class EvmDexs {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
 
   /**
    * Get DEX swap transactions
@@ -230,91 +295,7 @@ export class PinaxSDK {
       params: { query: params },
     });
 
-    return this.handleResponse(data, error);
-  }
-
-  /**
-   * Get token metadata
-   */
-  async getTokens(params?: {
-    network?: EvmNetwork;
-    contract?: string;
-    symbol?: string;
-    page?: number;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/tokens", {
-      params: { query: params },
-    });
-
-    return this.handleResponse(data, error);
-  }
-
-  /**
-   * Get token balances for a wallet address
-   */
-  async getBalances(params: {
-    owner: string;
-    network?: EvmNetwork;
-    contract?: string;
-    page?: number;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/balances", {
-      params: { query: params },
-    });
-
-    return this.handleResponse(data, error);
-  }
-
-  /**
-   * Get token holders
-   */
-  async getHolders(params: {
-    contract: string;
-    network?: EvmNetwork;
-    page?: number;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/holders", {
-      params: { query: params },
-    });
-
-    return this.handleResponse(data, error);
-  }
-
-  /**
-   * Get current token prices in USD
-   */
-  async getPrices(params?: {
-    network?: EvmNetwork;
-    contract?: string;
-    page?: number;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/prices", {
-      params: { query: params },
-    });
-
-    return this.handleResponse(data, error);
-  }
-
-  /**
-   * Get OHLCV candlestick data
-   */
-  async getOhlc(params: {
-    contract: string;
-    network?: EvmNetwork;
-    interval?: OhlcInterval;
-    start_time?: string;
-    end_time?: string;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/ohlc", {
-      params: { query: params },
-    });
-
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
 
   /**
@@ -332,8 +313,173 @@ export class PinaxSDK {
       params: { query: params },
     });
 
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
+}
+
+/**
+ * EVM NFTs API - NFT operations on EVM networks (placeholder for future implementation)
+ */
+class EvmNfts {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // NFT methods will be added when the API supports them
+}
+
+/**
+ * EVM API - Operations on EVM (Ethereum Virtual Machine) networks
+ */
+class EvmApi {
+  public readonly tokens: EvmTokens;
+  public readonly dexs: EvmDexs;
+  public readonly nfts: EvmNfts;
+
+  constructor(client: ReturnType<typeof createPinaxClient>) {
+    this.tokens = new EvmTokens(client);
+    this.dexs = new EvmDexs(client);
+    this.nfts = new EvmNfts(client);
+  }
+}
+
+/**
+ * SVM Tokens API - Token operations on SVM networks (placeholder for future implementation)
+ */
+class SvmTokens {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // SVM token methods will be added when the API supports them
+}
+
+/**
+ * SVM DEXs API - Decentralized exchange operations on SVM networks (placeholder for future implementation)
+ */
+class SvmDexs {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // SVM DEX methods will be added when the API supports them
+}
+
+/**
+ * SVM NFTs API - NFT operations on SVM networks (placeholder for future implementation)
+ */
+class SvmNfts {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // SVM NFT methods will be added when the API supports them
+}
+
+/**
+ * SVM API - Operations on SVM (Solana Virtual Machine) networks
+ */
+class SvmApi {
+  public readonly tokens: SvmTokens;
+  public readonly dexs: SvmDexs;
+  public readonly nfts: SvmNfts;
+
+  constructor(client: ReturnType<typeof createPinaxClient>) {
+    this.tokens = new SvmTokens(client);
+    this.dexs = new SvmDexs(client);
+    this.nfts = new SvmNfts(client);
+  }
+}
+
+/**
+ * TVM Tokens API - Token operations on TVM networks (placeholder for future implementation)
+ */
+class TvmTokens {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // TVM token methods will be added when the API supports them
+}
+
+/**
+ * TVM DEXs API - Decentralized exchange operations on TVM networks (placeholder for future implementation)
+ */
+class TvmDexs {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // TVM DEX methods will be added when the API supports them
+}
+
+/**
+ * TVM NFTs API - NFT operations on TVM networks (placeholder for future implementation)
+ */
+class TvmNfts {
+  constructor(private client: ReturnType<typeof createPinaxClient>) {}
+
+  // TVM NFT methods will be added when the API supports them
+}
+
+/**
+ * TVM API - Operations on TVM (Tron Virtual Machine) networks
+ */
+class TvmApi {
+  public readonly tokens: TvmTokens;
+  public readonly dexs: TvmDexs;
+  public readonly nfts: TvmNfts;
+
+  constructor(client: ReturnType<typeof createPinaxClient>) {
+    this.tokens = new TvmTokens(client);
+    this.dexs = new TvmDexs(client);
+    this.nfts = new TvmNfts(client);
+  }
+}
+
+/**
+ * High-level wrapper for common Token API operations
+ *
+ * @example
+ * ```typescript
+ * import { PinaxSDK } from "@pinax/sdk";
+ *
+ * const sdk = new PinaxSDK({ apiKey: "your-api-key" });
+ *
+ * // Get EVM transfers
+ * const transfers = await sdk.evm.tokens.getTransfers({
+ *   network: "mainnet",
+ *   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+ * });
+ *
+ * // Get EVM swaps
+ * const swaps = await sdk.evm.dexs.getSwaps({
+ *   network: "mainnet",
+ *   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"
+ * });
+ * ```
+ */
+export class PinaxSDK {
+  private client: ReturnType<typeof createPinaxClient>;
+
+  /**
+   * EVM (Ethereum Virtual Machine) API - Ethereum, Base, Arbitrum, etc.
+   */
+  public readonly evm: EvmApi;
+
+  /**
+   * SVM (Solana Virtual Machine) API - Solana
+   */
+  public readonly svm: SvmApi;
+
+  /**
+   * TVM (Tron Virtual Machine) API - Tron
+   */
+  public readonly tvm: TvmApi;
+
+  constructor(options: PinaxClientOptions = {}) {
+    this.client = createPinaxClient(options);
+    this.evm = new EvmApi(this.client);
+    this.svm = new SvmApi(this.client);
+    this.tvm = new TvmApi(this.client);
+  }
+
+  /**
+   * Get the underlying openapi-fetch client for advanced usage
+   */
+  getClient() {
+    return this.client;
+  }
+
+  // === Monitoring / System Methods (at root level) ===
 
   /**
    * Check API health status
@@ -341,7 +487,7 @@ export class PinaxSDK {
   async getHealth() {
     const { data, error } = await this.client.GET("/health");
 
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
 
   /**
@@ -350,7 +496,7 @@ export class PinaxSDK {
   async getVersion() {
     const { data, error } = await this.client.GET("/version");
 
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
 
   /**
@@ -359,7 +505,7 @@ export class PinaxSDK {
   async getNetworks() {
     const { data, error } = await this.client.GET("/networks");
 
-    return this.handleResponse(data, error);
+    return handleResponse(data, error);
   }
 }
 
