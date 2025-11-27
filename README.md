@@ -18,6 +18,8 @@ The `@pinax/sdk` provides a type-safe TypeScript client for [The Graph's Token A
 
 ### Supported Networks
 
+#### EVM Networks
+
 | Network | ID |
 |---------|-----|
 | Ethereum Mainnet | `mainnet` |
@@ -28,6 +30,18 @@ The `@pinax/sdk` provides a type-safe TypeScript client for [The Graph's Token A
 | Optimism | `optimism` |
 | Avalanche | `avalanche` |
 | Unichain | `unichain` |
+
+#### SVM Networks
+
+| Network | ID |
+|---------|-----|
+| Solana | `solana` |
+
+#### TVM Networks
+
+| Network | ID |
+|---------|-----|
+| Tron | `tron` |
 
 ## Quick Start
 
@@ -61,8 +75,8 @@ const sdk = new PinaxSDK({
   apiKey: "your-api-key",
 });
 
-// Get token transfers
-const transfers = await sdk.getTransfers({
+// Get EVM token transfers
+const transfers = await sdk.evm.tokens.getTransfers({
   network: "mainnet",
   limit: 10,
 });
@@ -84,7 +98,7 @@ const sdk = new PinaxSDK({
 });
 
 // Get transfers to Vitalik's address
-const transfers = await sdk.getTransfers({
+const transfers = await sdk.evm.tokens.getTransfers({
   network: "mainnet",
   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
   limit: 10,
@@ -113,7 +127,7 @@ const sdk = new PinaxSDK({
 });
 
 // Get swaps from the USDC/WETH pool
-const swaps = await sdk.getSwaps({
+const swaps = await sdk.evm.dexs.getSwaps({
   network: "mainnet",
   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640",
   limit: 10,
@@ -141,7 +155,7 @@ const sdk = new PinaxSDK({
 });
 
 // Get token balances for a wallet
-const balances = await sdk.getBalances({
+const balances = await sdk.evm.tokens.getBalances({
   network: "mainnet",
   owner: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
 });
@@ -161,7 +175,7 @@ const sdk = new PinaxSDK({
 });
 
 // Get token prices
-const prices = await sdk.getPrices({
+const prices = await sdk.evm.tokens.getPrices({
   network: "mainnet",
   contract: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // WETH
 });
@@ -221,21 +235,49 @@ const sdk = new PinaxSDK({
 
 ## API Reference
 
-### PinaxSDK Methods
+### SDK Structure
+
+The SDK is organized by blockchain type (EVM, SVM, TVM) and category (tokens, dexs, nfts):
+
+```typescript
+sdk.evm.tokens     // EVM token operations
+sdk.evm.dexs       // EVM DEX operations
+sdk.evm.nfts       // EVM NFT operations
+
+sdk.svm.tokens     // SVM token operations
+sdk.svm.dexs       // SVM DEX operations
+sdk.svm.nfts       // SVM NFT operations
+
+sdk.tvm.tokens     // TVM token operations
+sdk.tvm.dexs       // TVM DEX operations
+sdk.tvm.nfts       // TVM NFT operations
+```
+
+### EVM Tokens Methods
 
 | Method | Description |
 |--------|-------------|
-| `getTransfers(params?)` | Get ERC-20 and native token transfers |
-| `getSwaps(params?)` | Get DEX swap transactions |
-| `getTokens(params?)` | Get token metadata |
-| `getBalances(params)` | Get token balances for a wallet |
-| `getHolders(params)` | Get token holders |
-| `getPrices(params?)` | Get current token prices |
-| `getOhlc(params)` | Get OHLCV candlestick data |
-| `getPools(params?)` | Get DEX liquidity pools |
-| `getHealth()` | Check API health status |
-| `getVersion()` | Get API version information |
-| `getNetworks()` | Get list of supported networks |
+| `sdk.evm.tokens.getTransfers(params?)` | Get ERC-20 and native token transfers |
+| `sdk.evm.tokens.getTokens(params?)` | Get token metadata |
+| `sdk.evm.tokens.getBalances(params)` | Get token balances for a wallet |
+| `sdk.evm.tokens.getHolders(params)` | Get token holders |
+| `sdk.evm.tokens.getPrices(params?)` | Get current token prices |
+| `sdk.evm.tokens.getOhlc(params)` | Get OHLCV candlestick data |
+
+### EVM DEXs Methods
+
+| Method | Description |
+|--------|-------------|
+| `sdk.evm.dexs.getSwaps(params?)` | Get DEX swap transactions |
+| `sdk.evm.dexs.getPools(params?)` | Get DEX liquidity pools |
+
+### System Methods (Root Level)
+
+| Method | Description |
+|--------|-------------|
+| `sdk.getHealth()` | Check API health status |
+| `sdk.getVersion()` | Get API version information |
+| `sdk.getNetworks()` | Get list of supported networks |
 
 ## Types
 
@@ -252,6 +294,8 @@ import type {
   Ohlc,
   Pool,
   EvmNetwork,
+  SvmNetwork,
+  TvmNetwork,
   DexProtocol,
   OhlcInterval,
 } from "@pinax/sdk";
