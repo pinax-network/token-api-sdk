@@ -1,0 +1,1024 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Token API",
+    "version": "1.0.0",
+    "description": "Power your apps & AI agents with real-time token data. The Graph's Token API provides access to onchain NFT and fungible token data, including live and historical balances, holders, prices, market data, token metadata, and token transfers.",
+    "contact": {
+      "name": "Pinax Network",
+      "url": "https://pinax.network"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://token-api.thegraph.com",
+      "description": "Production API Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "apiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/evm/transfers": {
+      "get": {
+        "operationId": "getEvmTransfers",
+        "summary": "Token Transfers",
+        "description": "Returns ERC-20 and native token transfers with transaction and block data.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID (e.g., mainnet, base, arbitrum-one)",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction hash (supports batching with commas)",
+            "schema": { "type": "string" },
+            "example": "0x96b1b180d22dae2b18a783ebdd5ae33f6867f3572f87c69a135c6c0a15a63c8e"
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Filter by token contract address (supports batching with commas)",
+            "schema": { "type": "string" },
+            "example": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          },
+          {
+            "name": "from_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by sender address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "to_address",
+            "in": "query",
+            "required": false,
+            "description": "Filter by recipient address (supports batching with commas)",
+            "schema": { "type": "string" },
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start block number",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "end_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end block number",
+            "schema": { "type": "integer", "default": 9999999999 }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ASC or DESC by timestamp)",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TransfersResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/swaps": {
+      "get": {
+        "operationId": "getEvmSwaps",
+        "summary": "Swap Events",
+        "description": "Returns DEX swap transactions from Uniswap protocols with token amounts and prices.",
+        "tags": ["EVM DEXs"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID (e.g., mainnet, base, arbitrum-one)",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction hash (supports batching with commas)",
+            "schema": { "type": "string" },
+            "example": "0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca"
+          },
+          {
+            "name": "pool",
+            "in": "query",
+            "required": false,
+            "description": "Filter by pool address (supports batching with commas)",
+            "schema": { "type": "string" },
+            "example": "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"
+          },
+          {
+            "name": "caller",
+            "in": "query",
+            "required": false,
+            "description": "Filter by caller address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "sender",
+            "in": "query",
+            "required": false,
+            "description": "Filter by sender address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "recipient",
+            "in": "query",
+            "required": false,
+            "description": "Filter by recipient address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "protocol",
+            "in": "query",
+            "required": false,
+            "description": "Filter by DEX protocol",
+            "schema": { "type": "string", "enum": ["uniswap_v2", "uniswap_v3"] }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end timestamp (ISO 8601 or Unix timestamp)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by start block number",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "end_block",
+            "in": "query",
+            "required": false,
+            "description": "Filter by end block number",
+            "schema": { "type": "integer", "default": 9999999999 }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ASC or DESC by timestamp)",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SwapsResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/tokens": {
+      "get": {
+        "operationId": "getEvmTokens",
+        "summary": "Token Metadata",
+        "description": "Returns ERC-20 token metadata including symbol, name, decimals, supply, and holder information.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Token contract address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": false,
+            "description": "Token symbol (e.g., ETH, USDC)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TokensResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/balances": {
+      "get": {
+        "operationId": "getEvmBalances",
+        "summary": "Token Balances",
+        "description": "Returns current token holdings for any wallet address.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "owner",
+            "in": "query",
+            "required": true,
+            "description": "Wallet address to get balances for",
+            "schema": { "type": "string" },
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Filter by token contract address",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BalancesResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/holders": {
+      "get": {
+        "operationId": "getEvmHolders",
+        "summary": "Token Holders",
+        "description": "Returns the list of holders for a specific token.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": true,
+            "description": "Token contract address",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HoldersResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/prices": {
+      "get": {
+        "operationId": "getEvmPrices",
+        "summary": "Token Prices",
+        "description": "Returns current USD prices for tokens.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "description": "Token contract address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PricesResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/ohlc": {
+      "get": {
+        "operationId": "getEvmOhlc",
+        "summary": "OHLC Price Data",
+        "description": "Returns OHLCV candlestick data for token prices.",
+        "tags": ["EVM Tokens"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": true,
+            "description": "Token contract address",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "description": "Time interval for candlesticks",
+            "schema": { "type": "string", "enum": ["1m", "5m", "15m", "1h", "4h", "1d", "1w"], "default": "1h" }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OhlcResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/v1/evm/pools": {
+      "get": {
+        "operationId": "getEvmPools",
+        "summary": "Liquidity Pools",
+        "description": "Returns DEX liquidity pool information including token pairs and trading fees.",
+        "tags": ["EVM DEXs"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "required": false,
+            "description": "Network ID",
+            "schema": {
+              "type": "string",
+              "default": "mainnet",
+              "enum": ["mainnet", "base", "arbitrum-one", "bsc", "polygon", "optimism", "avalanche", "unichain"]
+            }
+          },
+          {
+            "name": "pool",
+            "in": "query",
+            "required": false,
+            "description": "Pool address (supports batching with commas)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "token0",
+            "in": "query",
+            "required": false,
+            "description": "Token0 contract address",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "token1",
+            "in": "query",
+            "required": false,
+            "description": "Token1 contract address",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 1000 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PoolsResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Health Check",
+        "description": "Returns the health status of the API.",
+        "tags": ["System"],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Healthy",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "operationId": "getVersion",
+        "summary": "API Version",
+        "description": "Returns the current API version.",
+        "tags": ["System"],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Version Info",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VersionResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/networks": {
+      "get": {
+        "operationId": "getNetworks",
+        "summary": "Supported Networks",
+        "description": "Returns the list of supported blockchain networks.",
+        "tags": ["System"],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Networks List",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NetworksResponse" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Bearer token authentication. Get your API token at https://thegraph.market"
+      },
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key",
+        "description": "API Key authentication"
+      }
+    },
+    "schemas": {
+      "UsageInfo": {
+        "type": "object",
+        "properties": {
+          "balance_remaining": { "type": "number" },
+          "total_count": { "type": "integer" },
+          "elapsed_time_ms": { "type": "number" }
+        }
+      },
+      "PaginationInfo": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total_pages": { "type": "integer" }
+        }
+      },
+      "Transfer": {
+        "type": "object",
+        "required": ["block_num", "datetime", "timestamp", "transaction_id", "contract", "from", "to", "amount", "value", "network"],
+        "properties": {
+          "block_num": { "type": "integer", "description": "Block number" },
+          "datetime": { "type": "string", "description": "Human-readable datetime" },
+          "timestamp": { "type": "integer", "description": "Unix timestamp" },
+          "transaction_id": { "type": "string", "description": "Transaction hash" },
+          "contract": { "type": "string", "description": "Token contract address" },
+          "from": { "type": "string", "description": "Sender address" },
+          "to": { "type": "string", "description": "Recipient address" },
+          "name": { "type": "string", "nullable": true, "description": "Token name" },
+          "symbol": { "type": "string", "nullable": true, "description": "Token symbol" },
+          "decimals": { "type": "integer", "nullable": true, "description": "Token decimals" },
+          "amount": { "type": "string", "description": "Raw transfer amount" },
+          "value": { "type": "number", "description": "Human-readable transfer value" },
+          "network": { "type": "string", "description": "Network ID" }
+        }
+      },
+      "TransfersResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Transfer" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "TokenInfo": {
+        "type": "object",
+        "required": ["address", "symbol", "decimals"],
+        "properties": {
+          "address": { "type": "string" },
+          "symbol": { "type": "string" },
+          "decimals": { "type": "integer" }
+        }
+      },
+      "Swap": {
+        "type": "object",
+        "required": ["block_num", "datetime", "timestamp", "transaction_id", "pool", "input_token", "output_token", "caller", "sender", "recipient", "input_amount", "input_value", "output_amount", "output_value", "price", "protocol", "network"],
+        "properties": {
+          "block_num": { "type": "integer", "description": "Block number" },
+          "datetime": { "type": "string", "description": "Human-readable datetime" },
+          "timestamp": { "type": "integer", "description": "Unix timestamp" },
+          "transaction_id": { "type": "string", "description": "Transaction hash" },
+          "factory": { "type": "string", "description": "Factory contract address" },
+          "pool": { "type": "string", "description": "Pool contract address" },
+          "input_token": { "$ref": "#/components/schemas/TokenInfo" },
+          "output_token": { "$ref": "#/components/schemas/TokenInfo" },
+          "caller": { "type": "string", "description": "Caller address" },
+          "sender": { "type": "string", "description": "Sender address" },
+          "recipient": { "type": "string", "description": "Recipient address" },
+          "input_amount": { "type": "string", "description": "Raw input amount" },
+          "input_value": { "type": "number", "description": "Human-readable input value" },
+          "output_amount": { "type": "string", "description": "Raw output amount" },
+          "output_value": { "type": "number", "description": "Human-readable output value" },
+          "price": { "type": "number", "description": "Price ratio" },
+          "price_inv": { "type": "number", "description": "Inverse price ratio" },
+          "protocol": { "type": "string", "description": "DEX protocol (uniswap_v2, uniswap_v3)" },
+          "summary": { "type": "string", "description": "Human-readable swap summary" },
+          "network": { "type": "string", "description": "Network ID" }
+        }
+      },
+      "SwapsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Swap" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "required": ["contract", "name", "symbol", "decimals", "network"],
+        "properties": {
+          "contract": { "type": "string" },
+          "name": { "type": "string" },
+          "symbol": { "type": "string" },
+          "decimals": { "type": "integer" },
+          "total_supply": { "type": "string" },
+          "holders_count": { "type": "integer" },
+          "network": { "type": "string" }
+        }
+      },
+      "TokensResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Token" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "Balance": {
+        "type": "object",
+        "required": ["owner", "contract", "amount", "value", "network"],
+        "properties": {
+          "owner": { "type": "string" },
+          "contract": { "type": "string" },
+          "name": { "type": "string", "nullable": true },
+          "symbol": { "type": "string", "nullable": true },
+          "decimals": { "type": "integer", "nullable": true },
+          "amount": { "type": "string" },
+          "value": { "type": "number" },
+          "network": { "type": "string" }
+        }
+      },
+      "BalancesResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Balance" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "Holder": {
+        "type": "object",
+        "required": ["owner", "contract", "amount", "value", "network"],
+        "properties": {
+          "owner": { "type": "string" },
+          "contract": { "type": "string" },
+          "amount": { "type": "string" },
+          "value": { "type": "number" },
+          "network": { "type": "string" }
+        }
+      },
+      "HoldersResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Holder" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "required": ["contract", "price_usd", "network"],
+        "properties": {
+          "contract": { "type": "string" },
+          "symbol": { "type": "string", "nullable": true },
+          "name": { "type": "string", "nullable": true },
+          "price_usd": { "type": "number" },
+          "network": { "type": "string" }
+        }
+      },
+      "PricesResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Price" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "Ohlc": {
+        "type": "object",
+        "required": ["datetime", "timestamp", "open", "high", "low", "close", "volume"],
+        "properties": {
+          "datetime": { "type": "string" },
+          "timestamp": { "type": "integer" },
+          "open": { "type": "number" },
+          "high": { "type": "number" },
+          "low": { "type": "number" },
+          "close": { "type": "number" },
+          "volume": { "type": "number" }
+        }
+      },
+      "OhlcResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Ohlc" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" }
+        }
+      },
+      "Pool": {
+        "type": "object",
+        "required": ["pool", "factory", "token0", "token1", "fee", "protocol", "network"],
+        "properties": {
+          "pool": { "type": "string" },
+          "factory": { "type": "string" },
+          "token0": { "$ref": "#/components/schemas/TokenInfo" },
+          "token1": { "$ref": "#/components/schemas/TokenInfo" },
+          "fee": { "type": "integer" },
+          "protocol": { "type": "string" },
+          "network": { "type": "string" }
+        }
+      },
+      "PoolsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Pool" }
+          },
+          "usage": { "$ref": "#/components/schemas/UsageInfo" },
+          "pagination": { "$ref": "#/components/schemas/PaginationInfo" }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["healthy", "degraded", "unhealthy"] }
+        }
+      },
+      "VersionResponse": {
+        "type": "object",
+        "properties": {
+          "version": { "type": "string" },
+          "commit": { "type": "string" },
+          "date": { "type": "string" }
+        }
+      },
+      "NetworksResponse": {
+        "type": "object",
+        "properties": {
+          "evm": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "svm": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error", "code"],
+        "properties": {
+          "error": { "type": "string" },
+          "code": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing authentication",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "EVM Tokens",
+      "description": "ERC-20 and native token operations on EVM networks"
+    },
+    {
+      "name": "EVM DEXs",
+      "description": "Decentralized exchange operations on EVM networks"
+    },
+    {
+      "name": "System",
+      "description": "System health and configuration endpoints"
+    }
+  ]
+}
