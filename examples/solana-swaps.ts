@@ -13,9 +13,9 @@
 import { createPinaxClient } from "@pinax/sdk";
 
 async function main() {
-  // Initialize the low-level client with your API key
+  // Initialize the low-level client with your bearer token
   const client = createPinaxClient({
-    apiKey: process.env.PINAX_API_KEY,
+    bearerToken: process.env.PINAX_BEARER_TOKEN,
   });
 
   console.log("Fetching 100 most recent swaps on Solana...\n");
