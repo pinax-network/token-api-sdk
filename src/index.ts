@@ -171,8 +171,8 @@ class EvmTokens {
   /**
    * Get ERC-20 and native token transfers
    */
-  async getTransfers(params?: {
-    network?: EvmNetwork;
+  async getTransfers(params: {
+    network: EvmNetwork;
     transaction_id?: string;
     contract?: string;
     from_address?: string;
@@ -195,8 +195,8 @@ class EvmTokens {
   /**
    * Get token metadata
    */
-  async getTokens(params?: {
-    network?: EvmNetwork;
+  async getTokens(params: {
+    network: EvmNetwork;
     contract?: string;
     symbol?: string;
     page?: number;
@@ -213,8 +213,8 @@ class EvmTokens {
    * Get token balances for a wallet address
    */
   async getBalances(params: {
+    network: EvmNetwork;
     owner: string;
-    network?: EvmNetwork;
     contract?: string;
     page?: number;
     limit?: number;
@@ -230,8 +230,8 @@ class EvmTokens {
    * Get token holders
    */
   async getHolders(params: {
+    network: EvmNetwork;
     contract: string;
-    network?: EvmNetwork;
     page?: number;
     limit?: number;
   }) {
@@ -245,8 +245,8 @@ class EvmTokens {
   /**
    * Get current token prices in USD
    */
-  async getPrices(params?: {
-    network?: EvmNetwork;
+  async getPrices(params: {
+    network: EvmNetwork;
     contract?: string;
     page?: number;
     limit?: number;
@@ -262,8 +262,8 @@ class EvmTokens {
    * Get OHLCV candlestick data
    */
   async getOhlc(params: {
+    network: EvmNetwork;
     contract: string;
-    network?: EvmNetwork;
     interval?: OhlcInterval;
     start_time?: string;
     end_time?: string;
@@ -286,8 +286,8 @@ class EvmDexs {
   /**
    * Get DEX swap transactions
    */
-  async getSwaps(params?: {
-    network?: EvmNetwork;
+  async getSwaps(params: {
+    network: EvmNetwork;
     transaction_id?: string;
     pool?: string;
     caller?: string;
@@ -312,8 +312,8 @@ class EvmDexs {
   /**
    * Get DEX liquidity pools
    */
-  async getPools(params?: {
-    network?: EvmNetwork;
+  async getPools(params: {
+    network: EvmNetwork;
     pool?: string;
     token0?: string;
     token1?: string;

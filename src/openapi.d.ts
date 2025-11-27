@@ -164,6 +164,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/svm/swaps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Swap Events
+         * @description Returns DEX swap transactions from Solana DEXs with token amounts and prices.
+         */
+        get: operations["getSvmSwaps"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Token Transfers
+         * @description Returns SPL and native token transfers with transaction and block data.
+         */
+        get: operations["getSvmTransfers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tvm/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Token Transfers
+         * @description Returns TRC-20 and native token transfers with transaction and block data.
+         */
+        get: operations["getTvmTransfers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -458,9 +518,9 @@ export type $defs = Record<string, never>;
 export interface operations {
     getEvmTransfers: {
         parameters: {
-            query?: {
+            query: {
                 /** @description Network ID (e.g., mainnet, base, arbitrum-one) */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /**
                  * @description Filter by transaction hash (supports batching with commas)
                  * @example 0x96b1b180d22dae2b18a783ebdd5ae33f6867f3572f87c69a135c6c0a15a63c8e
@@ -515,9 +575,9 @@ export interface operations {
     };
     getEvmSwaps: {
         parameters: {
-            query?: {
+            query: {
                 /** @description Network ID (e.g., mainnet, base, arbitrum-one) */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /**
                  * @description Filter by transaction hash (supports batching with commas)
                  * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
@@ -573,9 +633,9 @@ export interface operations {
     };
     getEvmTokens: {
         parameters: {
-            query?: {
+            query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /** @description Token contract address (supports batching with commas) */
                 contract?: string;
                 /** @description Token symbol (e.g., ETH, USDC) */
@@ -607,7 +667,7 @@ export interface operations {
         parameters: {
             query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /**
                  * @description Wallet address to get balances for
                  * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
@@ -642,7 +702,7 @@ export interface operations {
         parameters: {
             query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /** @description Token contract address */
                 contract: string;
                 page?: number;
@@ -670,9 +730,9 @@ export interface operations {
     };
     getEvmPrices: {
         parameters: {
-            query?: {
+            query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /** @description Token contract address (supports batching with commas) */
                 contract?: string;
                 page?: number;
@@ -702,7 +762,7 @@ export interface operations {
         parameters: {
             query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /** @description Token contract address */
                 contract: string;
                 /** @description Time interval for candlesticks */
@@ -733,9 +793,9 @@ export interface operations {
     };
     getEvmPools: {
         parameters: {
-            query?: {
+            query: {
                 /** @description Network ID */
-                network?: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
+                network: "mainnet" | "base" | "arbitrum-one" | "bsc" | "polygon" | "optimism" | "avalanche" | "unichain";
                 /** @description Pool address (supports batching with commas) */
                 pool?: string;
                 /** @description Token0 contract address */
@@ -758,6 +818,152 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PoolsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalError"];
+        };
+    };
+    getSvmSwaps: {
+        parameters: {
+            query: {
+                /** @description Network ID */
+                network: "solana";
+                /** @description Filter by transaction signature (supports batching with commas) */
+                transaction_id?: string;
+                /** @description Filter by pool address (supports batching with commas) */
+                pool?: string;
+                /** @description Filter by caller address (supports batching with commas) */
+                caller?: string;
+                /** @description Filter by sender address (supports batching with commas) */
+                sender?: string;
+                /** @description Filter by recipient address (supports batching with commas) */
+                recipient?: string;
+                /** @description Filter by start timestamp (ISO 8601 or Unix timestamp) */
+                start_time?: string;
+                /** @description Filter by end timestamp (ISO 8601 or Unix timestamp) */
+                end_time?: string;
+                /** @description Filter by start slot number */
+                start_block?: number;
+                /** @description Filter by end slot number */
+                end_block?: number;
+                /** @description Page number for pagination */
+                page?: number;
+                /** @description Number of results per page */
+                limit?: number;
+                /** @description Sort order (ASC or DESC by timestamp) */
+                order?: "ASC" | "DESC";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SwapsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalError"];
+        };
+    };
+    getSvmTransfers: {
+        parameters: {
+            query: {
+                /** @description Network ID */
+                network: "solana";
+                /** @description Filter by transaction signature (supports batching with commas) */
+                transaction_id?: string;
+                /** @description Filter by token mint address (supports batching with commas) */
+                contract?: string;
+                /** @description Filter by sender address (supports batching with commas) */
+                from_address?: string;
+                /** @description Filter by recipient address (supports batching with commas) */
+                to_address?: string;
+                /** @description Filter by start timestamp (ISO 8601 or Unix timestamp) */
+                start_time?: string;
+                /** @description Filter by end timestamp (ISO 8601 or Unix timestamp) */
+                end_time?: string;
+                /** @description Filter by start slot number */
+                start_block?: number;
+                /** @description Filter by end slot number */
+                end_block?: number;
+                /** @description Page number for pagination */
+                page?: number;
+                /** @description Number of results per page */
+                limit?: number;
+                /** @description Sort order (ASC or DESC by timestamp) */
+                order?: "ASC" | "DESC";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransfersResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalError"];
+        };
+    };
+    getTvmTransfers: {
+        parameters: {
+            query: {
+                /** @description Network ID */
+                network: "tron";
+                /** @description Filter by transaction hash (supports batching with commas) */
+                transaction_id?: string;
+                /** @description Filter by token contract address (supports batching with commas) */
+                contract?: string;
+                /** @description Filter by sender address (supports batching with commas) */
+                from_address?: string;
+                /** @description Filter by recipient address (supports batching with commas) */
+                to_address?: string;
+                /** @description Filter by start timestamp (ISO 8601 or Unix timestamp) */
+                start_time?: string;
+                /** @description Filter by end timestamp (ISO 8601 or Unix timestamp) */
+                end_time?: string;
+                /** @description Filter by start block number */
+                start_block?: number;
+                /** @description Filter by end block number */
+                end_block?: number;
+                /** @description Page number for pagination */
+                page?: number;
+                /** @description Number of results per page */
+                limit?: number;
+                /** @description Sort order (ASC or DESC by timestamp) */
+                order?: "ASC" | "DESC";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransfersResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
