@@ -23,8 +23,6 @@ export type Swap = components["schemas"]["Swap"];
 export type Token = components["schemas"]["Token"];
 export type Balance = components["schemas"]["Balance"];
 export type Holder = components["schemas"]["Holder"];
-export type Price = components["schemas"]["Price"];
-export type Ohlc = components["schemas"]["Ohlc"];
 export type Pool = components["schemas"]["Pool"];
 export type TokenInfo = components["schemas"]["TokenInfo"];
 export type UsageInfo = components["schemas"]["UsageInfo"];
@@ -36,8 +34,6 @@ export type SwapsResponse = components["schemas"]["SwapsResponse"];
 export type TokensResponse = components["schemas"]["TokensResponse"];
 export type BalancesResponse = components["schemas"]["BalancesResponse"];
 export type HoldersResponse = components["schemas"]["HoldersResponse"];
-export type PricesResponse = components["schemas"]["PricesResponse"];
-export type OhlcResponse = components["schemas"]["OhlcResponse"];
 export type PoolsResponse = components["schemas"]["PoolsResponse"];
 
 // Network types
@@ -56,8 +52,6 @@ export type SvmNetwork = "solana";
 export type TvmNetwork = "tron";
 
 export type DexProtocol = "uniswap_v2" | "uniswap_v3";
-
-export type OhlcInterval = "1m" | "5m" | "15m" | "1h" | "4h" | "1d" | "1w";
 
 /**
  * Configuration options for the Pinax SDK client
@@ -197,8 +191,7 @@ class EvmTokens {
    */
   async getTokens(params: {
     network: EvmNetwork;
-    contract?: string;
-    symbol?: string;
+    contract: string;
     page?: number;
     limit?: number;
   }) {
@@ -214,8 +207,9 @@ class EvmTokens {
    */
   async getBalances(params: {
     network: EvmNetwork;
-    owner: string;
-    contract?: string;
+    address: string | string[];
+    contract?: string | string[];
+    include_null_balances?: boolean;
     page?: number;
     limit?: number;
   }) {
@@ -242,39 +236,7 @@ class EvmTokens {
     return handleResponse(data, error);
   }
 
-  /**
-   * Get current token prices in USD
-   */
-  async getPrices(params: {
-    network: EvmNetwork;
-    contract?: string;
-    page?: number;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/prices", {
-      params: { query: params },
-    });
 
-    return handleResponse(data, error);
-  }
-
-  /**
-   * Get OHLCV candlestick data
-   */
-  async getOhlc(params: {
-    network: EvmNetwork;
-    contract: string;
-    interval?: OhlcInterval;
-    start_time?: string;
-    end_time?: string;
-    limit?: number;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/ohlc", {
-      params: { query: params },
-    });
-
-    return handleResponse(data, error);
-  }
 }
 
 /**
@@ -543,7 +505,7 @@ export class PinaxSDK {
    * Check API health status
    */
   async getHealth() {
-    const { data, error } = await this.client.GET("/health");
+    const { data, error } = await this.client.GET("/v1/health", {});
 
     return handleResponse(data, error);
   }
@@ -552,7 +514,7 @@ export class PinaxSDK {
    * Get API version information
    */
   async getVersion() {
-    const { data, error } = await this.client.GET("/version");
+    const { data, error } = await this.client.GET("/v1/version", {});
 
     return handleResponse(data, error);
   }
@@ -561,7 +523,7 @@ export class PinaxSDK {
    * Get list of supported networks
    */
   async getNetworks() {
-    const { data, error } = await this.client.GET("/networks");
+    const { data, error } = await this.client.GET("/v1/networks", {});
 
     return handleResponse(data, error);
   }
