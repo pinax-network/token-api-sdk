@@ -118,7 +118,7 @@ Retrieve ERC-20 and native token transfers for a specific address:
 ```typescript
 import { PinaxSDK } from "@pinax/token-api";
 
-// Uses PINAX_API_KEY from .env automatically
+// Uses PINAX_BEARER_TOKEN from .env automatically
 const sdk = new PinaxSDK();
 
 // Get transfers to Vitalik's address
