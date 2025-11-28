@@ -6,10 +6,6 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "bin": {
-    "@pinax/token-api": "./dist/bin/cli.js",
-    "token-api": "./dist/bin/cli.js"
-  },
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -18,17 +14,15 @@
   },
   "files": [
     "dist",
-    "src",
-    "bin"
+    "src"
   ],
   "scripts": {
     "prepublishOnly": "bun run build",
-    "generate": "openapi-typescript openapi.json -o src/openapi.d.ts",
-    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun build bin/cli.ts --outdir dist/bin --target node && bun run build:types",
+    "generate": "openapi-typescript https://token-api.thegraph.com/openapi -o src/openapi.d.ts",
+    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "cli": "bun run ./bin/cli.ts",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write ."
@@ -53,8 +47,6 @@
     "@biomejs/biome": "^2.3.6"
   },
   "dependencies": {
-    "commander": "^14.0.2",
-    "dotenv": "^17.2.3",
     "openapi-fetch": "^0.13.0"
   }
 }

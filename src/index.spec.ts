@@ -7,17 +7,16 @@
 import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
 import {
   TokenAPI,
-  TokenClient,
-  createTokenClient,
+  createAPIClient,
   DEFAULT_BASE_URL,
   EVMChains,
   SVMChains,
   TVMChains,
-} from '../src/index';
+} from './index';
 
-describe('createTokenClient', () => {
+describe('createAPIClient', () => {
   it('should create a client with default base URL', () => {
-    const client = createTokenClient();
+    const client = createAPIClient();
     expect(client).toBeDefined();
     expect(typeof client.GET).toBe('function');
     expect(typeof client.POST).toBe('function');
@@ -25,12 +24,12 @@ describe('createTokenClient', () => {
 
   it('should create a client with custom base URL', () => {
     const customUrl = 'https://custom-api.example.com';
-    const client = createTokenClient({ baseUrl: customUrl });
+    const client = createAPIClient({ baseUrl: customUrl });
     expect(client).toBeDefined();
   });
 
   it('should create a client with API token', () => {
-    const client = createTokenClient({ apiToken: 'test-token' });
+    const client = createAPIClient({ apiToken: 'test-token' });
     expect(client).toBeDefined();
   });
 });
@@ -463,19 +462,5 @@ describe('Error handling', () => {
     await expect(
       client.evm.tokens.getTransfers({ network: 'mainnet' }),
     ).rejects.toThrow('API Error: No data returned');
-  });
-});
-
-describe('TokenClient backward compatibility', () => {
-  it('should export TokenClient as an alias for TokenAPI', () => {
-    expect(TokenClient).toBe(TokenAPI);
-  });
-
-  it('should create instance using TokenClient alias', () => {
-    const client = new TokenClient();
-    expect(client).toBeInstanceOf(TokenAPI);
-    expect(client.evm).toBeDefined();
-    expect(client.svm).toBeDefined();
-    expect(client.tvm).toBeDefined();
   });
 });
