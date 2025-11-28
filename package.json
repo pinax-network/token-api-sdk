@@ -47,14 +47,15 @@
     "url": "git+https://github.com/pinax-network/token-api-sdk.git"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.6",
     "@types/bun": "latest",
     "openapi-typescript": "^7.0.0",
-    "typescript": "^5",
-    "@biomejs/biome": "^2.3.6"
+    "typescript": "^5"
   },
   "dependencies": {
     "commander": "^14.0.2",
     "dotenv": "^17.2.3",
-    "openapi-fetch": "^0.13.0"
+    "openapi-fetch": "^0.13.0",
+    "p-queue": "^9.0.1"
   }
 }
