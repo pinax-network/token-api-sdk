@@ -74,7 +74,7 @@ The SDK automatically loads environment variables from `.env` files using [doten
 Create a `.env` file in your project root:
 
 ```env
-GRAPH_API_TOKEN=your-token
+TOKENAPI_KEY=your-token
 ```
 
 **Option 2: Direct configuration**
@@ -91,7 +91,7 @@ const client = new TokenAPI({
 
 | Variable | Description |
 |----------|-------------|
-| `GRAPH_API_TOKEN` | API Token (Authentication JWT) |
+| `TOKENAPI_KEY` | API Token (Authentication JWT) |
 | `TOKEN_API_BASE_URL` | Custom base URL for the Token API |
 
 ### Basic Usage
@@ -99,7 +99,7 @@ const client = new TokenAPI({
 ```typescript
 import { TokenAPI, EVMChains } from "@pinax/token-api";
 
-// Initialize the client (uses GRAPH_API_TOKEN from .env automatically)
+// Initialize the client (uses TOKENAPI_KEY from .env automatically)
 const client = new TokenAPI();
 
 // Get EVM token transfers using chain constants
@@ -178,7 +178,7 @@ Retrieve ERC-20 and native token transfers for a specific address:
 ```typescript
 import { TokenAPI, EVMChains } from "@pinax/token-api";
 
-// Uses GRAPH_API_TOKEN from .env automatically
+// Uses TOKENAPI_KEY from .env automatically
 const client = new TokenAPI();
 
 // Get transfers to Vitalik's address
@@ -274,7 +274,7 @@ docker build -t token-api .
 
 # Run service
 docker run \
-  -e GRAPH_API_TOKEN=<your-api-token-jwt> \
+  -e TOKENAPI_KEY=<your-api-token-jwt> \
   token-api evm tokens transfer --from 0x1234...abcd --network mainnet --limit 5
 ```
 
