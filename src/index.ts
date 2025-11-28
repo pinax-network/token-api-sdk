@@ -7,7 +7,6 @@
  * @license Apache-2.0
  */
 
-import 'dotenv/config';
 import createClient, { type Middleware } from 'openapi-fetch';
 import type { paths, components } from './openapi.d.ts';
 
@@ -129,23 +128,19 @@ export const TVMChains = {
 
 /**
  * Configuration options for the Pinax SDK client
- *
- * Environment variables are automatically loaded from `.env` files via dotenv.
- * Options can be set via environment variables:
- * - `TOKENAPI_KEY` - Bearer token for authentication
- * - `TOKEN_API_BASE_URL` - Custom base URL for the API
  */
 export interface PinaxClientOptions {
   /**
-   * Bearer token for authentication
+   * Bearer token for authentication.
    * Get your API token at https://thegraph.market
-   * Falls back to `TOKENAPI_KEY` environment variable
+   *
+   * Required for most API endpoints. Some monitoring endpoints
+   * like health, version, and networks may work without authentication.
    */
   apiToken?: string;
 
   /**
    * Base URL for the API (defaults to production)
-   * Falls back to `TOKEN_API_BASE_URL` environment variable
    */
   baseUrl?: string;
 
@@ -159,7 +154,7 @@ export interface PinaxClientOptions {
  * Create a middleware that adds authentication headers and referrer
  */
 function createAuthMiddleware(options: PinaxClientOptions): Middleware {
-  const apiToken = options.apiToken ?? process.env.TOKENAPI_KEY;
+  const apiToken = options.apiToken;
 
   return {
     async onRequest({ request }) {
@@ -174,11 +169,6 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
 
 /**
  * Create a Pinax Token API client for accessing the Token API
- *
- * Environment variables are automatically loaded from `.env` files.
- * Supported environment variables:
- * - `TOKENAPI_KEY` - API Token (Authentication JWT)
- * - `TOKEN_API_BASE_URL` - Custom base URL for the Token API
  *
  * @example
  * ```typescript
@@ -205,8 +195,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * ```
  */
 export function createTokenClient(options: PinaxClientOptions = {}) {
-  const baseUrl =
-    options.baseUrl ?? process.env.TOKEN_API_BASE_URL ?? DEFAULT_BASE_URL;
+  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
     baseUrl,
