@@ -6,6 +6,10 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "bin": {
+    "@pinax/token-api": "./dist/cli.js",
+    "token-api": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -19,10 +23,11 @@
   "scripts": {
     "prepublishOnly": "bun run build",
     "generate": "openapi-typescript openapi.json -o src/openapi.d.ts",
-    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
+    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun build src/cli.ts --outdir dist --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
+    "cli": "bun run ./src/cli.ts",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write ."
@@ -47,6 +52,7 @@
     "@biomejs/biome": "^2.3.6"
   },
   "dependencies": {
+    "commander": "^14.0.2",
     "dotenv": "^17.2.3",
     "openapi-fetch": "^0.13.0"
   }
