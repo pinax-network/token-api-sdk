@@ -109,6 +109,64 @@ const transfers = await client.evm.tokens.getTransfers({
 console.log(transfers.data);
 ```
 
+## CLI Usage
+
+The SDK includes a command-line interface for quick access to the Token API.
+
+### Installation
+
+After installing the package globally, you can use the CLI directly:
+
+```bash
+npm install -g @pinax/token-api
+```
+
+### Commands
+
+```bash
+# EVM token transfers
+token-api evm tokens transfers --network mainnet --from 0x123... --limit 10
+
+# EVM token balances
+token-api evm tokens balances --network mainnet --address 0x123...
+
+# EVM DEX swaps
+token-api evm dexs swaps --network mainnet --limit 10
+
+# SVM (Solana) token transfers
+token-api svm tokens transfers --network solana --limit 10
+
+# TVM (Tron) token transfers
+token-api tvm tokens transfers --network tron --limit 10
+
+# Monitoring commands
+token-api monitoring health
+token-api monitoring version
+token-api monitoring networks
+```
+
+### Development Usage
+
+When running from the repository using `npm run cli`, use `--` to separate npm arguments from CLI options:
+
+```bash
+# Correct usage with npm run
+npm run cli -- evm tokens transfers --network mainnet --limit 10
+npm run cli -- svm tokens transfers --network solana --limit 10
+npm run cli -- monitoring health
+```
+
+### Help
+
+View all available commands and options:
+
+```bash
+token-api --help
+token-api evm --help
+token-api evm tokens --help
+token-api evm tokens transfers --help
+```
+
 ## Examples
 
 ### Get EVM Transfers
