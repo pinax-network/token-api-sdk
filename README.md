@@ -1,4 +1,4 @@
-# Token API Client `@pinax/token-api`
+# Token API `@pinax/token-api`
 
 > Power your apps & AI agents with real-time token data.
 
@@ -80,7 +80,7 @@ GRAPH_API_TOKEN=your-token
 Pass the bearer token directly to the SDK:
 
 ```typescript
-const client = new TokenClient({
+const client = new TokenAPI({
   apiToken: "your-token",
 });
 ```
@@ -95,10 +95,10 @@ const client = new TokenClient({
 ### Basic Usage
 
 ```typescript
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
 // Initialize the client (uses GRAPH_API_TOKEN from .env automatically)
-const client = new TokenClient();
+const client = new TokenAPI();
 
 // Get EVM token transfers
 const transfers = await client.evm.tokens.getTransfers({
@@ -116,10 +116,10 @@ console.log(transfers.data);
 Retrieve ERC-20 and native token transfers for a specific address:
 
 ```typescript
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
 // Uses GRAPH_API_TOKEN from .env automatically
-const client = new TokenClient();
+const client = new TokenAPI();
 
 // Get transfers to Vitalik's address
 const transfers = await client.evm.tokens.getTransfers({
@@ -144,9 +144,9 @@ for (const transfer of transfers.data ?? []) {
 Retrieve DEX swap events from Uniswap and other protocols:
 
 ```typescript
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
-const client = new TokenClient();
+const client = new TokenAPI();
 
 // Get swaps from the USDC/WETH pool
 const swaps = await client.evm.dexs.getSwaps({
@@ -170,9 +170,9 @@ for (const swap of swaps.data ?? []) {
 ### Get Token Balances
 
 ```typescript
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
-const client = new TokenClient();
+const client = new TokenAPI();
 
 // Get token balances for a wallet
 const balances = await client.evm.tokens.getBalances({

@@ -9,14 +9,14 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
 // USDT/ETH Uniswap V3 Pool Contract Address
 const USDT_ETH_POOL = "0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36";
 
 async function main() {
   // Initialize the client with your bearer token
-  const client = new TokenClient({
+  const client = new TokenAPI({
     apiToken: process.env.GRAPH_API_TOKEN,
   });
 
