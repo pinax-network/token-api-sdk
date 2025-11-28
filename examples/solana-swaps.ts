@@ -11,7 +11,7 @@ import { TokenAPI } from '@pinax/token-api';
 async function main() {
   // Initialize the client with your bearer token
   const client = new TokenAPI({
-    apiToken: process.env.GRAPH_API_TOKEN,
+    apiToken: process.env.TOKENAPI_KEY,
   });
 
   console.log('Fetching 100 most recent swaps on Solana...\n');

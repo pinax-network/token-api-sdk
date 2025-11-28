@@ -15,7 +15,7 @@ const TRON_USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
 async function main() {
   // Initialize the client with your bearer token
   const client = new TokenAPI({
-    apiToken: process.env.GRAPH_API_TOKEN,
+    apiToken: process.env.TOKENAPI_KEY,
   });
 
   console.log('Fetching USDT transfers on Tron network...\n');

@@ -132,14 +132,14 @@ export const TVMChains = {
  *
  * Environment variables are automatically loaded from `.env` files via dotenv.
  * Options can be set via environment variables:
- * - `GRAPH_API_TOKEN` - Bearer token for authentication
+ * - `TOKENAPI_KEY` - Bearer token for authentication
  * - `TOKEN_API_BASE_URL` - Custom base URL for the API
  */
 export interface PinaxClientOptions {
   /**
    * Bearer token for authentication
    * Get your API token at https://thegraph.market
-   * Falls back to `GRAPH_API_TOKEN` environment variable
+   * Falls back to `TOKENAPI_KEY` environment variable
    */
   apiToken?: string;
 
@@ -159,7 +159,7 @@ export interface PinaxClientOptions {
  * Create a middleware that adds authentication headers and referrer
  */
 function createAuthMiddleware(options: PinaxClientOptions): Middleware {
-  const apiToken = options.apiToken ?? process.env.GRAPH_API_TOKEN;
+  const apiToken = options.apiToken ?? process.env.TOKENAPI_KEY;
 
   return {
     async onRequest({ request }) {
@@ -177,7 +177,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  *
  * Environment variables are automatically loaded from `.env` files.
  * Supported environment variables:
- * - `GRAPH_API_TOKEN` - API Token (Authentication JWT)
+ * - `TOKENAPI_KEY` - API Token (Authentication JWT)
  * - `TOKEN_API_BASE_URL` - Custom base URL for the Token API
  *
  * @example
