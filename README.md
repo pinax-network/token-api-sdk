@@ -18,30 +18,32 @@ The `@pinax/token-api` provides a type-safe TypeScript client for [The Graph's T
 
 ### Supported Networks
 
+The SDK provides typed chain constants for type-safe network selection:
+
 #### EVM Networks
 
-| Network | ID |
-|---------|-----|
-| Ethereum Mainnet | `mainnet` |
-| Base | `base` |
-| Arbitrum One | `arbitrum-one` |
-| BNB Smart Chain | `bsc` |
-| Polygon | `polygon` |
-| Optimism | `optimism` |
-| Avalanche | `avalanche` |
-| Unichain | `unichain` |
+| Network | ID | Constant |
+|---------|-----|----------|
+| Ethereum Mainnet | `mainnet` | `EVMChains.Ethereum` |
+| Base | `base` | `EVMChains.Base` |
+| Arbitrum One | `arbitrum-one` | `EVMChains.ArbitrumOne` |
+| BNB Smart Chain | `bsc` | `EVMChains.BSC` |
+| Polygon | `polygon` | `EVMChains.Polygon` |
+| Optimism | `optimism` | `EVMChains.Optimism` |
+| Avalanche | `avalanche` | `EVMChains.Avalanche` |
+| Unichain | `unichain` | `EVMChains.Unichain` |
 
 #### SVM Networks
 
-| Network | ID |
-|---------|-----|
-| Solana | `solana` |
+| Network | ID | Constant |
+|---------|-----|----------|
+| Solana | `solana` | `SVMChains.Solana` |
 
 #### TVM Networks
 
-| Network | ID |
-|---------|-----|
-| Tron | `tron` |
+| Network | ID | Constant |
+|---------|-----|----------|
+| Tron | `tron` | `TVMChains.Tron` |
 
 ## Quick Start
 
@@ -95,14 +97,14 @@ const client = new TokenAPI({
 ### Basic Usage
 
 ```typescript
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI, EVMChains } from "@pinax/token-api";
 
 // Initialize the client (uses GRAPH_API_TOKEN from .env automatically)
 const client = new TokenAPI();
 
-// Get EVM token transfers
+// Get EVM token transfers using chain constants
 const transfers = await client.evm.tokens.getTransfers({
-  network: "mainnet",
+  network: EVMChains.Ethereum,
   limit: 10,
 });
 
@@ -174,14 +176,14 @@ token-api evm tokens transfers --help
 Retrieve ERC-20 and native token transfers for a specific address:
 
 ```typescript
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI, EVMChains } from "@pinax/token-api";
 
 // Uses GRAPH_API_TOKEN from .env automatically
 const client = new TokenAPI();
 
 // Get transfers to Vitalik's address
 const transfers = await client.evm.tokens.getTransfers({
-  network: "mainnet",
+  network: EVMChains.Ethereum,
   to_address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", // Vitalik's address
   limit: 10,
 });
@@ -202,13 +204,13 @@ for (const transfer of transfers.data ?? []) {
 Retrieve DEX swap events from Uniswap and other protocols:
 
 ```typescript
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI, EVMChains } from "@pinax/token-api";
 
 const client = new TokenAPI();
 
 // Get swaps from the USDC/WETH pool
 const swaps = await client.evm.dexs.getSwaps({
-  network: "mainnet",
+  network: EVMChains.Ethereum,
   pool: "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640", // Uniswap V3 USDC/WETH pool
   limit: 10,
 });
@@ -228,14 +230,14 @@ for (const swap of swaps.data ?? []) {
 ### Get Token Balances
 
 ```typescript
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI, EVMChains } from "@pinax/token-api";
 
 const client = new TokenAPI();
 
 // Get token balances for a wallet
 const balances = await client.evm.tokens.getBalances({
-  network: "mainnet",
-  owner: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", // Vitalik's address
+  network: EVMChains.Ethereum,
+  address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", // Vitalik's address
 });
 
 for (const balance of balances.data ?? []) {

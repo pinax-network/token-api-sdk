@@ -10,6 +10,9 @@ import {
   TokenClient,
   createTokenClient,
   DEFAULT_BASE_URL,
+  EVMChains,
+  SVMChains,
+  TVMChains,
 } from '../src/index';
 
 describe('createTokenClient', () => {
@@ -175,6 +178,47 @@ describe('Constants', () => {
   it('should export DEFAULT_BASE_URL', () => {
     expect(DEFAULT_BASE_URL).toBe('https://token-api.thegraph.com');
   });
+
+  describe('EVMChains', () => {
+    it('should export EVMChains constant', () => {
+      expect(EVMChains).toBeDefined();
+    });
+
+    it('should have Ethereum aliased to mainnet', () => {
+      expect(EVMChains.Ethereum).toBe('mainnet');
+    });
+
+    it('should have all EVM chain values', () => {
+      expect(EVMChains.Ethereum).toBe('mainnet');
+      expect(EVMChains.Base).toBe('base');
+      expect(EVMChains.ArbitrumOne).toBe('arbitrum-one');
+      expect(EVMChains.BSC).toBe('bsc');
+      expect(EVMChains.Polygon).toBe('polygon');
+      expect(EVMChains.Optimism).toBe('optimism');
+      expect(EVMChains.Avalanche).toBe('avalanche');
+      expect(EVMChains.Unichain).toBe('unichain');
+    });
+  });
+
+  describe('SVMChains', () => {
+    it('should export SVMChains constant', () => {
+      expect(SVMChains).toBeDefined();
+    });
+
+    it('should have Solana chain value', () => {
+      expect(SVMChains.Solana).toBe('solana');
+    });
+  });
+
+  describe('TVMChains', () => {
+    it('should export TVMChains constant', () => {
+      expect(TVMChains).toBeDefined();
+    });
+
+    it('should have Tron chain value', () => {
+      expect(TVMChains.Tron).toBe('tron');
+    });
+  });
 });
 
 describe('API methods with mocked fetch', () => {
@@ -253,6 +297,45 @@ describe('API methods with mocked fetch', () => {
 
     await client.tvm.tokens.getTransfers({
       network: 'tron',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/transfers');
+    expect(capturedRequest!.url).toContain('network=tron');
+  });
+
+  it('should work with EVMChains.Ethereum constant', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getTransfers({
+      network: EVMChains.Ethereum,
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/transfers');
+    expect(capturedRequest!.url).toContain('network=mainnet');
+  });
+
+  it('should work with SVMChains.Solana constant', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getTransfers({
+      network: SVMChains.Solana,
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/transfers');
+    expect(capturedRequest!.url).toContain('network=solana');
+  });
+
+  it('should work with TVMChains.Tron constant', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.tokens.getTransfers({
+      network: TVMChains.Tron,
       limit: 10,
     });
 
