@@ -20,87 +20,36 @@ The `@pinax/token-api` provides a type-safe TypeScript client for [The Graph's T
 
 The SDK provides typed chain constants for type-safe network selection:
 
-#### EVM Networks
-
-| Network | ID | Constant |
-|---------|-----|----------|
-| Ethereum Mainnet | `mainnet` | `EVMChains.Ethereum` |
-| Base | `base` | `EVMChains.Base` |
-| Arbitrum One | `arbitrum-one` | `EVMChains.ArbitrumOne` |
-| BNB Smart Chain | `bsc` | `EVMChains.BSC` |
-| Polygon | `polygon` | `EVMChains.Polygon` |
-| Optimism | `optimism` | `EVMChains.Optimism` |
-| Avalanche | `avalanche` | `EVMChains.Avalanche` |
-| Unichain | `unichain` | `EVMChains.Unichain` |
-
-#### SVM Networks
-
-| Network | ID | Constant |
-|---------|-----|----------|
-| Solana | `solana` | `SVMChains.Solana` |
-
-#### TVM Networks
-
-| Network | ID | Constant |
-|---------|-----|----------|
-| Tron | `tron` | `TVMChains.Tron` |
+- **EVM Chains**: Ethereum, ArbitrumOne, Unichain, Base, Optimism, Polygon, BNB Chain & Avalanche.
+- **Solana**: Mainnet.
+- **Tron**: Mainnet.
 
 ## Quick Start
 
 ### Installation
 
 ```bash
-# Using Bun (recommended)
-bun add @pinax/token-api
-
-# Using npm
 npm install @pinax/token-api
-
-# Using yarn
-yarn add @pinax/token-api
-
-# Using pnpm
-pnpm add @pinax/token-api
 ```
 
 ### Authentication
 
 Get your API key from [The Graph Market](https://thegraph.market).
 
-The SDK automatically loads environment variables from `.env` files using [dotenv](https://github.com/motdotla/dotenv). You can configure authentication via:
-
-**Option 1: Environment variables (recommended)**
-
-Create a `.env` file in your project root:
-
-```env
-TOKENAPI_KEY=your-token
-```
-
-**Option 2: Direct configuration**
-
-Pass the bearer token directly to the SDK:
-
 ```typescript
 const client = new TokenAPI({
-  apiToken: "your-token",
+  apiToken: "YOUR_API_KEY_HERE" // or set TOKENAPI_KEY in your environment
 });
 ```
-
-**Supported environment variables:**
-
-| Variable | Description |
-|----------|-------------|
-| `TOKENAPI_KEY` | API Token (Authentication JWT) |
-| `TOKEN_API_BASE_URL` | Custom base URL for the Token API |
 
 ### Basic Usage
 
 ```typescript
 import { TokenAPI, EVMChains } from "@pinax/token-api";
 
-// Initialize the client (uses TOKENAPI_KEY from .env automatically)
-const client = new TokenAPI();
+const client = new TokenAPI({
+  apiToken: "YOUR_API_KEY_HERE"
+});
 
 // Get EVM token transfers using chain constants
 const transfers = await client.evm.tokens.getTransfers({
@@ -111,64 +60,6 @@ const transfers = await client.evm.tokens.getTransfers({
 console.log(transfers.data);
 ```
 
-## CLI Usage
-
-The SDK includes a command-line interface for quick access to the Token API.
-
-### Installation
-
-After installing the package globally, you can use the CLI directly:
-
-```bash
-npm install -g @pinax/token-api
-```
-
-### Commands
-
-```bash
-# EVM token transfers
-token-api evm tokens transfers --network mainnet --from 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 --limit 10
-
-# EVM token balances
-token-api evm tokens balances --network mainnet --address 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
-
-# EVM DEX swaps
-token-api evm dexs swaps --network mainnet --limit 10
-
-# SVM (Solana) token transfers
-token-api svm tokens transfers --network solana --limit 10
-
-# TVM (Tron) token transfers
-token-api tvm tokens transfers --network tron --limit 10
-
-# Monitoring commands
-token-api monitoring health
-token-api monitoring version
-token-api monitoring networks
-```
-
-### Development Usage
-
-When running from the repository using `npm run cli`, use `--` to separate npm arguments from CLI options:
-
-```bash
-# Correct usage with npm run
-npm run cli -- evm tokens transfers --network mainnet --limit 10
-npm run cli -- svm tokens transfers --network solana --limit 10
-npm run cli -- monitoring health
-```
-
-### Help
-
-View all available commands and options:
-
-```bash
-token-api --help
-token-api evm --help
-token-api evm tokens --help
-token-api evm tokens transfers --help
-```
-
 ## Examples
 
 ### Get EVM Transfers
@@ -176,11 +67,6 @@ token-api evm tokens transfers --help
 Retrieve ERC-20 and native token transfers for a specific address:
 
 ```typescript
-import { TokenAPI, EVMChains } from "@pinax/token-api";
-
-// Uses TOKENAPI_KEY from .env automatically
-const client = new TokenAPI();
-
 // Get transfers to Vitalik's address
 const transfers = await client.evm.tokens.getTransfers({
   network: EVMChains.Ethereum,
@@ -204,10 +90,6 @@ for (const transfer of transfers.data ?? []) {
 Retrieve DEX swap events from Uniswap and other protocols:
 
 ```typescript
-import { TokenAPI, EVMChains } from "@pinax/token-api";
-
-const client = new TokenAPI();
-
 // Get swaps from the USDC/WETH pool
 const swaps = await client.evm.dexs.getSwaps({
   network: EVMChains.Ethereum,
@@ -230,10 +112,6 @@ for (const swap of swaps.data ?? []) {
 ### Get Token Balances
 
 ```typescript
-import { TokenAPI, EVMChains } from "@pinax/token-api";
-
-const client = new TokenAPI();
-
 // Get token balances for a wallet
 const balances = await client.evm.tokens.getBalances({
   network: EVMChains.Ethereum,
@@ -263,22 +141,6 @@ bun run generate
 # Build the package
 bun run build
 ```
-
-## Docker
-
-Run in containerized environments:
-
-```bash
-# Build image
-docker build -t token-api .
-
-# Run service
-docker run \
-  -e TOKENAPI_KEY=<your-api-token-jwt> \
-  token-api evm tokens transfer --from 0x1234...abcd --network mainnet --limit 5
-```
-
-See [Docker Guide](docs/DOCKER.md) for Docker Compose examples and production deployment.
 
 ## Related Resources
 

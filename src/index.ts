@@ -939,7 +939,7 @@ class TvmApi {
  * ```typescript
  * import { TokenAPI } from "@pinax/token-api";
  *
- * const client = new TokenAPI({ apiToken: "your-token" });
+ * const client = new TokenAPI({ apiToken: "YOUR_API_KEY_HERE" });
  *
  * // Get EVM transfers
  * const transfers = await client.evm.tokens.getTransfers({

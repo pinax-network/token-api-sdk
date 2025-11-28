@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 bun-debug.log*
+package-lock.json
+yarn.lock
 
 # Build output
 dist
