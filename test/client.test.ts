@@ -6,6 +6,7 @@
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import {
+  TokenAPI,
   TokenClient,
   createTokenClient,
   DEFAULT_BASE_URL,
@@ -31,26 +32,26 @@ describe("createTokenClient", () => {
   });
 });
 
-describe("TokenClient", () => {
+describe("TokenAPI", () => {
   describe("constructor", () => {
-    it("should create a TokenClient instance with default options", () => {
-      const client = new TokenClient();
-      expect(client).toBeInstanceOf(TokenClient);
+    it("should create a TokenAPI instance with default options", () => {
+      const client = new TokenAPI();
+      expect(client).toBeInstanceOf(TokenAPI);
       expect(client.evm).toBeDefined();
       expect(client.svm).toBeDefined();
       expect(client.tvm).toBeDefined();
     });
 
-    it("should create a TokenClient instance with custom options", () => {
-      const client = new TokenClient({
+    it("should create a TokenAPI instance with custom options", () => {
+      const client = new TokenAPI({
         apiToken: "test-token",
         baseUrl: "https://custom.example.com",
       });
-      expect(client).toBeInstanceOf(TokenClient);
+      expect(client).toBeInstanceOf(TokenAPI);
     });
 
     it("should expose getClient method", () => {
-      const client = new TokenClient();
+      const client = new TokenAPI();
       const internalClient = client.getClient();
       expect(internalClient).toBeDefined();
       expect(typeof internalClient.GET).toBe("function");
@@ -58,10 +59,10 @@ describe("TokenClient", () => {
   });
 
   describe("EVM API structure", () => {
-    let client: TokenClient;
+    let client: TokenAPI;
 
     beforeEach(() => {
-      client = new TokenClient();
+      client = new TokenAPI();
     });
 
     it("should expose evm.tokens API", () => {
@@ -94,10 +95,10 @@ describe("TokenClient", () => {
   });
 
   describe("SVM API structure", () => {
-    let client: TokenClient;
+    let client: TokenAPI;
 
     beforeEach(() => {
-      client = new TokenClient();
+      client = new TokenAPI();
     });
 
     it("should expose svm.tokens API", () => {
@@ -124,10 +125,10 @@ describe("TokenClient", () => {
   });
 
   describe("TVM API structure", () => {
-    let client: TokenClient;
+    let client: TokenAPI;
 
     beforeEach(() => {
-      client = new TokenClient();
+      client = new TokenAPI();
     });
 
     it("should expose tvm.tokens API", () => {
@@ -150,10 +151,10 @@ describe("TokenClient", () => {
   });
 
   describe("System methods", () => {
-    let client: TokenClient;
+    let client: TokenAPI;
 
     beforeEach(() => {
-      client = new TokenClient();
+      client = new TokenAPI();
     });
 
     it("should expose getHealth method", () => {
@@ -205,7 +206,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call the correct endpoint for EVM transfers", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.evm.tokens.getTransfers({
       network: "mainnet",
@@ -218,7 +219,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call the correct endpoint for EVM swaps", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.evm.dexs.getSwaps({
       network: "mainnet",
@@ -231,7 +232,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call the correct endpoint for SVM transfers", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.svm.tokens.getTransfers({
       network: "solana",
@@ -244,7 +245,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call the correct endpoint for TVM transfers", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.tvm.tokens.getTransfers({
       network: "tron",
@@ -257,7 +258,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should include authorization header when API token is provided", async () => {
-    const client = new TokenClient({ apiToken: "my-test-token" });
+    const client = new TokenAPI({ apiToken: "my-test-token" });
 
     await client.evm.tokens.getTransfers({
       network: "mainnet",
@@ -269,7 +270,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should include referrer header in all requests", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.evm.tokens.getTransfers({
       network: "mainnet",
@@ -282,7 +283,7 @@ describe("API methods with mocked fetch", () => {
 
   it("should use custom base URL when provided", async () => {
     const customUrl = "https://custom-api.example.com";
-    const client = new TokenClient({
+    const client = new TokenAPI({
       apiToken: "test-token",
       baseUrl: customUrl,
     });
@@ -297,7 +298,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call health endpoint", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.getHealth();
 
@@ -306,7 +307,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call version endpoint", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.getVersion();
 
@@ -315,7 +316,7 @@ describe("API methods with mocked fetch", () => {
   });
 
   it("should call networks endpoint", async () => {
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await client.getNetworks();
 
@@ -351,7 +352,7 @@ describe("Error handling", () => {
       );
     }) as typeof fetch;
 
-    const client = new TokenClient({ apiToken: "invalid-token" });
+    const client = new TokenAPI({ apiToken: "invalid-token" });
 
     await expect(
       client.evm.tokens.getTransfers({ network: "mainnet" })
@@ -368,10 +369,24 @@ describe("Error handling", () => {
       );
     }) as typeof fetch;
 
-    const client = new TokenClient({ apiToken: "test-token" });
+    const client = new TokenAPI({ apiToken: "test-token" });
 
     await expect(
       client.evm.tokens.getTransfers({ network: "mainnet" })
     ).rejects.toThrow("API Error: No data returned");
+  });
+});
+
+describe("TokenClient backward compatibility", () => {
+  it("should export TokenClient as an alias for TokenAPI", () => {
+    expect(TokenClient).toBe(TokenAPI);
+  });
+
+  it("should create instance using TokenClient alias", () => {
+    const client = new TokenClient();
+    expect(client).toBeInstanceOf(TokenAPI);
+    expect(client.evm).toBeDefined();
+    expect(client.svm).toBeDefined();
+    expect(client.tvm).toBeDefined();
   });
 });

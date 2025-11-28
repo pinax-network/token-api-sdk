@@ -876,9 +876,9 @@ class TvmApi {
  *
  * @example
  * ```typescript
- * import { TokenClient } from "@pinax/token-api";
+ * import { TokenAPI } from "@pinax/token-api";
  *
- * const client = new TokenClient({ apiToken: "your-token" });
+ * const client = new TokenAPI({ apiToken: "your-token" });
  *
  * // Get EVM transfers
  * const transfers = await client.evm.tokens.getTransfers({
@@ -893,7 +893,7 @@ class TvmApi {
  * });
  * ```
  */
-export class TokenClient {
+export class TokenAPI {
   private client: ReturnType<typeof createTokenClient>;
 
   /**
@@ -956,4 +956,9 @@ export class TokenClient {
 }
 
 // Default export
-export default TokenClient;
+export default TokenAPI;
+
+/**
+ * @deprecated Use `TokenAPI` instead. `TokenClient` is an alias kept for backward compatibility.
+ */
+export const TokenClient = TokenAPI;
