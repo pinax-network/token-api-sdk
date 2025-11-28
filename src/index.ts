@@ -54,6 +54,80 @@ export type TvmNetwork = 'tron';
 export type DexProtocol = 'uniswap_v2' | 'uniswap_v3';
 
 /**
+ * EVM chain identifiers for network parameter.
+ * Use these constants instead of raw strings for type safety.
+ *
+ * @example
+ * ```typescript
+ * import { TokenAPI, EVMChains } from "@pinax/token-api";
+ *
+ * const client = new TokenAPI();
+ * const transfers = await client.evm.tokens.getTransfers({
+ *   network: EVMChains.Ethereum,
+ *   limit: 10,
+ * });
+ * ```
+ */
+export const EVMChains = {
+  /** Ethereum Mainnet (alias for 'mainnet') */
+  Ethereum: 'mainnet',
+  /** Base */
+  Base: 'base',
+  /** Arbitrum One */
+  ArbitrumOne: 'arbitrum-one',
+  /** BNB Smart Chain */
+  BSC: 'bsc',
+  /** Polygon */
+  Polygon: 'polygon',
+  /** Optimism */
+  Optimism: 'optimism',
+  /** Avalanche */
+  Avalanche: 'avalanche',
+  /** Unichain */
+  Unichain: 'unichain',
+} as const satisfies Record<string, EvmNetwork>;
+
+/**
+ * SVM (Solana Virtual Machine) chain identifiers for network parameter.
+ * Use these constants instead of raw strings for type safety.
+ *
+ * @example
+ * ```typescript
+ * import { TokenAPI, SVMChains } from "@pinax/token-api";
+ *
+ * const client = new TokenAPI();
+ * const transfers = await client.svm.tokens.getTransfers({
+ *   network: SVMChains.Solana,
+ *   limit: 10,
+ * });
+ * ```
+ */
+export const SVMChains = {
+  /** Solana */
+  Solana: 'solana',
+} as const satisfies Record<string, SvmNetwork>;
+
+/**
+ * TVM (Tron Virtual Machine) chain identifiers for network parameter.
+ * Use these constants instead of raw strings for type safety.
+ *
+ * @example
+ * ```typescript
+ * import { TokenAPI, TVMChains } from "@pinax/token-api";
+ *
+ * const client = new TokenAPI();
+ * const transfers = await client.tvm.tokens.getTransfers({
+ *   network: TVMChains.Tron,
+ *   limit: 10,
+ * });
+ * ```
+ */
+export const TVMChains = {
+  /** Tron */
+  Tron: 'tron',
+} as const satisfies Record<string, TvmNetwork>;
+
+/**
  * Configuration options for the Pinax SDK client
  *
  * Environment variables are automatically loaded from `.env` files via dotenv.
