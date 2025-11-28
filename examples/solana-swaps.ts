@@ -6,11 +6,11 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { TokenClient } from "@pinax/token-api";
+import { TokenAPI } from "@pinax/token-api";
 
 async function main() {
   // Initialize the client with your bearer token
-  const client = new TokenClient({
+  const client = new TokenAPI({
     apiToken: process.env.GRAPH_API_TOKEN,
   });
 
