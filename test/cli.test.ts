@@ -4,7 +4,7 @@
  * Unit tests for the @pinax/token-api CLI retry and auto-pagination features.
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
+import { describe, it, expect } from 'bun:test';
 import { spawn } from 'child_process';
 import { resolve } from 'path';
 

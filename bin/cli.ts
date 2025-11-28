@@ -97,14 +97,18 @@ async function executeWithAutoPagination<T extends PaginatedResponse>(
   apiCall: (page: number) => Promise<T>,
   globalOptions: GlobalOptions,
   limit: number | undefined,
+  userPage?: number,
 ): Promise<T> {
   const { autoPaginate, timeoutMs } = globalOptions;
 
   if (!autoPaginate || !limit) {
     // If auto-paginate is disabled or no limit specified, just execute once
-    return executeWithRetry(() => apiCall(1), globalOptions);
+    // Use user-provided page or default to page 1
+    return executeWithRetry(() => apiCall(userPage ?? 1), globalOptions);
   }
 
+  // When auto-paginate is enabled, always start from page 1
+  // The userPage parameter is ignored in auto-pagination mode
   const allData: unknown[] = [];
   let currentPage = 1;
   let lastResponse: T | null = null;
@@ -229,11 +233,12 @@ evmTokens
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -256,11 +261,12 @@ evmTokens
           client.evm.tokens.getTokens({
             network: options.network,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -287,11 +293,12 @@ evmTokens
             address: options.address,
             contract: options.contract,
             include_null_balances: options.includeNullBalances,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -314,11 +321,12 @@ evmTokens
           client.evm.tokens.getHolders({
             network: options.network,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -343,11 +351,12 @@ evmTokens
             network: options.network,
             address: options.address,
             include_null_balances: options.includeNullBalances,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -378,11 +387,12 @@ evmTokens
             interval: options.interval,
             start_time: options.startTime,
             end_time: options.endTime,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -431,11 +441,12 @@ evmDexs
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -462,11 +473,12 @@ evmDexs
             pool: options.pool,
             token0: options.token0,
             token1: options.token1,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -515,11 +527,12 @@ evmDexs
             interval: options.interval,
             start_time: options.startTime,
             end_time: options.endTime,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -547,11 +560,12 @@ evmNfts
           client.evm.nfts.getCollections({
             network: options.network,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -574,11 +588,12 @@ evmNfts
           client.evm.nfts.getHolders({
             network: options.network,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -603,11 +618,12 @@ evmNfts
             network: options.network,
             contract: options.contract,
             token_id: options.tokenId,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -632,11 +648,12 @@ evmNfts
             network: options.network,
             address: options.address,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -673,11 +690,12 @@ evmNfts
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -716,11 +734,12 @@ evmNfts
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -773,11 +792,12 @@ svmTokens
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -800,11 +820,12 @@ svmTokens
           client.svm.tokens.getTokens({
             network: options.network,
             mint: options.mint,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -831,11 +852,12 @@ svmTokens
             owner: options.owner,
             mint: options.mint,
             include_null_balances: options.includeNullBalances,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -860,11 +882,12 @@ svmTokens
             network: options.network,
             address: options.address,
             include_null_balances: options.includeNullBalances,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -887,11 +910,12 @@ svmTokens
           client.svm.tokens.getHolders({
             network: options.network,
             mint: options.mint,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -914,11 +938,12 @@ svmTokens
           client.svm.tokens.getAccountOwner({
             network: options.network,
             account: options.account,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -964,11 +989,12 @@ svmDexs
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -995,11 +1021,12 @@ svmDexs
             amm_pool: options.ammPool,
             base_mint: options.baseMint,
             quote_mint: options.quoteMint,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1048,11 +1075,12 @@ svmDexs
             interval: options.interval,
             start_time: options.startTime,
             end_time: options.endTime,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1101,11 +1129,12 @@ tvmTokens
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1140,11 +1169,12 @@ tvmTokens
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1167,11 +1197,12 @@ tvmTokens
           client.tvm.tokens.getTokens({
             network: options.network,
             contract: options.contract,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1215,11 +1246,12 @@ tvmDexs
             end_time: options.endTime,
             start_block: options.startBlock,
             end_block: options.endBlock,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
@@ -1268,11 +1300,12 @@ tvmDexs
             interval: options.interval,
             start_time: options.startTime,
             end_time: options.endTime,
-            page: options.page ?? page,
+            page: page,
             limit: options.limit,
           }),
         globalOptions,
         options.limit,
+        options.page,
       );
       outputJSON(result);
     } catch (error) {
