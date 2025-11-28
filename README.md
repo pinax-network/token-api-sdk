@@ -204,6 +204,22 @@ bun run generate
 bun run build
 ```
 
+## Docker
+
+Run in containerized environments:
+
+```bash
+# Build image
+docker build -t token-api .
+
+# Run service
+docker run \
+  -e GRAPH_API_TOKEN=<your-api-token-jwt> \
+  token-api evm tokens transfer --from 0x1234...abcd --network mainnet --limit 5
+```
+
+See [Docker Guide](docs/DOCKER.md) for Docker Compose examples and production deployment.
+
 ## Related Resources
 
 - [Token API Documentation](https://thegraph.com/docs/en/token-api/quick-start/)
