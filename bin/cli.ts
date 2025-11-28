@@ -19,7 +19,7 @@ const program = new Command();
 
 // Initialize client with environment variable support
 const client = new TokenAPI({
-  apiToken: process.env.GRAPH_API_TOKEN,
+  apiToken: process.env.TOKENAPI_KEY,
   baseUrl: process.env.TOKEN_API_BASE_URL,
 });
 
