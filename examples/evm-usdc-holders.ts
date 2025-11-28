@@ -15,7 +15,7 @@ const USDC_CONTRACT = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 async function main() {
   // Initialize the client with your bearer token
   const client = new TokenAPI({
-    apiToken: process.env.GRAPH_API_TOKEN,
+    apiToken: process.env.TOKENAPI_KEY,
   });
 
   console.log('Fetching top USDC holders on Ethereum mainnet...\n');
