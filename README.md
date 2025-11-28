@@ -125,10 +125,10 @@ npm install -g @pinax/token-api
 
 ```bash
 # EVM token transfers
-token-api evm tokens transfers --network mainnet --from 0x123... --limit 10
+token-api evm tokens transfers --network mainnet --from 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 --limit 10
 
 # EVM token balances
-token-api evm tokens balances --network mainnet --address 0x123...
+token-api evm tokens balances --network mainnet --address 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
 
 # EVM DEX swaps
 token-api evm dexs swaps --network mainnet --limit 10
