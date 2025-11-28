@@ -7,8 +7,8 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "@pinax/token-api": "./dist/cli.js",
-    "token-api": "./dist/cli.js"
+    "@pinax/token-api": "./dist/bin/cli.js",
+    "token-api": "./dist/bin/cli.js"
   },
   "exports": {
     ".": {
@@ -18,16 +18,17 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "bin"
   ],
   "scripts": {
     "prepublishOnly": "bun run build",
     "generate": "openapi-typescript openapi.json -o src/openapi.d.ts",
-    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun build src/cli.ts --outdir dist --target node && bun run build:types",
+    "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun build bin/cli.ts --outdir dist/bin --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "cli": "bun run ./src/cli.ts",
+    "cli": "bun run ./bin/cli.ts",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write ."

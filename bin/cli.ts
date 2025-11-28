@@ -13,12 +13,15 @@
 
 import 'dotenv/config';
 import { Command } from 'commander';
-import { TokenAPI } from './index.js';
+import { TokenAPI } from '../src/index.js';
 
 const program = new Command();
 
-// Initialize client
-const client = new TokenAPI();
+// Initialize client with environment variable support
+const client = new TokenAPI({
+  apiToken: process.env.GRAPH_API_TOKEN,
+  baseUrl: process.env.TOKEN_API_BASE_URL,
+});
 
 // Helper function to output JSON response
 function outputJSON(data: unknown): void {
