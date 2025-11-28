@@ -7,51 +7,51 @@
  * @license Apache-2.0
  */
 
-import "dotenv/config";
-import createClient, { type Middleware } from "openapi-fetch";
-import type { paths, components } from "./openapi.d.ts";
+import 'dotenv/config';
+import createClient, { type Middleware } from 'openapi-fetch';
+import type { paths, components } from './openapi.d.ts';
 
 // Re-export types
-export type * from "./openapi.d.ts";
+export type * from './openapi.d.ts';
 
 // Constants
-export const DEFAULT_BASE_URL = "https://token-api.thegraph.com";
+export const DEFAULT_BASE_URL = 'https://token-api.thegraph.com';
 
 // Type aliases for convenience
-export type Transfer = components["schemas"]["Transfer"];
-export type Swap = components["schemas"]["Swap"];
-export type Token = components["schemas"]["Token"];
-export type Balance = components["schemas"]["Balance"];
-export type Holder = components["schemas"]["Holder"];
-export type Pool = components["schemas"]["Pool"];
-export type TokenInfo = components["schemas"]["TokenInfo"];
-export type UsageInfo = components["schemas"]["UsageInfo"];
-export type PaginationInfo = components["schemas"]["PaginationInfo"];
+export type Transfer = components['schemas']['Transfer'];
+export type Swap = components['schemas']['Swap'];
+export type Token = components['schemas']['Token'];
+export type Balance = components['schemas']['Balance'];
+export type Holder = components['schemas']['Holder'];
+export type Pool = components['schemas']['Pool'];
+export type TokenInfo = components['schemas']['TokenInfo'];
+export type UsageInfo = components['schemas']['UsageInfo'];
+export type PaginationInfo = components['schemas']['PaginationInfo'];
 
 // Response types
-export type TransfersResponse = components["schemas"]["TransfersResponse"];
-export type SwapsResponse = components["schemas"]["SwapsResponse"];
-export type TokensResponse = components["schemas"]["TokensResponse"];
-export type BalancesResponse = components["schemas"]["BalancesResponse"];
-export type HoldersResponse = components["schemas"]["HoldersResponse"];
-export type PoolsResponse = components["schemas"]["PoolsResponse"];
+export type TransfersResponse = components['schemas']['TransfersResponse'];
+export type SwapsResponse = components['schemas']['SwapsResponse'];
+export type TokensResponse = components['schemas']['TokensResponse'];
+export type BalancesResponse = components['schemas']['BalancesResponse'];
+export type HoldersResponse = components['schemas']['HoldersResponse'];
+export type PoolsResponse = components['schemas']['PoolsResponse'];
 
 // Network types
 export type EvmNetwork =
-  | "mainnet"
-  | "base"
-  | "arbitrum-one"
-  | "bsc"
-  | "polygon"
-  | "optimism"
-  | "avalanche"
-  | "unichain";
+  | 'mainnet'
+  | 'base'
+  | 'arbitrum-one'
+  | 'bsc'
+  | 'polygon'
+  | 'optimism'
+  | 'avalanche'
+  | 'unichain';
 
-export type SvmNetwork = "solana";
+export type SvmNetwork = 'solana';
 
-export type TvmNetwork = "tron";
+export type TvmNetwork = 'tron';
 
-export type DexProtocol = "uniswap_v2" | "uniswap_v3";
+export type DexProtocol = 'uniswap_v2' | 'uniswap_v3';
 
 /**
  * Configuration options for the Pinax SDK client
@@ -90,9 +90,9 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
   return {
     async onRequest({ request }) {
       if (apiToken) {
-        request.headers.set("Authorization", `Bearer ${apiToken}`);
+        request.headers.set('Authorization', `Bearer ${apiToken}`);
       }
-      request.headers.set("Referer", "@pinax/token-api");
+      request.headers.set('Referer', '@pinax/token-api');
       return request;
     },
   };
@@ -131,7 +131,8 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
  * ```
  */
 export function createTokenClient(options: PinaxClientOptions = {}) {
-  const baseUrl = options.baseUrl ?? process.env.TOKEN_API_BASE_URL ?? DEFAULT_BASE_URL;
+  const baseUrl =
+    options.baseUrl ?? process.env.TOKEN_API_BASE_URL ?? DEFAULT_BASE_URL;
 
   const client = createClient<paths>({
     baseUrl,
@@ -152,7 +153,7 @@ function handleResponse<T>(data: T | undefined | null, error: unknown): T {
     throw new Error(`API Error: ${JSON.stringify(error)}`);
   }
   if (data === undefined || data === null) {
-    throw new Error("API Error: No data returned");
+    throw new Error('API Error: No data returned');
   }
   return data;
 }
@@ -161,7 +162,7 @@ function handleResponse<T>(data: T | undefined | null, error: unknown): T {
  * EVM Tokens API - Token operations on EVM networks
  */
 class EvmTokens {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get ERC-20 and native token transfers
@@ -179,7 +180,7 @@ class EvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/transfers", {
+    const { data, error } = await this.client.GET('/v1/evm/transfers', {
       params: { query: params },
     });
 
@@ -195,7 +196,7 @@ class EvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/tokens", {
+    const { data, error } = await this.client.GET('/v1/evm/tokens', {
       params: { query: params },
     });
 
@@ -213,7 +214,7 @@ class EvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/balances", {
+    const { data, error } = await this.client.GET('/v1/evm/balances', {
       params: { query: params },
     });
 
@@ -229,7 +230,7 @@ class EvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/holders", {
+    const { data, error } = await this.client.GET('/v1/evm/holders', {
       params: { query: params },
     });
 
@@ -246,7 +247,7 @@ class EvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/balances/native", {
+    const { data, error } = await this.client.GET('/v1/evm/balances/native', {
       params: { query: params },
     });
 
@@ -260,15 +261,18 @@ class EvmTokens {
     network: EvmNetwork;
     address: string;
     contract?: string | string[];
-    interval?: "1h" | "4h" | "1d" | "1w";
+    interval?: '1h' | '4h' | '1d' | '1w';
     start_time?: string;
     end_time?: string;
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/balances/historical", {
-      params: { query: params },
-    });
+    const { data, error } = await this.client.GET(
+      '/v1/evm/balances/historical',
+      {
+        params: { query: params },
+      },
+    );
 
     return handleResponse(data, error);
   }
@@ -278,7 +282,7 @@ class EvmTokens {
  * EVM DEXs API - Decentralized exchange operations on EVM networks
  */
 class EvmDexs {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get DEX swap transactions
@@ -298,7 +302,7 @@ class EvmDexs {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/swaps", {
+    const { data, error } = await this.client.GET('/v1/evm/swaps', {
       params: { query: params },
     });
 
@@ -316,7 +320,7 @@ class EvmDexs {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/pools", {
+    const { data, error } = await this.client.GET('/v1/evm/pools', {
       params: { query: params },
     });
 
@@ -326,10 +330,8 @@ class EvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: {
-    network: EvmNetwork;
-  }) {
-    const { data, error } = await this.client.GET("/v1/evm/dexes", {
+  async getDexes(params: { network: EvmNetwork }) {
+    const { data, error } = await this.client.GET('/v1/evm/dexes', {
       params: { query: params },
     });
 
@@ -342,13 +344,13 @@ class EvmDexs {
   async getPoolOHLC(params: {
     network: EvmNetwork;
     pool: string;
-    interval?: "1h" | "4h" | "1d" | "1w";
+    interval?: '1h' | '4h' | '1d' | '1w';
     start_time?: string;
     end_time?: string;
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/pools/ohlc", {
+    const { data, error } = await this.client.GET('/v1/evm/pools/ohlc', {
       params: { query: params },
     });
 
@@ -360,7 +362,7 @@ class EvmDexs {
  * EVM NFTs API - NFT operations on EVM networks
  */
 class EvmNfts {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get NFT collection metadata and stats
@@ -371,7 +373,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/collections", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/collections', {
       params: { query: params },
     });
 
@@ -387,7 +389,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/holders", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/holders', {
       params: { query: params },
     });
 
@@ -404,7 +406,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/items", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/items', {
       params: { query: params },
     });
 
@@ -421,7 +423,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/ownerships", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/ownerships', {
       params: { query: params },
     });
 
@@ -444,7 +446,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/sales", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/sales', {
       params: { query: params },
     });
 
@@ -468,7 +470,7 @@ class EvmNfts {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/evm/nft/transfers", {
+    const { data, error } = await this.client.GET('/v1/evm/nft/transfers', {
       params: { query: params },
     });
 
@@ -495,7 +497,7 @@ class EvmApi {
  * SVM Tokens API - Token operations on Solana Virtual Machine networks
  */
 class SvmTokens {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get SPL token transfers
@@ -515,7 +517,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/transfers", {
+    const { data, error } = await this.client.GET('/v1/svm/transfers', {
       params: { query: params },
     });
 
@@ -531,7 +533,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/tokens", {
+    const { data, error } = await this.client.GET('/v1/svm/tokens', {
       params: { query: params },
     });
 
@@ -549,7 +551,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/balances", {
+    const { data, error } = await this.client.GET('/v1/svm/balances', {
       params: { query: params },
     });
 
@@ -566,7 +568,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/balances/native", {
+    const { data, error } = await this.client.GET('/v1/svm/balances/native', {
       params: { query: params },
     });
 
@@ -582,7 +584,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/holders", {
+    const { data, error } = await this.client.GET('/v1/svm/holders', {
       params: { query: params },
     });
 
@@ -598,7 +600,7 @@ class SvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/owner", {
+    const { data, error } = await this.client.GET('/v1/svm/owner', {
       params: { query: params },
     });
 
@@ -610,7 +612,7 @@ class SvmTokens {
  * SVM DEXs API - Decentralized exchange operations on Solana Virtual Machine networks
  */
 class SvmDexs {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get DEX swap transactions
@@ -630,7 +632,7 @@ class SvmDexs {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/swaps", {
+    const { data, error } = await this.client.GET('/v1/svm/swaps', {
       params: { query: params },
     });
 
@@ -648,7 +650,7 @@ class SvmDexs {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/pools", {
+    const { data, error } = await this.client.GET('/v1/svm/pools', {
       params: { query: params },
     });
 
@@ -658,10 +660,8 @@ class SvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: {
-    network: SvmNetwork;
-  }) {
-    const { data, error } = await this.client.GET("/v1/svm/dexes", {
+  async getDexes(params: { network: SvmNetwork }) {
+    const { data, error } = await this.client.GET('/v1/svm/dexes', {
       params: { query: params },
     });
 
@@ -674,13 +674,13 @@ class SvmDexs {
   async getPoolOHLC(params: {
     network: SvmNetwork;
     amm_pool: string;
-    interval?: "1h" | "4h" | "1d" | "1w";
+    interval?: '1h' | '4h' | '1d' | '1w';
     start_time?: string;
     end_time?: string;
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/svm/pools/ohlc", {
+    const { data, error } = await this.client.GET('/v1/svm/pools/ohlc', {
       params: { query: params },
     });
 
@@ -696,7 +696,7 @@ class SvmDexs {
  * Methods will be added when the Token API adds support for Solana NFT operations.
  */
 class SvmNfts {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 }
 
 /**
@@ -718,7 +718,7 @@ class SvmApi {
  * TVM Tokens API - Token operations on Tron Virtual Machine networks
  */
 class TvmTokens {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get TRC-20 token transfers
@@ -736,7 +736,7 @@ class TvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/tvm/transfers", {
+    const { data, error } = await this.client.GET('/v1/tvm/transfers', {
       params: { query: params },
     });
 
@@ -758,7 +758,7 @@ class TvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/tvm/transfers/native", {
+    const { data, error } = await this.client.GET('/v1/tvm/transfers/native', {
       params: { query: params },
     });
 
@@ -774,7 +774,7 @@ class TvmTokens {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/tvm/tokens", {
+    const { data, error } = await this.client.GET('/v1/tvm/tokens', {
       params: { query: params },
     });
 
@@ -786,7 +786,7 @@ class TvmTokens {
  * TVM DEXs API - Decentralized exchange operations on Tron Virtual Machine networks
  */
 class TvmDexs {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 
   /**
    * Get DEX swap transactions
@@ -805,7 +805,7 @@ class TvmDexs {
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/tvm/swaps", {
+    const { data, error } = await this.client.GET('/v1/tvm/swaps', {
       params: { query: params },
     });
 
@@ -815,10 +815,8 @@ class TvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: {
-    network: TvmNetwork;
-  }) {
-    const { data, error } = await this.client.GET("/v1/tvm/dexes", {
+  async getDexes(params: { network: TvmNetwork }) {
+    const { data, error } = await this.client.GET('/v1/tvm/dexes', {
       params: { query: params },
     });
 
@@ -831,13 +829,13 @@ class TvmDexs {
   async getPoolOHLC(params: {
     network: TvmNetwork;
     pool: string;
-    interval?: "1h" | "4h" | "1d" | "1w";
+    interval?: '1h' | '4h' | '1d' | '1w';
     start_time?: string;
     end_time?: string;
     page?: number;
     limit?: number;
   }) {
-    const { data, error } = await this.client.GET("/v1/tvm/pools/ohlc", {
+    const { data, error } = await this.client.GET('/v1/tvm/pools/ohlc', {
       params: { query: params },
     });
 
@@ -853,7 +851,7 @@ class TvmDexs {
  * Methods will be added when the Token API adds support for Tron NFT operations.
  */
 class TvmNfts {
-  constructor(private client: ReturnType<typeof createTokenClient>) { }
+  constructor(private client: ReturnType<typeof createTokenClient>) {}
 }
 
 /**
@@ -931,7 +929,7 @@ export class TokenAPI {
    * Check API health status
    */
   async getHealth() {
-    const { data, error } = await this.client.GET("/v1/health", {});
+    const { data, error } = await this.client.GET('/v1/health', {});
 
     return handleResponse(data, error);
   }
@@ -940,7 +938,7 @@ export class TokenAPI {
    * Get API version information
    */
   async getVersion() {
-    const { data, error } = await this.client.GET("/v1/version", {});
+    const { data, error } = await this.client.GET('/v1/version', {});
 
     return handleResponse(data, error);
   }
@@ -949,7 +947,7 @@ export class TokenAPI {
    * Get list of supported networks
    */
   async getNetworks() {
-    const { data, error } = await this.client.GET("/v1/networks", {});
+    const { data, error } = await this.client.GET('/v1/networks', {});
 
     return handleResponse(data, error);
   }

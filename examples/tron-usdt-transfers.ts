@@ -7,10 +7,10 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI } from '@pinax/token-api';
 
 // USDT Token Contract Address on Tron Network
-const TRON_USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+const TRON_USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
 
 async function main() {
   // Initialize the client with your bearer token
@@ -18,11 +18,11 @@ async function main() {
     apiToken: process.env.GRAPH_API_TOKEN,
   });
 
-  console.log("Fetching USDT transfers on Tron network...\n");
+  console.log('Fetching USDT transfers on Tron network...\n');
 
   // Get transfers using the high-level client
   const data = await client.tvm.tokens.getTransfers({
-    network: "tron",
+    network: 'tron',
     contract: TRON_USDT_CONTRACT,
     limit: 10,
   });

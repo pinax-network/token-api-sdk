@@ -31,9 +31,7 @@
         "operationId": "getV1EvmBalancesHistorical",
         "summary": "Historical Balances",
         "description": "Returns wallet token balance changes over time in OHLCV format.\n\nOHLCV historical depth is subject to plan restrictions.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -146,10 +144,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -244,11 +239,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -311,11 +302,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -378,11 +365,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -445,11 +428,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -499,11 +478,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -581,12 +556,7 @@
             "name": "interval",
             "schema": {
               "type": "string",
-              "enum": [
-                "1h",
-                "4h",
-                "1d",
-                "1w"
-              ],
+              "enum": ["1h", "4h", "1d", "1w"],
               "example": "1w",
               "default": "1d"
             },
@@ -640,9 +610,7 @@
         "operationId": "getV1EvmBalancesNative",
         "summary": "Native Balances",
         "description": "Returns EVM native balances for wallet addresses.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -776,10 +744,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -874,11 +839,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -941,11 +902,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1008,11 +965,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1075,11 +1028,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1129,11 +1078,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1235,9 +1180,7 @@
         "operationId": "getV1EvmBalances",
         "summary": "Token Balances",
         "description": "Returns ERC-20 token balances for a wallet address.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -1371,10 +1314,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -1469,11 +1409,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1536,11 +1472,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1603,11 +1535,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1670,11 +1598,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1724,11 +1648,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -1857,9 +1777,7 @@
         "operationId": "getV1EvmDexes",
         "summary": "Supported DEXs",
         "description": "Returns all supported EVM DEXs.",
-        "tags": [
-          "EVM DEXs"
-        ],
+        "tags": ["EVM DEXs"],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1882,11 +1800,7 @@
                             "description": "Protocol name",
                             "example": "uniswap_v3",
                             "type": "string",
-                            "enum": [
-                              "uniswap_v2",
-                              "uniswap_v3",
-                              "uniswap_v4"
-                            ]
+                            "enum": ["uniswap_v2", "uniswap_v3", "uniswap_v4"]
                           },
                           "uaw": {
                             "type": "number"
@@ -1936,10 +1850,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -2028,11 +1939,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2095,11 +2002,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2162,11 +2065,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2229,11 +2128,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2283,11 +2178,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2331,9 +2222,7 @@
         "operationId": "getV1EvmHolders",
         "summary": "Token Holders",
         "description": "Returns top token holders ranked by balance.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -2467,10 +2356,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -2565,11 +2451,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2632,11 +2514,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2699,11 +2577,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2766,11 +2640,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2820,11 +2690,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -2900,9 +2766,7 @@
         "operationId": "getV1EvmNftCollections",
         "summary": "NFT Collection",
         "description": "Returns NFT collection metadata, supply stats, owner count, and transfer history.\n\nThe `spam_status` flag indicates if the NFT is likely spam. If status shows `pending`, retry in a few seconds.\n\nSpam detection is supported for:\n\n* mainnet\n* base\n* polygon\n* arbitrum-one\n* avalanche\n* optimism\n* bsc",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -3036,10 +2900,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -3135,11 +2996,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3202,11 +3059,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3269,11 +3122,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3336,11 +3185,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3390,11 +3235,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3470,9 +3311,7 @@
         "operationId": "getV1EvmNftHolders",
         "summary": "NFT Holders",
         "description": "Returns wallet addresses holding NFT collection tokens with quantity and percentage distribution.",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -3500,10 +3339,7 @@
                             "description": "Token standard",
                             "example": "ERC721",
                             "type": "string",
-                            "enum": [
-                              "ERC721",
-                              "ERC1155"
-                            ]
+                            "enum": ["ERC721", "ERC1155"]
                           },
                           "address": {
                             "type": "string",
@@ -3577,10 +3413,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -3671,11 +3504,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3738,11 +3567,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3805,11 +3630,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3872,11 +3693,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -3926,11 +3743,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4006,9 +3819,7 @@
         "operationId": "getV1EvmNftItems",
         "summary": "NFT Items",
         "description": "Returns NFT token metadata, attributes, current owner, and media URIs.",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -4046,10 +3857,7 @@
                             "description": "Token standard",
                             "example": "ERC721",
                             "type": "string",
-                            "enum": [
-                              "ERC721",
-                              "ERC1155"
-                            ]
+                            "enum": ["ERC721", "ERC1155"]
                           },
                           "name": {
                             "anyOf": [
@@ -4106,10 +3914,7 @@
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "trait_type",
-                                "value"
-                              ]
+                              "required": ["trait_type", "value"]
                             }
                           },
                           "network": {
@@ -4170,10 +3975,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -4288,11 +4090,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4355,11 +4153,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4422,11 +4216,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4489,11 +4279,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4543,11 +4329,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4650,9 +4432,7 @@
         "operationId": "getV1EvmNftOwnerships",
         "summary": "NFT Ownerships by Address",
         "description": "Returns NFT tokens owned by a wallet address with metadata and ownership information.",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -4690,10 +4470,7 @@
                             "description": "Token standard",
                             "example": "ERC721",
                             "type": "string",
-                            "enum": [
-                              "ERC721",
-                              "ERC1155"
-                            ]
+                            "enum": ["ERC721", "ERC1155"]
                           },
                           "name": {
                             "anyOf": [
@@ -4770,10 +4547,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -4864,11 +4638,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4931,11 +4701,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -4998,11 +4764,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5065,11 +4827,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5119,11 +4877,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5248,10 +5002,7 @@
               "example": "ERC721",
               "default": "",
               "type": "string",
-              "enum": [
-                "ERC721",
-                "ERC1155"
-              ]
+              "enum": ["ERC721", "ERC1155"]
             },
             "description": "Token standard"
           },
@@ -5293,9 +5044,7 @@
         "operationId": "getV1EvmNftSales",
         "summary": "NFT Sales",
         "description": "Returns NFT marketplace sales with price, buyer, seller, and transaction data.",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -5436,10 +5185,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -5536,11 +5282,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5603,11 +5345,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5670,11 +5408,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5737,11 +5471,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -5791,11 +5521,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6063,9 +5789,7 @@
         "operationId": "getV1EvmNftTransfers",
         "summary": "NFT Transfers",
         "description": "Returns NFT transfer events including mints, burns, and ownership changes.",
-        "tags": [
-          "EVM NFTs"
-        ],
+        "tags": ["EVM NFTs"],
         "security": [
           {
             "bearerAuth": []
@@ -6098,11 +5822,7 @@
                             "description": "Transfer category",
                             "example": "TRANSFER",
                             "type": "string",
-                            "enum": [
-                              "BURN",
-                              "MINT",
-                              "TRANSFER"
-                            ]
+                            "enum": ["BURN", "MINT", "TRANSFER"]
                           },
                           "transfer_type": {
                             "type": "string"
@@ -6146,10 +5866,7 @@
                             "description": "Token standard",
                             "example": "ERC721",
                             "type": "string",
-                            "enum": [
-                              "ERC721",
-                              "ERC1155"
-                            ]
+                            "enum": ["ERC721", "ERC1155"]
                           },
                           "from": {
                             "type": "string",
@@ -6227,10 +5944,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -6329,11 +6043,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6396,11 +6106,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6463,11 +6169,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6530,11 +6232,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6584,11 +6282,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -6631,11 +6325,7 @@
               "example": "TRANSFER",
               "default": "",
               "type": "string",
-              "enum": [
-                "BURN",
-                "MINT",
-                "TRANSFER"
-              ]
+              "enum": ["BURN", "MINT", "TRANSFER"]
             },
             "description": "Transfer category"
           },
@@ -6871,9 +6561,7 @@
         "operationId": "getV1EvmPools",
         "summary": "Liquidity Pools",
         "description": "Returns Uniswap liquidity pool metadata including token pairs, fees, and protocol versions.",
-        "tags": [
-          "EVM DEXs"
-        ],
+        "tags": ["EVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -6946,11 +6634,7 @@
                                 ]
                               }
                             },
-                            "required": [
-                              "address",
-                              "symbol",
-                              "decimals"
-                            ]
+                            "required": ["address", "symbol", "decimals"]
                           },
                           "output_token": {
                             "type": "object",
@@ -6988,11 +6672,7 @@
                                 ]
                               }
                             },
-                            "required": [
-                              "address",
-                              "symbol",
-                              "decimals"
-                            ]
+                            "required": ["address", "symbol", "decimals"]
                           },
                           "fee": {
                             "type": "number"
@@ -7001,11 +6681,7 @@
                             "description": "Protocol name",
                             "example": "uniswap_v3",
                             "type": "string",
-                            "enum": [
-                              "uniswap_v2",
-                              "uniswap_v3",
-                              "uniswap_v4"
-                            ]
+                            "enum": ["uniswap_v2", "uniswap_v3", "uniswap_v4"]
                           },
                           "network": {
                             "description": "The Graph Network ID for EVM networks https://thegraph.com/networks",
@@ -7062,10 +6738,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -7164,11 +6837,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7231,11 +6900,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7298,11 +6963,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7365,11 +7026,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7419,11 +7076,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7590,11 +7243,7 @@
               "example": "uniswap_v3",
               "default": "",
               "type": "string",
-              "enum": [
-                "uniswap_v2",
-                "uniswap_v3",
-                "uniswap_v4"
-              ]
+              "enum": ["uniswap_v2", "uniswap_v3", "uniswap_v4"]
             },
             "description": "Protocol name"
           },
@@ -7628,9 +7277,7 @@
         "operationId": "getV1EvmPoolsOhlc",
         "summary": "Pool OHLCV Data",
         "description": "Returns OHLCV price data for liquidity pools.\n\nOHLCV historical depth is subject to plan restrictions.",
-        "tags": [
-          "EVM DEXs"
-        ],
+        "tags": ["EVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -7733,10 +7380,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -7830,11 +7474,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7897,11 +7537,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -7964,11 +7600,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8031,11 +7663,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8085,11 +7713,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8148,12 +7772,7 @@
             "name": "interval",
             "schema": {
               "type": "string",
-              "enum": [
-                "1h",
-                "4h",
-                "1d",
-                "1w"
-              ],
+              "enum": ["1h", "4h", "1d", "1w"],
               "default": "1d"
             },
             "description": "The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted."
@@ -8206,9 +7825,7 @@
         "operationId": "getV1EvmSwaps",
         "summary": "Swap Events",
         "description": "Returns DEX swap transactions from Uniswap protocols with token amounts and prices.",
-        "tags": [
-          "EVM DEXs"
-        ],
+        "tags": ["EVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -8294,11 +7911,7 @@
                                 ]
                               }
                             },
-                            "required": [
-                              "address",
-                              "symbol",
-                              "decimals"
-                            ]
+                            "required": ["address", "symbol", "decimals"]
                           },
                           "output_token": {
                             "type": "object",
@@ -8336,11 +7949,7 @@
                                 ]
                               }
                             },
-                            "required": [
-                              "address",
-                              "symbol",
-                              "decimals"
-                            ]
+                            "required": ["address", "symbol", "decimals"]
                           },
                           "caller": {
                             "type": "string",
@@ -8379,11 +7988,7 @@
                             "description": "Protocol name",
                             "example": "uniswap_v3",
                             "type": "string",
-                            "enum": [
-                              "uniswap_v2",
-                              "uniswap_v3",
-                              "uniswap_v4"
-                            ]
+                            "enum": ["uniswap_v2", "uniswap_v3", "uniswap_v4"]
                           },
                           "summary": {
                             "type": "string"
@@ -8456,10 +8061,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -8571,11 +8173,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8638,11 +8236,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8705,11 +8299,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8772,11 +8362,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -8826,11 +8412,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9024,11 +8606,7 @@
               "example": "uniswap_v3",
               "default": "",
               "type": "string",
-              "enum": [
-                "uniswap_v2",
-                "uniswap_v3",
-                "uniswap_v4"
-              ]
+              "enum": ["uniswap_v2", "uniswap_v3", "uniswap_v4"]
             },
             "description": "Protocol name"
           },
@@ -9102,9 +8680,7 @@
         "operationId": "getV1EvmTokens",
         "summary": "Token Metadata",
         "description": "Returns ERC-20 token metadata including supply and holder count.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -9199,9 +8775,7 @@
                                 "type": "string"
                               }
                             },
-                            "required": [
-                              "web3icon"
-                            ]
+                            "required": ["web3icon"]
                           }
                         },
                         "required": [
@@ -9247,10 +8821,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -9348,11 +8919,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9415,11 +8982,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9482,11 +9045,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9549,11 +9108,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9603,11 +9158,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9683,9 +9234,7 @@
         "operationId": "getV1EvmTransfers",
         "summary": "Token Transfers",
         "description": "Returns ERC-20 and native token transfers with transaction and block data.",
-        "tags": [
-          "EVM Tokens"
-        ],
+        "tags": ["EVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -9831,10 +9380,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -9932,11 +9478,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -9999,11 +9541,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10066,11 +9604,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10133,11 +9667,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10187,11 +9717,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10405,9 +9931,7 @@
         "operationId": "getV1SvmBalancesNative",
         "summary": "Native Balances",
         "description": "Returns SOL native balances for wallet addresses.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -10506,9 +10030,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -10556,10 +10078,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -10656,11 +10175,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10723,11 +10238,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10790,11 +10301,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10857,11 +10364,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10911,11 +10414,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -10937,9 +10436,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -11010,9 +10507,7 @@
         "operationId": "getV1SvmBalances",
         "summary": "Token Balances",
         "description": "Returns SPL token balances for Solana token owners with mint and program data.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -11116,9 +10611,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -11167,10 +10660,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -11268,11 +10758,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11335,11 +10821,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11402,11 +10884,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11469,11 +10947,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11523,11 +10997,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11549,9 +11019,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -11691,9 +11159,7 @@
         "operationId": "getV1SvmDexes",
         "summary": "Supported DEXs",
         "description": "Returns all supported Solana DEXs.",
-        "tags": [
-          "SVM DEXs"
-        ],
+        "tags": ["SVM DEXs"],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -11781,10 +11247,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -11874,11 +11337,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -11941,11 +11400,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12008,11 +11463,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12075,11 +11526,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12129,11 +11576,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12155,9 +11598,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -12170,9 +11611,7 @@
         "operationId": "getV1SvmHolders",
         "summary": "Token Holders",
         "description": "Returns top token holders ranked by balance.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -12279,9 +11718,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -12329,10 +11766,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -12429,11 +11863,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12496,11 +11926,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12563,11 +11989,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12630,11 +12052,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12684,11 +12102,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -12710,9 +12124,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -12757,9 +12169,7 @@
         "operationId": "getV1SvmOwner",
         "summary": "Account Owner Lookup",
         "description": "Returns owner address of an associated token account (ATA) with closure status.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -12805,9 +12215,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -12849,10 +12257,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -12943,11 +12348,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13010,11 +12411,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13077,11 +12474,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13144,11 +12537,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13198,11 +12587,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13224,9 +12609,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -13289,9 +12672,7 @@
         "operationId": "getV1SvmPoolsOhlc",
         "summary": "Pool OHLCV Data",
         "description": "Provides pricing data in the Open/High/Low/Close/Volume (OHCLV) format for DEX pools.",
-        "tags": [
-          "SVM DEXs"
-        ],
+        "tags": ["SVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -13422,10 +12803,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -13523,11 +12901,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13590,11 +12964,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13657,11 +13027,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13724,11 +13090,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13778,11 +13140,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -13804,9 +13162,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -13826,12 +13182,7 @@
             "name": "interval",
             "schema": {
               "type": "string",
-              "enum": [
-                "1h",
-                "4h",
-                "1d",
-                "1w"
-              ],
+              "enum": ["1h", "4h", "1d", "1w"],
               "default": "1d"
             },
             "description": "The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted."
@@ -13884,9 +13235,7 @@
         "operationId": "getV1SvmPools",
         "summary": "Liquidity Pools",
         "description": "Returns AMM pool information from Solana DEX protocols with transaction counts.",
-        "tags": [
-          "SVM DEXs"
-        ],
+        "tags": ["SVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -13956,9 +13305,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -14002,10 +13349,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -14098,11 +13442,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14165,11 +13505,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14232,11 +13568,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14299,11 +13631,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14353,11 +13681,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14379,9 +13703,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -14576,9 +13898,7 @@
         "operationId": "getV1SvmSwaps",
         "summary": "Swap Events",
         "description": "Returns AMM swap events from Solana DEXs with input/output tokens and amounts.",
-        "tags": [
-          "SVM DEXs"
-        ],
+        "tags": ["SVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -14674,9 +13994,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -14727,10 +14045,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -14830,11 +14145,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14897,11 +14208,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -14964,11 +14271,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15031,11 +14334,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15085,11 +14384,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15111,9 +14406,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -15402,9 +14695,7 @@
         "operationId": "getV1SvmTokens",
         "summary": "Token Metadata",
         "description": "Provides SVM token contract metadata.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -15534,10 +14825,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -15631,11 +14919,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15698,11 +14982,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15765,11 +15045,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15832,11 +15108,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15886,11 +15158,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -15912,9 +15180,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -15959,9 +15225,7 @@
         "operationId": "getV1SvmTransfers",
         "summary": "Token Transfers",
         "description": "Returns SPL token transfers with program, authority, and account information.",
-        "tags": [
-          "SVM Tokens"
-        ],
+        "tags": ["SVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -16079,9 +15343,7 @@
                             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks",
                             "example": "solana",
                             "type": "string",
-                            "enum": [
-                              "solana"
-                            ]
+                            "enum": ["solana"]
                           }
                         },
                         "required": [
@@ -16134,10 +15396,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -16239,11 +15498,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16306,11 +15561,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16373,11 +15624,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16440,11 +15687,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16494,11 +15737,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16520,9 +15759,7 @@
             "schema": {
               "example": "solana",
               "type": "string",
-              "enum": [
-                "solana"
-              ]
+              "enum": ["solana"]
             },
             "required": true,
             "description": "The Graph Network ID for SVM networks https://thegraph.com/networks"
@@ -16747,9 +15984,7 @@
         "operationId": "getV1TvmDexes",
         "summary": "Supported DEXs",
         "description": "Returns all supported TVM DEXs.",
-        "tags": [
-          "TVM DEXs"
-        ],
+        "tags": ["TVM DEXs"],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -16772,11 +16007,7 @@
                             "description": "Protocol name",
                             "example": "sunswap",
                             "type": "string",
-                            "enum": [
-                              "justswap",
-                              "sunswap",
-                              "sunpump"
-                            ]
+                            "enum": ["justswap", "sunswap", "sunpump"]
                           },
                           "transactions": {
                             "type": "number"
@@ -16826,10 +16057,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -16918,11 +16146,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -16985,11 +16209,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17052,11 +16272,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17119,11 +16335,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17173,11 +16385,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17199,9 +16407,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -17214,9 +16420,7 @@
         "operationId": "getV1TvmPoolsOhlc",
         "summary": "Pool OHLCV Data",
         "description": "Returns OHLCV price data for liquidity pools.\n\nOHLCV historical depth is subject to plan restrictions.",
-        "tags": [
-          "TVM DEXs"
-        ],
+        "tags": ["TVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -17311,10 +16515,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -17408,11 +16609,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17475,11 +16672,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17542,11 +16735,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17609,11 +16798,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17663,11 +16848,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -17689,9 +16870,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -17711,12 +16890,7 @@
             "name": "interval",
             "schema": {
               "type": "string",
-              "enum": [
-                "1h",
-                "4h",
-                "1d",
-                "1w"
-              ],
+              "enum": ["1h", "4h", "1d", "1w"],
               "default": "1d"
             },
             "description": "The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted."
@@ -17769,9 +16943,7 @@
         "operationId": "getV1TvmSwaps",
         "summary": "Swap Events",
         "description": "Returns DEX swap transactions from Tron protocols with token amounts and prices.",
-        "tags": [
-          "TVM DEXs"
-        ],
+        "tags": ["TVM DEXs"],
         "security": [
           {
             "bearerAuth": []
@@ -17824,11 +16996,7 @@
                             "description": "Protocol name",
                             "example": "sunswap",
                             "type": "string",
-                            "enum": [
-                              "justswap",
-                              "sunswap",
-                              "sunpump"
-                            ]
+                            "enum": ["justswap", "sunswap", "sunpump"]
                           },
                           "factory": {
                             "type": "string",
@@ -17911,9 +17079,7 @@
                             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks",
                             "example": "tron",
                             "type": "string",
-                            "enum": [
-                              "tron"
-                            ]
+                            "enum": ["tron"]
                           }
                         },
                         "required": [
@@ -17968,10 +17134,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -18085,11 +17248,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18152,11 +17311,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18219,11 +17374,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18286,11 +17437,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18340,11 +17487,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18366,9 +17509,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -18542,11 +17683,7 @@
               "example": "sunswap",
               "default": "",
               "type": "string",
-              "enum": [
-                "justswap",
-                "sunswap",
-                "sunpump"
-              ]
+              "enum": ["justswap", "sunswap", "sunpump"]
             },
             "description": "Protocol name"
           },
@@ -18620,9 +17757,7 @@
         "operationId": "getV1TvmTokens",
         "summary": "Token Metadata",
         "description": "Provides TVM token contract metadata.",
-        "tags": [
-          "TVM Tokens"
-        ],
+        "tags": ["TVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -18730,10 +17865,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -18825,11 +17957,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18892,11 +18020,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -18959,11 +18083,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19026,11 +18146,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19080,11 +18196,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19106,9 +18218,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -19153,9 +18263,7 @@
         "operationId": "getV1TvmTransfers",
         "summary": "TRC-20 Transfers",
         "description": "Returns TRC-20 transfers with transaction and block data.",
-        "tags": [
-          "TVM Tokens"
-        ],
+        "tags": ["TVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -19253,9 +18361,7 @@
                             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks",
                             "example": "tron",
                             "type": "string",
-                            "enum": [
-                              "tron"
-                            ]
+                            "enum": ["tron"]
                           }
                         },
                         "required": [
@@ -19306,10 +18412,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -19409,11 +18512,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19476,11 +18575,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19543,11 +18638,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19610,11 +18701,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19664,11 +18751,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -19690,9 +18773,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -19875,9 +18956,7 @@
         "operationId": "getV1TvmTransfersNative",
         "summary": "Native Transfers",
         "description": "Returns Native transfers with transaction and block data.",
-        "tags": [
-          "TVM Tokens"
-        ],
+        "tags": ["TVM Tokens"],
         "security": [
           {
             "bearerAuth": []
@@ -19964,9 +19043,7 @@
                             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks",
                             "example": "tron",
                             "type": "string",
-                            "enum": [
-                              "tron"
-                            ]
+                            "enum": ["tron"]
                           }
                         },
                         "required": [
@@ -20014,10 +19091,7 @@
                           "maximum": 9007199254740991
                         }
                       },
-                      "required": [
-                        "previous_page",
-                        "current_page"
-                      ]
+                      "required": ["previous_page", "current_page"]
                     },
                     "results": {
                       "type": "number"
@@ -20114,11 +19188,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20181,11 +19251,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20248,11 +19314,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20315,11 +19377,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20369,11 +19427,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20395,9 +19449,7 @@
             "schema": {
               "example": "tron",
               "type": "string",
-              "enum": [
-                "tron"
-              ]
+              "enum": ["tron"]
             },
             "required": true,
             "description": "The Graph Network ID for TVM networks https://thegraph.com/networks"
@@ -20553,9 +19605,7 @@
         "operationId": "getV1Health",
         "summary": "Health Check",
         "description": "Returns API operational status and dependency health with optional endpoint testing.\n\nUse `skip_endpoints` to bypass endpoint responses checks.",
-        "tags": [
-          "Monitoring"
-        ],
+        "tags": ["Monitoring"],
         "responses": {
           "200": {
             "description": "API is healthy or degraded",
@@ -20566,37 +19616,21 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "healthy",
-                        "degraded",
-                        "unhealthy"
-                      ]
+                      "enum": ["healthy", "degraded", "unhealthy"]
                     },
                     "checks": {
                       "type": "object",
                       "properties": {
                         "database": {
                           "type": "string",
-                          "enum": [
-                            "up",
-                            "down",
-                            "slow"
-                          ]
+                          "enum": ["up", "down", "slow"]
                         },
                         "api_endpoints": {
                           "type": "string",
-                          "enum": [
-                            "up",
-                            "down",
-                            "partial",
-                            "skipped"
-                          ]
+                          "enum": ["up", "down", "partial", "skipped"]
                         }
                       },
-                      "required": [
-                        "database",
-                        "api_endpoints"
-                      ]
+                      "required": ["database", "api_endpoints"]
                     },
                     "request_time": {
                       "type": "string",
@@ -20703,11 +19737,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20770,11 +19800,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20837,11 +19863,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20904,11 +19926,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20958,11 +19976,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -20985,37 +19999,21 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "healthy",
-                        "degraded",
-                        "unhealthy"
-                      ]
+                      "enum": ["healthy", "degraded", "unhealthy"]
                     },
                     "checks": {
                       "type": "object",
                       "properties": {
                         "database": {
                           "type": "string",
-                          "enum": [
-                            "up",
-                            "down",
-                            "slow"
-                          ]
+                          "enum": ["up", "down", "slow"]
                         },
                         "api_endpoints": {
                           "type": "string",
-                          "enum": [
-                            "up",
-                            "down",
-                            "partial",
-                            "skipped"
-                          ]
+                          "enum": ["up", "down", "partial", "skipped"]
                         }
                       },
-                      "required": [
-                        "database",
-                        "api_endpoints"
-                      ]
+                      "required": ["database", "api_endpoints"]
                     },
                     "request_time": {
                       "type": "string",
@@ -21066,9 +20064,7 @@
         "operationId": "getV1Version",
         "summary": "API Version Info",
         "description": "Returns API version, build date, and commit information.",
-        "tags": [
-          "Monitoring"
-        ],
+        "tags": ["Monitoring"],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -21087,11 +20083,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "version",
-                    "date",
-                    "commit"
-                  ]
+                  "required": ["version", "date", "commit"]
                 },
                 "examples": {
                   "example": {
@@ -21155,11 +20147,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21222,11 +20210,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21289,11 +20273,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21356,11 +20336,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21410,11 +20386,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21436,9 +20408,7 @@
         "operationId": "getV1Networks",
         "summary": "Supported Networks",
         "description": "Returns supported blockchain networks with identifiers and metadata.",
-        "tags": [
-          "Monitoring"
-        ],
+        "tags": ["Monitoring"],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -21477,14 +20447,10 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": [
-                                  "name"
-                                ]
+                                "required": ["name"]
                               }
                             },
-                            "required": [
-                              "web3Icons"
-                            ]
+                            "required": ["web3Icons"]
                           },
                           "aliases": {
                             "type": "array",
@@ -21505,9 +20471,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "networks"
-                  ]
+                  "required": ["networks"]
                 },
                 "examples": {
                   "example": {
@@ -21525,12 +20489,7 @@
                               "name": "ethereum"
                             }
                           },
-                          "aliases": [
-                            "ethereum",
-                            "eth",
-                            "eth-mainnet",
-                            "evm-1"
-                          ]
+                          "aliases": ["ethereum", "eth", "eth-mainnet", "evm-1"]
                         }
                       ]
                     }
@@ -21588,11 +20547,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21655,11 +20610,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21722,11 +20673,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21789,11 +20736,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {
@@ -21843,11 +20786,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "code",
-                    "message"
-                  ]
+                  "required": ["status", "code", "message"]
                 },
                 "examples": {
                   "example": {

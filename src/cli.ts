@@ -11,9 +11,9 @@
  *   @pinax/token-api monitoring health
  */
 
-import "dotenv/config";
-import { Command } from "commander";
-import { TokenAPI } from "./index.js";
+import 'dotenv/config';
+import { Command } from 'commander';
+import { TokenAPI } from './index.js';
 
 const program = new Command();
 
@@ -39,32 +39,41 @@ function handleError(error: unknown): void {
 // Main Program Setup
 // ============================================================================
 program
-  .name("@pinax/token-api")
-  .description("Pinax Token API - Power your apps & AI agents with real-time token data")
-  .version("0.1.2");
+  .name('@pinax/token-api')
+  .description(
+    'Pinax Token API - Power your apps & AI agents with real-time token data',
+  )
+  .version('0.1.2');
 
 // ============================================================================
 // EVM Commands
 // ============================================================================
-const evm = program.command("evm").description("EVM (Ethereum Virtual Machine) operations");
+const evm = program
+  .command('evm')
+  .description('EVM (Ethereum Virtual Machine) operations');
 
 // EVM Tokens subgroup
-const evmTokens = evm.command("tokens").description("Token operations on EVM networks");
+const evmTokens = evm
+  .command('tokens')
+  .description('Token operations on EVM networks');
 
 evmTokens
-  .command("transfers")
-  .description("Get ERC-20 and native token transfers")
-  .requiredOption("--network <network>", "EVM network (mainnet, base, arbitrum-one, bsc, polygon, optimism, avalanche, unichain)")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--contract <address>", "Filter by token contract address")
-  .option("--from <address>", "Filter by sender address")
-  .option("--to <address>", "Filter by recipient address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('transfers')
+  .description('Get ERC-20 and native token transfers')
+  .requiredOption(
+    '--network <network>',
+    'EVM network (mainnet, base, arbitrum-one, bsc, polygon, optimism, avalanche, unichain)',
+  )
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--contract <address>', 'Filter by token contract address')
+  .option('--from <address>', 'Filter by sender address')
+  .option('--to <address>', 'Filter by recipient address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getTransfers({
@@ -87,12 +96,12 @@ evmTokens
   });
 
 evmTokens
-  .command("metadata")
-  .description("Get token metadata")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--contract <address>", "Token contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('metadata')
+  .description('Get token metadata')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--contract <address>', 'Token contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getTokens({
@@ -108,14 +117,14 @@ evmTokens
   });
 
 evmTokens
-  .command("balances")
-  .description("Get token balances for a wallet address")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--address <address>", "Wallet address")
-  .option("--contract <address>", "Filter by token contract address")
-  .option("--include-null-balances", "Include zero balances")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('balances')
+  .description('Get token balances for a wallet address')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--address <address>', 'Wallet address')
+  .option('--contract <address>', 'Filter by token contract address')
+  .option('--include-null-balances', 'Include zero balances')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getBalances({
@@ -133,12 +142,12 @@ evmTokens
   });
 
 evmTokens
-  .command("holders")
-  .description("Get token holders")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--contract <address>", "Token contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('holders')
+  .description('Get token holders')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--contract <address>', 'Token contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getHolders({
@@ -154,13 +163,13 @@ evmTokens
   });
 
 evmTokens
-  .command("native-balances")
-  .description("Get native token balances")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--address <address>", "Wallet address")
-  .option("--include-null-balances", "Include zero balances")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('native-balances')
+  .description('Get native token balances')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--address <address>', 'Wallet address')
+  .option('--include-null-balances', 'Include zero balances')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getNativeBalances({
@@ -177,16 +186,16 @@ evmTokens
   });
 
 evmTokens
-  .command("historical-balances")
-  .description("Get historical token balance changes in OHLCV format")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--address <address>", "Wallet address")
-  .option("--contract <address>", "Filter by token contract address")
-  .option("--interval <interval>", "Time interval (1h, 4h, 1d, 1w)")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('historical-balances')
+  .description('Get historical token balance changes in OHLCV format')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--address <address>', 'Wallet address')
+  .option('--contract <address>', 'Filter by token contract address')
+  .option('--interval <interval>', 'Time interval (1h, 4h, 1d, 1w)')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.tokens.getHistoricalBalances({
@@ -206,24 +215,29 @@ evmTokens
   });
 
 // EVM DEXs subgroup
-const evmDexs = evm.command("dexs").description("DEX operations on EVM networks");
+const evmDexs = evm
+  .command('dexs')
+  .description('DEX operations on EVM networks');
 
 evmDexs
-  .command("swaps")
-  .description("Get DEX swap transactions")
-  .requiredOption("--network <network>", "EVM network")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--pool <address>", "Filter by pool address")
-  .option("--caller <address>", "Filter by caller address")
-  .option("--sender <address>", "Filter by sender address")
-  .option("--recipient <address>", "Filter by recipient address")
-  .option("--protocol <protocol>", "Filter by DEX protocol (uniswap_v2, uniswap_v3)")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('swaps')
+  .description('Get DEX swap transactions')
+  .requiredOption('--network <network>', 'EVM network')
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--pool <address>', 'Filter by pool address')
+  .option('--caller <address>', 'Filter by caller address')
+  .option('--sender <address>', 'Filter by sender address')
+  .option('--recipient <address>', 'Filter by recipient address')
+  .option(
+    '--protocol <protocol>',
+    'Filter by DEX protocol (uniswap_v2, uniswap_v3)',
+  )
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.dexs.getSwaps({
@@ -248,14 +262,14 @@ evmDexs
   });
 
 evmDexs
-  .command("pools")
-  .description("Get DEX liquidity pools")
-  .requiredOption("--network <network>", "EVM network")
-  .option("--pool <address>", "Filter by pool address")
-  .option("--token0 <address>", "Filter by token0 address")
-  .option("--token1 <address>", "Filter by token1 address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('pools')
+  .description('Get DEX liquidity pools')
+  .requiredOption('--network <network>', 'EVM network')
+  .option('--pool <address>', 'Filter by pool address')
+  .option('--token0 <address>', 'Filter by token0 address')
+  .option('--token1 <address>', 'Filter by token1 address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.dexs.getPools({
@@ -273,9 +287,9 @@ evmDexs
   });
 
 evmDexs
-  .command("list")
-  .description("Get supported DEXs")
-  .requiredOption("--network <network>", "EVM network")
+  .command('list')
+  .description('Get supported DEXs')
+  .requiredOption('--network <network>', 'EVM network')
   .action(async (options) => {
     try {
       const result = await client.evm.dexs.getDexes({
@@ -288,15 +302,15 @@ evmDexs
   });
 
 evmDexs
-  .command("ohlc")
-  .description("Get OHLCV price data for liquidity pools")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--pool <address>", "Pool address")
-  .option("--interval <interval>", "Time interval (1h, 4h, 1d, 1w)")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('ohlc')
+  .description('Get OHLCV price data for liquidity pools')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--pool <address>', 'Pool address')
+  .option('--interval <interval>', 'Time interval (1h, 4h, 1d, 1w)')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.dexs.getPoolOHLC({
@@ -315,15 +329,17 @@ evmDexs
   });
 
 // EVM NFTs subgroup
-const evmNfts = evm.command("nfts").description("NFT operations on EVM networks");
+const evmNfts = evm
+  .command('nfts')
+  .description('NFT operations on EVM networks');
 
 evmNfts
-  .command("collections")
-  .description("Get NFT collection metadata and stats")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--contract <address>", "NFT contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('collections')
+  .description('Get NFT collection metadata and stats')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--contract <address>', 'NFT contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getCollections({
@@ -339,12 +355,12 @@ evmNfts
   });
 
 evmNfts
-  .command("holders")
-  .description("Get NFT holders for a collection")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--contract <address>", "NFT contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('holders')
+  .description('Get NFT holders for a collection')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--contract <address>', 'NFT contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getHolders({
@@ -360,13 +376,13 @@ evmNfts
   });
 
 evmNfts
-  .command("items")
-  .description("Get NFT items with metadata")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--contract <address>", "NFT contract address")
-  .option("--token-id <id>", "Filter by token ID")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('items')
+  .description('Get NFT items with metadata')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--contract <address>', 'NFT contract address')
+  .option('--token-id <id>', 'Filter by token ID')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getItems({
@@ -383,13 +399,13 @@ evmNfts
   });
 
 evmNfts
-  .command("ownerships")
-  .description("Get NFT ownerships by wallet address")
-  .requiredOption("--network <network>", "EVM network")
-  .requiredOption("--address <address>", "Wallet address")
-  .option("--contract <address>", "Filter by NFT contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('ownerships')
+  .description('Get NFT ownerships by wallet address')
+  .requiredOption('--network <network>', 'EVM network')
+  .requiredOption('--address <address>', 'Wallet address')
+  .option('--contract <address>', 'Filter by NFT contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getOwnerships({
@@ -406,19 +422,19 @@ evmNfts
   });
 
 evmNfts
-  .command("sales")
-  .description("Get NFT sales data")
-  .requiredOption("--network <network>", "EVM network")
-  .option("--contract <address>", "Filter by NFT contract address")
-  .option("--token-id <id>", "Filter by token ID")
-  .option("--buyer <address>", "Filter by buyer address")
-  .option("--seller <address>", "Filter by seller address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('sales')
+  .description('Get NFT sales data')
+  .requiredOption('--network <network>', 'EVM network')
+  .option('--contract <address>', 'Filter by NFT contract address')
+  .option('--token-id <id>', 'Filter by token ID')
+  .option('--buyer <address>', 'Filter by buyer address')
+  .option('--seller <address>', 'Filter by seller address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getSales({
@@ -441,20 +457,20 @@ evmNfts
   });
 
 evmNfts
-  .command("transfers")
-  .description("Get NFT transfers")
-  .requiredOption("--network <network>", "EVM network")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--contract <address>", "Filter by NFT contract address")
-  .option("--token-id <id>", "Filter by token ID")
-  .option("--from <address>", "Filter by sender address")
-  .option("--to <address>", "Filter by recipient address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('transfers')
+  .description('Get NFT transfers')
+  .requiredOption('--network <network>', 'EVM network')
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--contract <address>', 'Filter by NFT contract address')
+  .option('--token-id <id>', 'Filter by token ID')
+  .option('--from <address>', 'Filter by sender address')
+  .option('--to <address>', 'Filter by recipient address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.evm.nfts.getTransfers({
@@ -480,27 +496,31 @@ evmNfts
 // ============================================================================
 // SVM Commands
 // ============================================================================
-const svm = program.command("svm").description("SVM (Solana Virtual Machine) operations");
+const svm = program
+  .command('svm')
+  .description('SVM (Solana Virtual Machine) operations');
 
 // SVM Tokens subgroup
-const svmTokens = svm.command("tokens").description("Token operations on SVM networks");
+const svmTokens = svm
+  .command('tokens')
+  .description('Token operations on SVM networks');
 
 svmTokens
-  .command("transfers")
-  .description("Get SPL token transfers")
-  .requiredOption("--network <network>", "SVM network (solana)")
-  .option("--signature <signature>", "Filter by transaction signature")
-  .option("--mint <address>", "Filter by token mint address")
-  .option("--from <address>", "Filter by sender address")
-  .option("--to <address>", "Filter by recipient address")
-  .option("--from-owner <address>", "Filter by sender owner address")
-  .option("--to-owner <address>", "Filter by recipient owner address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('transfers')
+  .description('Get SPL token transfers')
+  .requiredOption('--network <network>', 'SVM network (solana)')
+  .option('--signature <signature>', 'Filter by transaction signature')
+  .option('--mint <address>', 'Filter by token mint address')
+  .option('--from <address>', 'Filter by sender address')
+  .option('--to <address>', 'Filter by recipient address')
+  .option('--from-owner <address>', 'Filter by sender owner address')
+  .option('--to-owner <address>', 'Filter by recipient owner address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getTransfers({
@@ -525,12 +545,12 @@ svmTokens
   });
 
 svmTokens
-  .command("metadata")
-  .description("Get token metadata")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--mint <address>", "Token mint address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('metadata')
+  .description('Get token metadata')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--mint <address>', 'Token mint address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getTokens({
@@ -546,14 +566,14 @@ svmTokens
   });
 
 svmTokens
-  .command("balances")
-  .description("Get token balances for a wallet address")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--owner <address>", "Wallet owner address")
-  .option("--mint <address>", "Filter by token mint address")
-  .option("--include-null-balances", "Include zero balances")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('balances')
+  .description('Get token balances for a wallet address')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--owner <address>', 'Wallet owner address')
+  .option('--mint <address>', 'Filter by token mint address')
+  .option('--include-null-balances', 'Include zero balances')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getBalances({
@@ -571,13 +591,13 @@ svmTokens
   });
 
 svmTokens
-  .command("native-balances")
-  .description("Get native SOL balances")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--address <address>", "Wallet address")
-  .option("--include-null-balances", "Include zero balances")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('native-balances')
+  .description('Get native SOL balances')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--address <address>', 'Wallet address')
+  .option('--include-null-balances', 'Include zero balances')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getNativeBalances({
@@ -594,12 +614,12 @@ svmTokens
   });
 
 svmTokens
-  .command("holders")
-  .description("Get token holders")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--mint <address>", "Token mint address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('holders')
+  .description('Get token holders')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--mint <address>', 'Token mint address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getHolders({
@@ -615,12 +635,12 @@ svmTokens
   });
 
 svmTokens
-  .command("owner")
-  .description("Get account owner lookup")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--account <address>", "Account address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('owner')
+  .description('Get account owner lookup')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--account <address>', 'Account address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.tokens.getAccountOwner({
@@ -636,24 +656,26 @@ svmTokens
   });
 
 // SVM DEXs subgroup
-const svmDexs = svm.command("dexs").description("DEX operations on SVM networks");
+const svmDexs = svm
+  .command('dexs')
+  .description('DEX operations on SVM networks');
 
 svmDexs
-  .command("swaps")
-  .description("Get DEX swap transactions")
-  .requiredOption("--network <network>", "SVM network")
-  .option("--signature <signature>", "Filter by transaction signature")
-  .option("--amm <address>", "Filter by AMM address")
-  .option("--amm-pool <address>", "Filter by AMM pool address")
-  .option("--user <address>", "Filter by user address")
-  .option("--input-mint <address>", "Filter by input mint address")
-  .option("--output-mint <address>", "Filter by output mint address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('swaps')
+  .description('Get DEX swap transactions')
+  .requiredOption('--network <network>', 'SVM network')
+  .option('--signature <signature>', 'Filter by transaction signature')
+  .option('--amm <address>', 'Filter by AMM address')
+  .option('--amm-pool <address>', 'Filter by AMM pool address')
+  .option('--user <address>', 'Filter by user address')
+  .option('--input-mint <address>', 'Filter by input mint address')
+  .option('--output-mint <address>', 'Filter by output mint address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.dexs.getSwaps({
@@ -678,14 +700,14 @@ svmDexs
   });
 
 svmDexs
-  .command("pools")
-  .description("Get DEX liquidity pools")
-  .requiredOption("--network <network>", "SVM network")
-  .option("--amm-pool <address>", "Filter by AMM pool address")
-  .option("--base-mint <address>", "Filter by base mint address")
-  .option("--quote-mint <address>", "Filter by quote mint address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('pools')
+  .description('Get DEX liquidity pools')
+  .requiredOption('--network <network>', 'SVM network')
+  .option('--amm-pool <address>', 'Filter by AMM pool address')
+  .option('--base-mint <address>', 'Filter by base mint address')
+  .option('--quote-mint <address>', 'Filter by quote mint address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.dexs.getPools({
@@ -703,9 +725,9 @@ svmDexs
   });
 
 svmDexs
-  .command("list")
-  .description("Get supported DEXs")
-  .requiredOption("--network <network>", "SVM network")
+  .command('list')
+  .description('Get supported DEXs')
+  .requiredOption('--network <network>', 'SVM network')
   .action(async (options) => {
     try {
       const result = await client.svm.dexs.getDexes({
@@ -718,15 +740,15 @@ svmDexs
   });
 
 svmDexs
-  .command("ohlc")
-  .description("Get OHLCV price data for liquidity pools")
-  .requiredOption("--network <network>", "SVM network")
-  .requiredOption("--amm-pool <address>", "AMM pool address")
-  .option("--interval <interval>", "Time interval (1h, 4h, 1d, 1w)")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('ohlc')
+  .description('Get OHLCV price data for liquidity pools')
+  .requiredOption('--network <network>', 'SVM network')
+  .requiredOption('--amm-pool <address>', 'AMM pool address')
+  .option('--interval <interval>', 'Time interval (1h, 4h, 1d, 1w)')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.svm.dexs.getPoolOHLC({
@@ -747,25 +769,29 @@ svmDexs
 // ============================================================================
 // TVM Commands
 // ============================================================================
-const tvm = program.command("tvm").description("TVM (Tron Virtual Machine) operations");
+const tvm = program
+  .command('tvm')
+  .description('TVM (Tron Virtual Machine) operations');
 
 // TVM Tokens subgroup
-const tvmTokens = tvm.command("tokens").description("Token operations on TVM networks");
+const tvmTokens = tvm
+  .command('tokens')
+  .description('Token operations on TVM networks');
 
 tvmTokens
-  .command("transfers")
-  .description("Get TRC-20 token transfers")
-  .requiredOption("--network <network>", "TVM network (tron)")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--contract <address>", "Filter by token contract address")
-  .option("--from <address>", "Filter by sender address")
-  .option("--to <address>", "Filter by recipient address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('transfers')
+  .description('Get TRC-20 token transfers')
+  .requiredOption('--network <network>', 'TVM network (tron)')
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--contract <address>', 'Filter by token contract address')
+  .option('--from <address>', 'Filter by sender address')
+  .option('--to <address>', 'Filter by recipient address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.tvm.tokens.getTransfers({
@@ -788,18 +814,18 @@ tvmTokens
   });
 
 tvmTokens
-  .command("native-transfers")
-  .description("Get native TRX transfers")
-  .requiredOption("--network <network>", "TVM network")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--from <address>", "Filter by sender address")
-  .option("--to <address>", "Filter by recipient address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('native-transfers')
+  .description('Get native TRX transfers')
+  .requiredOption('--network <network>', 'TVM network')
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--from <address>', 'Filter by sender address')
+  .option('--to <address>', 'Filter by recipient address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.tvm.tokens.getNativeTransfers({
@@ -821,12 +847,12 @@ tvmTokens
   });
 
 tvmTokens
-  .command("metadata")
-  .description("Get token metadata")
-  .requiredOption("--network <network>", "TVM network")
-  .requiredOption("--contract <address>", "Token contract address")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('metadata')
+  .description('Get token metadata')
+  .requiredOption('--network <network>', 'TVM network')
+  .requiredOption('--contract <address>', 'Token contract address')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.tvm.tokens.getTokens({
@@ -842,23 +868,25 @@ tvmTokens
   });
 
 // TVM DEXs subgroup
-const tvmDexs = tvm.command("dexs").description("DEX operations on TVM networks");
+const tvmDexs = tvm
+  .command('dexs')
+  .description('DEX operations on TVM networks');
 
 tvmDexs
-  .command("swaps")
-  .description("Get DEX swap transactions")
-  .requiredOption("--network <network>", "TVM network")
-  .option("--transaction-id <id>", "Filter by transaction ID")
-  .option("--pool <address>", "Filter by pool address")
-  .option("--caller <address>", "Filter by caller address")
-  .option("--sender <address>", "Filter by sender address")
-  .option("--recipient <address>", "Filter by recipient address")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--start-block <block>", "Start block number", parseInt)
-  .option("--end-block <block>", "End block number", parseInt)
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('swaps')
+  .description('Get DEX swap transactions')
+  .requiredOption('--network <network>', 'TVM network')
+  .option('--transaction-id <id>', 'Filter by transaction ID')
+  .option('--pool <address>', 'Filter by pool address')
+  .option('--caller <address>', 'Filter by caller address')
+  .option('--sender <address>', 'Filter by sender address')
+  .option('--recipient <address>', 'Filter by recipient address')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--start-block <block>', 'Start block number', parseInt)
+  .option('--end-block <block>', 'End block number', parseInt)
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.tvm.dexs.getSwaps({
@@ -882,9 +910,9 @@ tvmDexs
   });
 
 tvmDexs
-  .command("list")
-  .description("Get supported DEXs")
-  .requiredOption("--network <network>", "TVM network")
+  .command('list')
+  .description('Get supported DEXs')
+  .requiredOption('--network <network>', 'TVM network')
   .action(async (options) => {
     try {
       const result = await client.tvm.dexs.getDexes({
@@ -897,15 +925,15 @@ tvmDexs
   });
 
 tvmDexs
-  .command("ohlc")
-  .description("Get OHLCV price data for liquidity pools")
-  .requiredOption("--network <network>", "TVM network")
-  .requiredOption("--pool <address>", "Pool address")
-  .option("--interval <interval>", "Time interval (1h, 4h, 1d, 1w)")
-  .option("--start-time <time>", "Start time (ISO 8601)")
-  .option("--end-time <time>", "End time (ISO 8601)")
-  .option("--page <number>", "Page number", parseInt)
-  .option("--limit <number>", "Results per page", parseInt)
+  .command('ohlc')
+  .description('Get OHLCV price data for liquidity pools')
+  .requiredOption('--network <network>', 'TVM network')
+  .requiredOption('--pool <address>', 'Pool address')
+  .option('--interval <interval>', 'Time interval (1h, 4h, 1d, 1w)')
+  .option('--start-time <time>', 'Start time (ISO 8601)')
+  .option('--end-time <time>', 'End time (ISO 8601)')
+  .option('--page <number>', 'Page number', parseInt)
+  .option('--limit <number>', 'Results per page', parseInt)
   .action(async (options) => {
     try {
       const result = await client.tvm.dexs.getPoolOHLC({
@@ -926,11 +954,13 @@ tvmDexs
 // ============================================================================
 // Monitoring Commands
 // ============================================================================
-const monitoring = program.command("monitoring").description("API monitoring and status");
+const monitoring = program
+  .command('monitoring')
+  .description('API monitoring and status');
 
 monitoring
-  .command("health")
-  .description("Check API health status")
+  .command('health')
+  .description('Check API health status')
   .action(async () => {
     try {
       const result = await client.getHealth();
@@ -941,8 +971,8 @@ monitoring
   });
 
 monitoring
-  .command("version")
-  .description("Get API version information")
+  .command('version')
+  .description('Get API version information')
   .action(async () => {
     try {
       const result = await client.getVersion();
@@ -953,8 +983,8 @@ monitoring
   });
 
 monitoring
-  .command("networks")
-  .description("Get list of supported networks")
+  .command('networks')
+  .description('Get list of supported networks')
   .action(async () => {
     try {
       const result = await client.getNetworks();

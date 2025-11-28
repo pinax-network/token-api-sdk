@@ -6,7 +6,7 @@
  * @see https://thegraph.com/docs/en/token-api/quick-start/
  */
 
-import { TokenAPI } from "@pinax/token-api";
+import { TokenAPI } from '@pinax/token-api';
 
 async function main() {
   // Initialize the client with your bearer token
@@ -14,11 +14,11 @@ async function main() {
     apiToken: process.env.GRAPH_API_TOKEN,
   });
 
-  console.log("Fetching 100 most recent swaps on Solana...\n");
+  console.log('Fetching 100 most recent swaps on Solana...\n');
 
   // Get swaps using the high-level client
   const data = await client.svm.dexs.getSwaps({
-    network: "solana",
+    network: 'solana',
     limit: 10,
   });
 
