@@ -131,8 +131,11 @@ export const TVMChains = {
  */
 export interface PinaxClientOptions {
   /**
-   * Bearer token for authentication
+   * Bearer token for authentication.
    * Get your API token at https://thegraph.market
+   *
+   * Required for most API endpoints. Some monitoring endpoints
+   * like health, version, and networks may work without authentication.
    */
   apiToken?: string;
 
