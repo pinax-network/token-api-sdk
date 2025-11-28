@@ -22,7 +22,10 @@
     "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun test"
+    "test": "bun test",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write ."
   },
   "keywords": [
     "pinax",
@@ -35,12 +38,13 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pinax-network/pinax-token-api-sdk.git"
+    "url": "git+https://github.com/pinax-network/token-api-sdk.git"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "openapi-typescript": "^7.0.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@biomejs/biome": "^2.3.6"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
