@@ -253,7 +253,7 @@ class EvmTokens {
   /**
    * Get token metadata
    */
-  async getTokens(params: {
+  async getTokenMetadata(params: {
     network: EvmNetwork;
     contract: string;
     page?: number;
@@ -590,7 +590,7 @@ class SvmTokens {
   /**
    * Get token metadata
    */
-  async getTokens(params: {
+  async getTokenMetadata(params: {
     network: SvmNetwork;
     mint: string;
     page?: number;
@@ -831,7 +831,7 @@ class TvmTokens {
   /**
    * Get token metadata
    */
-  async getTokens(params: {
+  async getTokenMetadata(params: {
     network: TvmNetwork;
     contract: string;
     page?: number;

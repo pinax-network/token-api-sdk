@@ -70,7 +70,7 @@ describe('TokenAPI', () => {
     it('should expose evm.tokens API', () => {
       expect(client.evm.tokens).toBeDefined();
       expect(typeof client.evm.tokens.getTransfers).toBe('function');
-      expect(typeof client.evm.tokens.getTokens).toBe('function');
+      expect(typeof client.evm.tokens.getTokenMetadata).toBe('function');
       expect(typeof client.evm.tokens.getBalances).toBe('function');
       expect(typeof client.evm.tokens.getHolders).toBe('function');
       expect(typeof client.evm.tokens.getNativeBalances).toBe('function');
@@ -106,7 +106,7 @@ describe('TokenAPI', () => {
     it('should expose svm.tokens API', () => {
       expect(client.svm.tokens).toBeDefined();
       expect(typeof client.svm.tokens.getTransfers).toBe('function');
-      expect(typeof client.svm.tokens.getTokens).toBe('function');
+      expect(typeof client.svm.tokens.getTokenMetadata).toBe('function');
       expect(typeof client.svm.tokens.getBalances).toBe('function');
       expect(typeof client.svm.tokens.getNativeBalances).toBe('function');
       expect(typeof client.svm.tokens.getHolders).toBe('function');
@@ -137,7 +137,7 @@ describe('TokenAPI', () => {
       expect(client.tvm.tokens).toBeDefined();
       expect(typeof client.tvm.tokens.getTransfers).toBe('function');
       expect(typeof client.tvm.tokens.getNativeTransfers).toBe('function');
-      expect(typeof client.tvm.tokens.getTokens).toBe('function');
+      expect(typeof client.tvm.tokens.getTokenMetadata).toBe('function');
     });
 
     it('should expose tvm.dexs API', () => {
