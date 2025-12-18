@@ -366,7 +366,7 @@ describe('API methods with mocked fetch', () => {
     });
 
     expect(capturedRequest).not.toBeNull();
-    expect(capturedRequest!.headers.get('Referer')).toBe('@pinax/token-api');
+    expect(capturedRequest!.headers.get('User-Agent')).toBe('@pinax/token-api');
   });
 
   it('should use custom base URL when provided', async () => {

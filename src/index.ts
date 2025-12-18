@@ -377,9 +377,10 @@ class EvmDexs {
    */
   async getPools(params: {
     network: EvmNetwork;
+    factory?: string;
     pool?: string;
-    token0?: string;
-    token1?: string;
+    input_token?: string;
+    output_token?: string;
     page?: number;
     limit?: number;
   }) {
@@ -707,9 +708,11 @@ class SvmDexs {
    */
   async getPools(params: {
     network: SvmNetwork;
+    amm?: string | string[];
     amm_pool?: string | string[];
-    base_mint?: string | string[];
-    quote_mint?: string | string[];
+    input_mint?: string | string[];
+    output_mint?: string | string[];
+    program_id?: string;
     page?: number;
     limit?: number;
   }) {
@@ -880,6 +883,25 @@ class TvmDexs {
    */
   async getDexes(params: { network: TvmNetwork }) {
     const { data, error } = await this.client.GET('/v1/tvm/dexes', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get DEX liquidity pools
+   */
+  async getPools(params: {
+    network: TvmNetwork;
+    factory?: string;
+    pool?: string;
+    input_token?: string;
+    output_token?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET('/v1/tvm/pools', {
       params: { query: params },
     });
 

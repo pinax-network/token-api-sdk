@@ -247,7 +247,7 @@ export interface paths {
         };
         /**
          * Liquidity Pools
-         * @description Returns Uniswap liquidity pool metadata including token pairs, fees, and protocol versions.
+         * @description Returns DEX pool metadata including tokens, fees and protocol.
          */
         get: operations["getV1EvmPools"];
         put?: never;
@@ -266,7 +266,7 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Pool OHLCV Data
+         * Pool OHLCV
          * @description Returns OHLCV price data for liquidity pools.
          *
          *     OHLCV historical depth is subject to plan restrictions.
@@ -289,7 +289,7 @@ export interface paths {
         };
         /**
          * Swap Events
-         * @description Returns DEX swap transactions from Uniswap protocols with token amounts and prices.
+         * @description Returns DEX swaps events with input & output token amounts.
          */
         get: operations["getV1EvmSwaps"];
         put?: never;
@@ -448,7 +448,7 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Pool OHLCV Data
+         * Pool OHLCV
          * @description Provides pricing data in the Open/High/Low/Close/Volume (OHCLV) format for DEX pools.
          */
         get: operations["getV1SvmPoolsOhlc"];
@@ -560,6 +560,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tvm/pools": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Liquidity Pools
+         * @description Returns DEX pool metadata including tokens, fees and protocol.
+         */
+        get: operations["getV1TvmPools"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/tvm/pools/ohlc": {
         parameters: {
             query?: never;
@@ -568,7 +588,7 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Pool OHLCV Data
+         * Pool OHLCV
          * @description Returns OHLCV price data for liquidity pools.
          *
          *     OHLCV historical depth is subject to plan restrictions.
@@ -591,7 +611,7 @@ export interface paths {
         };
         /**
          * Swap Events
-         * @description Returns DEX swap transactions from Tron protocols with token amounts and prices.
+         * @description Returns DEX swaps events with input & output token amounts.
          */
         get: operations["getV1TvmSwaps"];
         put?: never;
@@ -1172,6 +1192,10 @@ export interface operations {
             query: {
                 /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
                 network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
             };
             header?: never;
             path?: never;
@@ -1197,11 +1221,17 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v2" | "uniswap_v3" | "uniswap_v4";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
                             uaw: number;
                             transactions: number;
                             /** @description ISO 8601 datetime string */
                             last_activity: string;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -2388,7 +2418,7 @@ export interface operations {
                 /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_token?: string | string[];
                 /** @description Protocol name */
-                protocol?: "uniswap_v2" | "uniswap_v3" | "uniswap_v4";
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -2409,15 +2439,21 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * @description Filter by pool address
+                             * @example 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640
+                             */
+                            pool: string;
+                            /**
                              * @description Filter by factory address
                              * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
                              */
                             factory: string;
                             /**
-                             * @description Filter by pool address
-                             * @example 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640
+                             * @description Protocol name
+                             * @example uniswap_v3
+                             * @enum {string}
                              */
-                            pool: string;
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
                             input_token: {
                                 address: string | null;
                                 symbol: string | null;
@@ -2428,13 +2464,6 @@ export interface operations {
                                 symbol: string | null;
                                 decimals: number | null;
                             };
-                            fee: number;
-                            /**
-                             * @description Protocol name
-                             * @example uniswap_v3
-                             * @enum {string}
-                             */
-                            protocol: "uniswap_v2" | "uniswap_v3" | "uniswap_v4";
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -2576,6 +2605,12 @@ export interface operations {
                             volume: number;
                             uaw: number;
                             transactions: number;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -2672,6 +2707,8 @@ export interface operations {
                 network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
                 /** @description Filter by transaction hash<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 transaction_id?: string | string[];
+                /** @description Filter by factory address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                factory?: string | string[];
                 /** @description Filter by pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 pool?: string | (string) | (string)[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
@@ -2680,8 +2717,12 @@ export interface operations {
                 sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 recipient?: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                input_contract?: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                output_contract?: string | string[];
                 /** @description Protocol name */
-                protocol?: "uniswap_v2" | "uniswap_v3" | "uniswap_v4";
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -2759,7 +2800,7 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v2" | "uniswap_v3" | "uniswap_v4";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
                             summary: string;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
@@ -3469,6 +3510,10 @@ export interface operations {
             query: {
                 /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
                 network: "solana";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
             };
             header?: never;
             path?: never;
@@ -4679,6 +4724,10 @@ export interface operations {
             query: {
                 /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
                 network: "tron";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
             };
             header?: never;
             path?: never;
@@ -4701,13 +4750,175 @@ export interface operations {
                             factory: string;
                             /**
                              * @description Protocol name
-                             * @example sunswap
+                             * @example uniswap_v2
                              * @enum {string}
                              */
-                            protocol: "justswap" | "sunswap" | "sunpump";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
                             transactions: number;
                             uaw: number;
                             last_activity: string;
+                            /**
+                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
+                             * @example tron
+                             * @enum {string}
+                             */
+                            network: "tron";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1TvmPools: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
+                network: "tron";
+                /** @description Filter by factory address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                factory?: string | string[];
+                /** @description Filter by pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                pool?: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                input_token?: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                output_token?: string | string[];
+                /** @description Protocol name */
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /**
+                             * @description Filter by factory address
+                             * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+                             */
+                            factory: string;
+                            /**
+                             * @description Filter by pool address
+                             * @example 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640
+                             */
+                            pool: string;
+                            input_token: {
+                                address: string | null;
+                                symbol: string | null;
+                                decimals: number | null;
+                            };
+                            output_token: {
+                                address: string | null;
+                                symbol: string | null;
+                                decimals: number | null;
+                            };
+                            fee: number;
+                            /**
+                             * @description Protocol name
+                             * @example uniswap_v3
+                             * @enum {string}
+                             */
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -4843,6 +5054,12 @@ export interface operations {
                             volume: number;
                             uaw: number;
                             transactions: number;
+                            /**
+                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
+                             * @example tron
+                             * @enum {string}
+                             */
+                            network: "tron";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -4944,13 +5161,17 @@ export interface operations {
                 /** @description Filter by pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 pool?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                user?: string | string[];
+                caller?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                input_token?: string | string[];
+                sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                output_token?: string | string[];
+                recipient?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                input_contract?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                output_contract?: string | string[];
                 /** @description Protocol name */
-                protocol?: "justswap" | "sunswap" | "sunpump";
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -4982,21 +5203,6 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             transaction_id: string;
-                            transaction_index: number;
-                            log_index: number;
-                            log_ordinal: number;
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            log_address: string;
-                            log_topic0: string;
-                            /**
-                             * @description Protocol name
-                             * @example sunswap
-                             * @enum {string}
-                             */
-                            protocol: "justswap" | "sunswap" | "sunpump";
                             /**
                              * @description Filter by factory address
                              * @example TKWJdrQkqHisa1X8HUdHEfREvTzw4pMAaY
@@ -5007,13 +5213,6 @@ export interface operations {
                              * @example TFGDbUyP8xez44C76fin3bn3Ss6jugoUwJ
                              */
                             pool: string;
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            user: string;
-                            input_amount: string;
-                            input_value: number;
                             input_token: {
                                 /**
                                  * @description Filter by address
@@ -5024,8 +5223,6 @@ export interface operations {
                                 name: string;
                                 decimals: number;
                             };
-                            output_amount: string;
-                            output_value: number;
                             output_token: {
                                 /**
                                  * @description Filter by address
@@ -5036,6 +5233,34 @@ export interface operations {
                                 name: string;
                                 decimals: number;
                             };
+                            /**
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            caller: string;
+                            /**
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            sender: string;
+                            /**
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            recipient: string;
+                            input_amount: string;
+                            input_value: number;
+                            output_amount: string;
+                            output_value: number;
+                            price: number;
+                            price_inv: number;
+                            /**
+                             * @description Protocol name
+                             * @example uniswap_v2
+                             * @enum {string}
+                             */
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
+                            summary: string;
                             /**
                              * @description The Graph Network ID for TVM networks https://thegraph.com/networks
                              * @example tron

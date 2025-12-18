@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "prepublishOnly": "bun run build",
-    "generate": "openapi-typescript https://token-api.thegraph.com/openapi -o src/openapi.d.ts",
+    "generate": "openapi-typescript https://token-api.service.stage.pinax.network/openapi -o src/openapi.d.ts",
     "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
