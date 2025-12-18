@@ -161,7 +161,7 @@ function createAuthMiddleware(options: PinaxClientOptions): Middleware {
       if (apiToken) {
         request.headers.set('Authorization', `Bearer ${apiToken}`);
       }
-      request.headers.set('Referer', '@pinax/token-api');
+      request.headers.set('User-Agent', '@pinax/token-api');
       return request;
     },
   };
