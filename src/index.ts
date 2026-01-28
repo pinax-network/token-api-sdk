@@ -228,7 +228,7 @@ class EvmTokens {
   constructor(private client: ReturnType<typeof createAPIClient>) { }
 
   /**
-   * Get ERC-20 and native token transfers
+   * Get ERC-20 token transfers
    */
   async getTransfers(params: {
     network: EvmNetwork;
@@ -244,6 +244,28 @@ class EvmTokens {
     limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/evm/transfers', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native token transfers (ETH, etc.)
+   */
+  async getNativeTransfers(params: {
+    network: EvmNetwork;
+    transaction_id?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
+    start_time?: string;
+    end_time?: string;
+    start_block?: number;
+    end_block?: number;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET('/v1/evm/transfers/native', {
       params: { query: params },
     });
 
@@ -301,6 +323,21 @@ class EvmTokens {
   }
 
   /**
+   * Get native token holders (ranked by ETH balance, etc.)
+   */
+  async getNativeHolders(params: {
+    network: EvmNetwork;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET('/v1/evm/holders/native', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
    * Get native token balances for wallet addresses
    */
   async getNativeBalances(params: {
@@ -336,6 +373,41 @@ class EvmTokens {
         params: { query: params },
       },
     );
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get historical native balance changes over time in OHLCV format
+   */
+  async getHistoricalNativeBalances(params: {
+    network: EvmNetwork;
+    address: string;
+    interval?: '1h' | '4h' | '1d' | '1w';
+    start_time?: string;
+    end_time?: string;
+    page?: number;
+    limit?: number;
+  }) {
+    const { data, error } = await this.client.GET(
+      '/v1/evm/balances/historical/native',
+      {
+        params: { query: params },
+      },
+    );
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native token metadata (ETH, etc.) including supply and holder count
+   */
+  async getNativeTokenMetadata(params: {
+    network: EvmNetwork;
+  }) {
+    const { data, error } = await this.client.GET('/v1/evm/tokens/native', {
+      params: { query: params },
+    });
 
     return handleResponse(data, error);
   }
@@ -841,6 +913,19 @@ class TvmTokens {
     limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/tvm/tokens', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native TRX token metadata
+   */
+  async getNativeTokenMetadata(params: {
+    network: TvmNetwork;
+  }) {
+    const { data, error } = await this.client.GET('/v1/tvm/tokens/native', {
       params: { query: params },
     });
 

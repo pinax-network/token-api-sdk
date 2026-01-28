@@ -1,6 +1,6 @@
 {
   "name": "@pinax/token-api",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Pinax Token API - Power your apps & AI agents with real-time token data",
   "main": "dist/index.js",
   "module": "dist/index.js",
