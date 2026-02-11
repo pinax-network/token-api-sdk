@@ -218,18 +218,6 @@ export interface paths {
         /**
          * NFT Collection
          * @description Returns NFT collection metadata, supply stats, owner count, and transfer history.
-         *
-         *     The `spam_status` flag indicates if the NFT is likely spam. If status shows `pending`, retry in a few seconds.
-         *
-         *     Spam detection is supported for:
-         *
-         *     * mainnet
-         *     * base
-         *     * polygon
-         *     * arbitrum-one
-         *     * avalanche
-         *     * optimism
-         *     * bsc
          */
         get: operations["getV1EvmNftCollections"];
         put?: never;
@@ -2393,8 +2381,6 @@ export interface operations {
                              * @enum {string}
                              */
                             network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                            /** @enum {string} */
-                            spam_status: "spam" | "not_spam" | "pending" | "not_supported" | "error";
                         }[];
                         statistics: {
                             elapsed?: number;
