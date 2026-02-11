@@ -9,6 +9,7 @@ bun-debug.log*
 package-lock.json
 yarn.lock
 
+.DS_Store
 # Build output
 dist
 
