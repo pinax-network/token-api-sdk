@@ -53,7 +53,18 @@ export type TvmNetwork = 'tron';
 export type EvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'bancor' | 'curvefi' | 'balancer';
 export type TvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'sunpump';
 export type SvmTokenProgramId = '11111111111111111111111111111111' | 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' | 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
-export type SvmDexProgramId = 'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj' | 'CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C' | '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8' | 'CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK' | 'Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB' | 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4' | 'LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo' | 'cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG' | 'pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA' | 'JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB' | '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
+export type SvmDexProgramId =
+  | 'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj'
+  | 'CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C'
+  | '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8'
+  | 'CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK'
+  | 'Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB'
+  | 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4'
+  | 'LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo'
+  | 'cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG'
+  | 'pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA'
+  | 'JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB'
+  | '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 
 /**
  * @deprecated Use `EvmDexProtocol` or `TvmDexProtocol` instead.
