@@ -453,6 +453,8 @@ class EvmDexs {
     pool?: string;
     input_token?: string;
     output_token?: string;
+    start_time?: string;
+    end_time?: string;
     page?: number;
     limit?: number;
   }) {
@@ -785,6 +787,8 @@ class SvmDexs {
     input_mint?: string | string[];
     output_mint?: string | string[];
     program_id?: string;
+    start_time?: string;
+    end_time?: string;
     page?: number;
     limit?: number;
   }) {
@@ -983,6 +987,8 @@ class TvmDexs {
     pool?: string;
     input_token?: string;
     output_token?: string;
+    start_time?: string;
+    end_time?: string;
     page?: number;
     limit?: number;
   }) {

@@ -278,6 +278,21 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('network=mainnet');
   });
 
+  it('should include start_time and end_time for EVM pools', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.dexs.getPools({
+      network: 'mainnet',
+      start_time: '2025-01-01T00:00:00Z',
+      end_time: '2025-01-02T00:00:00Z',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/pools');
+    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
+  });
+
   it('should call the correct endpoint for SVM transfers', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
@@ -291,6 +306,21 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('network=solana');
   });
 
+  it('should include start_time and end_time for SVM pools', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.dexs.getPools({
+      network: 'solana',
+      start_time: '2025-01-01T00:00:00Z',
+      end_time: '2025-01-02T00:00:00Z',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/pools');
+    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
+  });
+
   it('should call the correct endpoint for TVM transfers', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
@@ -302,6 +332,21 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/tvm/transfers');
     expect(capturedRequest!.url).toContain('network=tron');
+  });
+
+  it('should include start_time and end_time for TVM pools', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.dexs.getPools({
+      network: 'tron',
+      start_time: '2025-01-01T00:00:00Z',
+      end_time: '2025-01-02T00:00:00Z',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/pools');
+    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
   });
 
   it('should work with EVMChains.Ethereum constant', async () => {
