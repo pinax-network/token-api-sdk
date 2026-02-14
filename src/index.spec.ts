@@ -144,6 +144,7 @@ describe('TokenAPI', () => {
       expect(client.tvm.dexs).toBeDefined();
       expect(typeof client.tvm.dexs.getSwaps).toBe('function');
       expect(typeof client.tvm.dexs.getDexes).toBe('function');
+      expect(typeof client.tvm.dexs.getPools).toBe('function');
       expect(typeof client.tvm.dexs.getPoolOHLC).toBe('function');
     });
 
@@ -278,19 +279,17 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('network=mainnet');
   });
 
-  it('should include start_time and end_time for EVM pools', async () => {
+  it('should include protocol filter for EVM pools', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
     await client.evm.dexs.getPools({
       network: 'mainnet',
-      start_time: '2025-01-01T00:00:00Z',
-      end_time: '2025-01-02T00:00:00Z',
+      protocol: 'uniswap_v3',
     });
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/evm/pools');
-    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
-    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('protocol=uniswap_v3');
   });
 
   it('should call the correct endpoint for SVM transfers', async () => {
@@ -306,19 +305,17 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('network=solana');
   });
 
-  it('should include start_time and end_time for SVM pools', async () => {
+  it('should include amm_pool filter for SVM pools', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
     await client.svm.dexs.getPools({
       network: 'solana',
-      start_time: '2025-01-01T00:00:00Z',
-      end_time: '2025-01-02T00:00:00Z',
+      amm_pool: 'pool-address',
     });
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/svm/pools');
-    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
-    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('amm_pool=pool-address');
   });
 
   it('should call the correct endpoint for TVM transfers', async () => {
@@ -334,19 +331,17 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('network=tron');
   });
 
-  it('should include start_time and end_time for TVM pools', async () => {
+  it('should include protocol filter for TVM pools', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
     await client.tvm.dexs.getPools({
       network: 'tron',
-      start_time: '2025-01-01T00:00:00Z',
-      end_time: '2025-01-02T00:00:00Z',
+      protocol: 'sunpump',
     });
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/tvm/pools');
-    expect(capturedRequest!.url).toContain('start_time=2025-01-01T00%3A00%3A00Z');
-    expect(capturedRequest!.url).toContain('end_time=2025-01-02T00%3A00%3A00Z');
+    expect(capturedRequest!.url).toContain('protocol=sunpump');
   });
 
   it('should work with EVMChains.Ethereum constant', async () => {
