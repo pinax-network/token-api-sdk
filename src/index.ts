@@ -50,7 +50,15 @@ export type SvmNetwork = 'solana';
 
 export type TvmNetwork = 'tron';
 
-export type DexProtocol = 'uniswap_v2' | 'uniswap_v3';
+export type EvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'bancor' | 'curvefi' | 'balancer';
+export type TvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'sunpump';
+export type SvmTokenProgramId = '11111111111111111111111111111111' | 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' | 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+export type SvmDexProgramId = 'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj' | 'CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C' | '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8' | 'CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK' | 'Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB' | 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4' | 'LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo' | 'cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG' | 'pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA' | 'JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB' | '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
+
+/**
+ * @deprecated Use `EvmDexProtocol` or `TvmDexProtocol` instead.
+ */
+export type DexProtocol = EvmDexProtocol;
 
 /**
  * EVM chain identifiers for network parameter.
@@ -232,10 +240,10 @@ class EvmTokens {
    */
   async getTransfers(params: {
     network: EvmNetwork;
-    transaction_id?: string;
-    contract?: string;
-    from_address?: string;
-    to_address?: string;
+    transaction_id?: string | string[];
+    contract?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -278,8 +286,6 @@ class EvmTokens {
   async getTokenMetadata(params: {
     network: EvmNetwork;
     contract: string;
-    page?: number;
-    limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/evm/tokens', {
       params: { query: params },
@@ -343,7 +349,6 @@ class EvmTokens {
   async getNativeBalances(params: {
     network: EvmNetwork;
     address: string | string[];
-    include_null_balances?: boolean;
     page?: number;
     limit?: number;
   }) {
@@ -424,12 +429,15 @@ class EvmDexs {
    */
   async getSwaps(params: {
     network: EvmNetwork;
-    transaction_id?: string;
-    pool?: string;
-    caller?: string;
-    sender?: string;
-    recipient?: string;
-    protocol?: DexProtocol;
+    transaction_id?: string | string[];
+    factory?: string | string[];
+    pool?: string | string[];
+    caller?: string | string[];
+    sender?: string | string[];
+    recipient?: string | string[];
+    input_contract?: string | string[];
+    output_contract?: string | string[];
+    protocol?: EvmDexProtocol;
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -449,12 +457,11 @@ class EvmDexs {
    */
   async getPools(params: {
     network: EvmNetwork;
-    factory?: string;
-    pool?: string;
-    input_token?: string;
-    output_token?: string;
-    start_time?: string;
-    end_time?: string;
+    factory?: string | string[];
+    pool?: string | string[];
+    input_token?: string | string[];
+    output_token?: string | string[];
+    protocol?: EvmDexProtocol;
     page?: number;
     limit?: number;
   }) {
@@ -468,7 +475,11 @@ class EvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: { network: EvmNetwork }) {
+  async getDexes(params: {
+    network: EvmNetwork;
+    page?: number;
+    limit?: number;
+  }) {
     const { data, error } = await this.client.GET('/v1/evm/dexes', {
       params: { query: params },
     });
@@ -643,11 +654,11 @@ class SvmTokens {
   async getTransfers(params: {
     network: SvmNetwork;
     signature?: string | string[];
+    source?: string | string[];
+    destination?: string | string[];
+    authority?: string | string[];
     mint?: string | string[];
-    from_address?: string | string[];
-    to_address?: string | string[];
-    from_owner?: string | string[];
-    to_owner?: string | string[];
+    program_id?: SvmTokenProgramId;
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -684,7 +695,9 @@ class SvmTokens {
   async getBalances(params: {
     network: SvmNetwork;
     owner: string | string[];
+    token_account?: string | string[];
     mint?: string | string[];
+    program_id?: SvmTokenProgramId;
     include_null_balances?: boolean;
     page?: number;
     limit?: number;
@@ -763,6 +776,7 @@ class SvmDexs {
     user?: string | string[];
     input_mint?: string | string[];
     output_mint?: string | string[];
+    program_id?: SvmDexProgramId | string | SvmDexProgramId[];
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -786,9 +800,7 @@ class SvmDexs {
     amm_pool?: string | string[];
     input_mint?: string | string[];
     output_mint?: string | string[];
-    program_id?: string;
-    start_time?: string;
-    end_time?: string;
+    program_id?: SvmDexProgramId | string | SvmDexProgramId[];
     page?: number;
     limit?: number;
   }) {
@@ -802,7 +814,11 @@ class SvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: { network: SvmNetwork }) {
+  async getDexes(params: {
+    network: SvmNetwork;
+    page?: number;
+    limit?: number;
+  }) {
     const { data, error } = await this.client.GET('/v1/svm/dexes', {
       params: { query: params },
     });
@@ -913,8 +929,6 @@ class TvmTokens {
   async getTokenMetadata(params: {
     network: TvmNetwork;
     contract: string;
-    page?: number;
-    limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/tvm/tokens', {
       params: { query: params },
@@ -949,10 +963,14 @@ class TvmDexs {
   async getSwaps(params: {
     network: TvmNetwork;
     transaction_id?: string | string[];
+    factory?: string | string[];
     pool?: string | string[];
     caller?: string | string[];
     sender?: string | string[];
     recipient?: string | string[];
+    input_contract?: string | string[];
+    output_contract?: string | string[];
+    protocol?: TvmDexProtocol;
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -970,7 +988,11 @@ class TvmDexs {
   /**
    * Get supported DEXs
    */
-  async getDexes(params: { network: TvmNetwork }) {
+  async getDexes(params: {
+    network: TvmNetwork;
+    page?: number;
+    limit?: number;
+  }) {
     const { data, error } = await this.client.GET('/v1/tvm/dexes', {
       params: { query: params },
     });
@@ -983,12 +1005,11 @@ class TvmDexs {
    */
   async getPools(params: {
     network: TvmNetwork;
-    factory?: string;
-    pool?: string;
-    input_token?: string;
-    output_token?: string;
-    start_time?: string;
-    end_time?: string;
+    factory?: string | string[];
+    pool?: string | string[];
+    input_token?: string | string[];
+    output_token?: string | string[];
+    protocol?: TvmDexProtocol;
     page?: number;
     limit?: number;
   }) {
