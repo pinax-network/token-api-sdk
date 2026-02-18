@@ -138,6 +138,7 @@ describe('TokenAPI', () => {
       expect(typeof client.tvm.tokens.getTransfers).toBe('function');
       expect(typeof client.tvm.tokens.getNativeTransfers).toBe('function');
       expect(typeof client.tvm.tokens.getTokenMetadata).toBe('function');
+      expect(typeof client.tvm.tokens.getNativeTokenMetadata).toBe('function');
     });
 
     it('should expose tvm.dexs API', () => {
@@ -450,6 +451,485 @@ describe('API methods with mocked fetch', () => {
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/networks');
+  });
+
+  it('should call networks endpoint with filter', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.getNetworks({ network: 'mainnet' });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/networks');
+    expect(capturedRequest!.url).toContain('network=mainnet');
+  });
+
+  // --- EVM Tokens: uncovered methods ---
+
+  it('should call the correct endpoint for EVM native transfers', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getNativeTransfers({
+      network: 'mainnet',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/transfers/native');
+    expect(capturedRequest!.url).toContain('network=mainnet');
+  });
+
+  it('should call the correct endpoint for EVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getTokenMetadata({
+      network: 'mainnet',
+      contract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/tokens');
+    expect(capturedRequest!.url).toContain('contract=');
+  });
+
+  it('should support array of contracts for EVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getTokenMetadata({
+      network: 'mainnet',
+      contract: ['0xaaa', '0xbbb'],
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/tokens');
+  });
+
+  it('should call the correct endpoint for EVM balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getBalances({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/balances');
+    expect(capturedRequest!.url).toContain('address=');
+  });
+
+  it('should call the correct endpoint for EVM holders', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getHolders({
+      network: 'mainnet',
+      contract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/holders');
+    expect(capturedRequest!.url).toContain('contract=');
+  });
+
+  it('should call the correct endpoint for EVM native holders', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getNativeHolders({
+      network: 'mainnet',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/holders/native');
+  });
+
+  it('should call the correct endpoint for EVM native balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getNativeBalances({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/balances/native');
+  });
+
+  it('should call the correct endpoint for EVM historical balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getHistoricalBalances({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/balances/historical');
+    expect(capturedRequest!.url).not.toContain('/native');
+  });
+
+  it('should call the correct endpoint for EVM historical native balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getHistoricalNativeBalances({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/balances/historical/native');
+  });
+
+  it('should call the correct endpoint for EVM native token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.tokens.getNativeTokenMetadata({
+      network: 'mainnet',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/tokens/native');
+  });
+
+  // --- EVM DEXs: uncovered methods ---
+
+  it('should call the correct endpoint for EVM dexes', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.dexs.getDexes({
+      network: 'mainnet',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/dexes');
+  });
+
+  it('should call the correct endpoint for EVM pool OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.dexs.getPoolOHLC({
+      network: 'mainnet',
+      pool: '0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640',
+      interval: '1h',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/pools/ohlc');
+    expect(capturedRequest!.url).toContain('pool=');
+    expect(capturedRequest!.url).toContain('interval=1h');
+  });
+
+  // --- EVM NFTs: all methods ---
+
+  it('should call the correct endpoint for NFT collections', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getCollections({
+      network: 'mainnet',
+      contract: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/collections');
+    expect(capturedRequest!.url).toContain('contract=');
+  });
+
+  it('should call the correct endpoint for NFT holders', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getHolders({
+      network: 'mainnet',
+      contract: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/holders');
+  });
+
+  it('should call the correct endpoint for NFT items', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getItems({
+      network: 'mainnet',
+      contract: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+      token_id: '1234',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/items');
+    expect(capturedRequest!.url).toContain('token_id=1234');
+  });
+
+  it('should call the correct endpoint for NFT ownerships', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getOwnerships({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/ownerships');
+    expect(capturedRequest!.url).toContain('address=');
+  });
+
+  it('should include new params for NFT ownerships', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getOwnerships({
+      network: 'mainnet',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+      token_standard: 'ERC721',
+      include_null_balances: true,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('token_standard=ERC721');
+    expect(capturedRequest!.url).toContain('include_null_balances=true');
+  });
+
+  it('should call the correct endpoint for NFT sales', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getSales({
+      network: 'mainnet',
+      contract: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/sales');
+  });
+
+  it('should call the correct endpoint for NFT transfers', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getTransfers({
+      network: 'mainnet',
+      contract: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/transfers');
+  });
+
+  it('should include type and address params for NFT transfers', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.evm.nfts.getTransfers({
+      network: 'mainnet',
+      type: 'MINT',
+      address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/evm/nft/transfers');
+    expect(capturedRequest!.url).toContain('type=MINT');
+    expect(capturedRequest!.url).toContain('address=');
+  });
+
+  // --- SVM Tokens: uncovered methods ---
+
+  it('should call the correct endpoint for SVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getTokenMetadata({
+      network: 'solana',
+      mint: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/tokens');
+    expect(capturedRequest!.url).toContain('mint=');
+  });
+
+  it('should support array of mints for SVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getTokenMetadata({
+      network: 'solana',
+      mint: ['mintA', 'mintB'],
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/tokens');
+  });
+
+  it('should call the correct endpoint for SVM balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getBalances({
+      network: 'solana',
+      owner: 'So11111111111111111111111111111111111111112',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/balances');
+    expect(capturedRequest!.url).not.toContain('/native');
+  });
+
+  it('should call the correct endpoint for SVM native balances', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getNativeBalances({
+      network: 'solana',
+      address: 'So11111111111111111111111111111111111111112',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/balances/native');
+  });
+
+  it('should call the correct endpoint for SVM holders', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getHolders({
+      network: 'solana',
+      mint: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/holders');
+    expect(capturedRequest!.url).toContain('mint=');
+  });
+
+  it('should call the correct endpoint for SVM account owner', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getAccountOwner({
+      network: 'solana',
+      account: 'So11111111111111111111111111111111111111112',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/owner');
+    expect(capturedRequest!.url).toContain('account=');
+  });
+
+  // --- SVM DEXs: uncovered methods ---
+
+  it('should call the correct endpoint for SVM swaps', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.dexs.getSwaps({
+      network: 'solana',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/swaps');
+  });
+
+  it('should call the correct endpoint for SVM dexes', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.dexs.getDexes({
+      network: 'solana',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/dexes');
+  });
+
+  it('should call the correct endpoint for SVM pool OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.dexs.getPoolOHLC({
+      network: 'solana',
+      amm_pool: 'pool-address',
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/pools/ohlc');
+    expect(capturedRequest!.url).toContain('amm_pool=pool-address');
+  });
+
+  // --- TVM Tokens: uncovered methods ---
+
+  it('should call the correct endpoint for TVM native transfers', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.tokens.getNativeTransfers({
+      network: 'tron',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/transfers/native');
+  });
+
+  it('should call the correct endpoint for TVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.tokens.getTokenMetadata({
+      network: 'tron',
+      contract: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/tokens');
+    expect(capturedRequest!.url).toContain('contract=');
+  });
+
+  it('should support array of contracts for TVM token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.tokens.getTokenMetadata({
+      network: 'tron',
+      contract: ['TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t', 'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR'],
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/tokens');
+  });
+
+  it('should call the correct endpoint for TVM native token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.tokens.getNativeTokenMetadata({
+      network: 'tron',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/tokens/native');
+  });
+
+  // --- TVM DEXs: uncovered methods ---
+
+  it('should call the correct endpoint for TVM swaps', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.dexs.getSwaps({
+      network: 'tron',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/swaps');
+  });
+
+  it('should call the correct endpoint for TVM dexes', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.dexs.getDexes({
+      network: 'tron',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/dexes');
+  });
+
+  it('should call the correct endpoint for TVM pool OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.tvm.dexs.getPoolOHLC({
+      network: 'tron',
+      pool: 'pool-address',
+      interval: '1h',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/tvm/pools/ohlc');
+    expect(capturedRequest!.url).toContain('pool=pool-address');
   });
 });
 
