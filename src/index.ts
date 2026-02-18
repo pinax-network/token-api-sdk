@@ -353,8 +353,6 @@ class EvmTokens {
   async getNativeBalances(params: {
     network: EvmNetwork;
     address: string | string[];
-    page?: number;
-    limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/evm/balances/native', {
       params: { query: params },
@@ -591,10 +589,12 @@ class EvmNfts {
    */
   async getSales(params: {
     network: EvmNetwork;
+    transaction_id?: string | string[];
     contract?: string | string[];
     token_id?: string | string[];
-    buyer?: string | string[];
-    seller?: string | string[];
+    address?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
     start_time?: string;
     end_time?: string;
     start_block?: number;
