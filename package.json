@@ -1,6 +1,6 @@
 {
   "name": "@pinax/token-api",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Pinax Token API - Power your apps & AI agents with real-time token data",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -22,7 +22,7 @@
     "build": "bun run generate && bun build src/index.ts --outdir dist --target node && bun run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist && cp ./src/openapi.d.ts dist/openapi.d.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun test",
+    "test": "bun test --coverage",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write ."

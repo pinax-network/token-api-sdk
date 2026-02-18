@@ -16,24 +16,17 @@ export type * from './openapi.d.ts';
 // Constants
 export const DEFAULT_BASE_URL = 'https://token-api.thegraph.com';
 
-// Type aliases for convenience
-export type Transfer = components['schemas']['Transfer'];
-export type Swap = components['schemas']['Swap'];
-export type Token = components['schemas']['Token'];
-export type Balance = components['schemas']['Balance'];
-export type Holder = components['schemas']['Holder'];
-export type Pool = components['schemas']['Pool'];
-export type TokenInfo = components['schemas']['TokenInfo'];
-export type UsageInfo = components['schemas']['UsageInfo'];
-export type PaginationInfo = components['schemas']['PaginationInfo'];
-
-// Response types
-export type TransfersResponse = components['schemas']['TransfersResponse'];
-export type SwapsResponse = components['schemas']['SwapsResponse'];
-export type TokensResponse = components['schemas']['TokensResponse'];
-export type BalancesResponse = components['schemas']['BalancesResponse'];
-export type HoldersResponse = components['schemas']['HoldersResponse'];
-export type PoolsResponse = components['schemas']['PoolsResponse'];
+// Response types inferred from operations
+export type EvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['tokens']['getTransfers']>>>;
+export type EvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['dexs']['getSwaps']>>>;
+export type EvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['tokens']['getTokenMetadata']>>>;
+export type EvmBalancesResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['tokens']['getBalances']>>>;
+export type EvmHoldersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['tokens']['getHolders']>>>;
+export type EvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['dexs']['getPools']>>>;
+export type SvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getTransfers']>>>;
+export type SvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['dexs']['getSwaps']>>>;
+export type TvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['tokens']['getTransfers']>>>;
+export type TvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getSwaps']>>>;
 
 // Network types
 export type EvmNetwork =
@@ -296,7 +289,7 @@ class EvmTokens {
    */
   async getTokenMetadata(params: {
     network: EvmNetwork;
-    contract: string;
+    contract: string | string[];
   }) {
     const { data, error } = await this.client.GET('/v1/evm/tokens', {
       params: { query: params },
@@ -360,8 +353,6 @@ class EvmTokens {
   async getNativeBalances(params: {
     network: EvmNetwork;
     address: string | string[];
-    page?: number;
-    limit?: number;
   }) {
     const { data, error } = await this.client.GET('/v1/evm/balances/native', {
       params: { query: params },
@@ -580,6 +571,9 @@ class EvmNfts {
     network: EvmNetwork;
     address: string | string[];
     contract?: string | string[];
+    token_id?: string | string[];
+    token_standard?: 'ERC721' | 'ERC1155';
+    include_null_balances?: boolean;
     page?: number;
     limit?: number;
   }) {
@@ -595,10 +589,12 @@ class EvmNfts {
    */
   async getSales(params: {
     network: EvmNetwork;
+    transaction_id?: string | string[];
     contract?: string | string[];
     token_id?: string | string[];
-    buyer?: string | string[];
-    seller?: string | string[];
+    address?: string | string[];
+    from_address?: string | string[];
+    to_address?: string | string[];
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -618,9 +614,11 @@ class EvmNfts {
    */
   async getTransfers(params: {
     network: EvmNetwork;
+    type?: 'BURN' | 'MINT' | 'TRANSFER';
     transaction_id?: string | string[];
     contract?: string | string[];
     token_id?: string | string[];
+    address?: string | string[];
     from_address?: string | string[];
     to_address?: string | string[];
     start_time?: string;
@@ -689,9 +687,7 @@ class SvmTokens {
    */
   async getTokenMetadata(params: {
     network: SvmNetwork;
-    mint: string;
-    page?: number;
-    limit?: number;
+    mint: string | string[];
   }) {
     const { data, error } = await this.client.GET('/v1/svm/tokens', {
       params: { query: params },
@@ -939,7 +935,7 @@ class TvmTokens {
    */
   async getTokenMetadata(params: {
     network: TvmNetwork;
-    contract: string;
+    contract: string | string[];
   }) {
     const { data, error } = await this.client.GET('/v1/tvm/tokens', {
       params: { query: params },
@@ -1154,8 +1150,12 @@ export class TokenAPI {
   /**
    * Get list of supported networks
    */
-  async getNetworks() {
-    const { data, error } = await this.client.GET('/v1/networks', {});
+  async getNetworks(params?: {
+    network?: string | string[];
+  }) {
+    const { data, error } = await this.client.GET('/v1/networks', {
+      params: { query: params ?? {} },
+    });
 
     return handleResponse(data, error);
   }
