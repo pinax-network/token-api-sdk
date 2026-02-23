@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/v1/health": {
+    "/v1/svm/transfers": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,10 +12,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Health Check
-         * @description Verifies that all database connections are established.
+         * Token Transfers
+         * @description Returns SPL token transfers with program, authority, and account information.
          */
-        get: operations["getV1Health"];
+        get: operations["getV1SvmTransfers"];
         put?: never;
         post?: never;
         delete?: never;
@@ -24,7 +24,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/version": {
+    "/v1/svm/balances": {
         parameters: {
             query?: never;
             header?: never;
@@ -32,10 +32,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * API Version Info
-         * @description Returns API version, build date, and commit information.
+         * Token Balances
+         * @description Returns SPL token balances for Solana token owners with mint and program data.
          */
-        get: operations["getV1Version"];
+        get: operations["getV1SvmBalances"];
         put?: never;
         post?: never;
         delete?: never;
@@ -44,7 +44,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/networks": {
+    "/v1/svm/holders": {
         parameters: {
             query?: never;
             header?: never;
@@ -52,10 +52,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Supported Networks
-         * @description Returns supported blockchain networks with identifiers, metadata, and indexed block information per database category.
+         * Token Holders
+         * @description Returns top token holders ranked by balance.
          */
-        get: operations["getV1Networks"];
+        get: operations["getV1SvmHolders"];
         put?: never;
         post?: never;
         delete?: never;
@@ -64,7 +64,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/evm/tokens": {
+    "/v1/svm/owner": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Account Owner Lookup
+         * @description Returns owner address of an associated token account (ATA) with closure status.
+         */
+        get: operations["getV1SvmOwner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/tokens": {
         parameters: {
             query?: never;
             header?: never;
@@ -73,9 +93,9 @@ export interface paths {
         };
         /**
          * Token Metadata
-         * @description Returns ERC-20 token metadata including supply and holder count.
+         * @description Provides SVM token contract metadata.
          */
-        get: operations["getV1EvmTokens"];
+        get: operations["getV1SvmTokens"];
         put?: never;
         post?: never;
         delete?: never;
@@ -84,7 +104,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/evm/tokens/native": {
+    "/v1/svm/balances/native": {
         parameters: {
             query?: never;
             header?: never;
@@ -92,10 +112,110 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Native Metadata
-         * @description Returns Native metadata including supply and holder count.
+         * Native Balances
+         * @description Returns SOL native balances for wallet addresses.
          */
-        get: operations["getV1EvmTokensNative"];
+        get: operations["getV1SvmBalancesNative"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/swaps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Swap Events
+         * @description Returns AMM swap events from Solana DEXs with input/output tokens and amounts.
+         */
+        get: operations["getV1SvmSwaps"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/pools": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Liquidity Pools
+         * @description Returns AMM pool information from Solana DEX protocols with transaction counts.
+         */
+        get: operations["getV1SvmPools"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/pools/ohlc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Pool OHLCV
+         * @description Provides pricing data in the Open/High/Low/Close/Volume (OHCLV) format for DEX pools.
+         */
+        get: operations["getV1SvmPoolsOhlc"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/dexes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Supported DEXs
+         * @description Returns all supported Solana DEXs.
+         */
+        get: operations["getV1SvmDexes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/evm/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Token Transfers
+         * @description Returns ERC-20 transfers with transaction and block data.
+         */
+        get: operations["getV1EvmTransfers"];
         put?: never;
         post?: never;
         delete?: never;
@@ -124,7 +244,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/evm/balances/native": {
+    "/v1/evm/holders": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,10 +252,30 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Native Balances
-         * @description Returns EVM native balances for wallet addresses.
+         * Token Holders
+         * @description Returns top token holders ranked by ERC-20 balance.
          */
-        get: operations["getV1EvmBalancesNative"];
+        get: operations["getV1EvmHolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/evm/tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Token Metadata
+         * @description Returns ERC-20 token metadata including supply and holder count.
+         */
+        get: operations["getV1EvmTokens"];
         put?: never;
         post?: never;
         delete?: never;
@@ -166,48 +306,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/evm/balances/historical/native": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Historical Native Balances
-         * @description Returns wallet Native balance changes over time in OHLCV format.
-         *
-         *     OHLCV historical depth is subject to plan restrictions.
-         */
-        get: operations["getV1EvmBalancesHistoricalNative"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/evm/transfers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Token Transfers
-         * @description Returns ERC-20 transfers with transaction and block data.
-         */
-        get: operations["getV1EvmTransfers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/v1/evm/transfers/native": {
         parameters: {
             query?: never;
@@ -228,7 +326,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/evm/holders": {
+    "/v1/evm/balances/native": {
         parameters: {
             query?: never;
             header?: never;
@@ -236,10 +334,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Token Holders
-         * @description Returns top token holders ranked by ERC-20 balance.
+         * Native Balances
+         * @description Returns EVM native balances for wallet addresses.
          */
-        get: operations["getV1EvmHolders"];
+        get: operations["getV1EvmBalancesNative"];
         put?: never;
         post?: never;
         delete?: never;
@@ -268,6 +366,48 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/evm/tokens/native": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Native Metadata
+         * @description Returns Native metadata including supply and holder count.
+         */
+        get: operations["getV1EvmTokensNative"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/evm/balances/historical/native": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historical Native Balances
+         * @description Returns wallet Native balance changes over time in OHLCV format.
+         *
+         *     OHLCV historical depth is subject to plan restrictions.
+         */
+        get: operations["getV1EvmBalancesHistoricalNative"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/evm/swaps": {
         parameters: {
             query?: never;
@@ -280,26 +420,6 @@ export interface paths {
          * @description Returns DEX swaps events with input & output token amounts.
          */
         get: operations["getV1EvmSwaps"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/evm/dexes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Supported DEXs
-         * @description Returns all supported EVM DEXs.
-         */
-        get: operations["getV1EvmDexes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -342,6 +462,26 @@ export interface paths {
          *     OHLCV historical depth is subject to plan restrictions.
          */
         get: operations["getV1EvmPoolsOhlc"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/evm/dexes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Supported DEXs
+         * @description Returns all supported EVM DEXs.
+         */
+        get: operations["getV1EvmDexes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -470,67 +610,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/svm/tokens": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Token Metadata
-         * @description Provides SVM token contract metadata.
-         */
-        get: operations["getV1SvmTokens"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/balances": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Token Balances
-         * @description Returns SPL token balances for Solana token owners with mint and program data.
-         */
-        get: operations["getV1SvmBalances"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/balances/native": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Native Balances
-         * @description Returns SOL native balances for wallet addresses.
-         */
-        get: operations["getV1SvmBalancesNative"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/transfers": {
+    "/v1/tvm/transfers": {
         parameters: {
             query?: never;
             header?: never;
@@ -539,129 +619,9 @@ export interface paths {
         };
         /**
          * Token Transfers
-         * @description Returns SPL token transfers with program, authority, and account information.
+         * @description Returns ERC-20 transfers with transaction and block data.
          */
-        get: operations["getV1SvmTransfers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/holders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Token Holders
-         * @description Returns top token holders ranked by balance.
-         */
-        get: operations["getV1SvmHolders"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/swaps": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Swap Events
-         * @description Returns AMM swap events from Solana DEXs with input/output tokens and amounts.
-         */
-        get: operations["getV1SvmSwaps"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/dexes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Supported DEXs
-         * @description Returns all supported Solana DEXs.
-         */
-        get: operations["getV1SvmDexes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/pools": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Liquidity Pools
-         * @description Returns AMM pool information from Solana DEX protocols with transaction counts.
-         */
-        get: operations["getV1SvmPools"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/pools/ohlc": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Pool OHLCV
-         * @description Provides pricing data in the Open/High/Low/Close/Volume (OHCLV) format for DEX pools.
-         */
-        get: operations["getV1SvmPoolsOhlc"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/svm/owner": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Account Owner Lookup
-         * @description Returns owner address of an associated token account (ATA) with closure status.
-         */
-        get: operations["getV1SvmOwner"];
+        get: operations["getV1TvmTransfers"];
         put?: never;
         post?: never;
         delete?: never;
@@ -690,46 +650,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/tvm/tokens/native": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Native Metadata
-         * @description Provides Native metadata.
-         */
-        get: operations["getV1TvmTokensNative"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/tvm/transfers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Token Transfers
-         * @description Returns ERC-20 transfers with transaction and block data.
-         */
-        get: operations["getV1TvmTransfers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/v1/tvm/transfers/native": {
         parameters: {
             query?: never;
@@ -750,6 +670,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tvm/tokens/native": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Native Metadata
+         * @description Provides Native metadata.
+         */
+        get: operations["getV1TvmTokensNative"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/tvm/swaps": {
         parameters: {
             query?: never;
@@ -762,26 +702,6 @@ export interface paths {
          * @description Returns DEX swaps events with input & output token amounts.
          */
         get: operations["getV1TvmSwaps"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/tvm/dexes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Supported DEXs
-         * @description Returns all supported TVM DEXs.
-         */
-        get: operations["getV1TvmDexes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -832,6 +752,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tvm/dexes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Supported DEXs
+         * @description Returns all supported TVM DEXs.
+         */
+        get: operations["getV1TvmDexes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Health Check
+         * @description Verifies that all database connections are established.
+         */
+        get: operations["getV1Health"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/version": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * API Version Info
+         * @description Returns API version, build date, and commit information.
+         */
+        get: operations["getV1Version"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/networks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Supported Networks
+         * @description Returns supported blockchain networks with identifiers, metadata, and indexed block information per database category.
+         */
+        get: operations["getV1Networks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -844,325 +844,35 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getV1Health: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description All database connections are healthy */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: string;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-            /** @description One or more database connections failed */
-            503: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: string;
-                        error: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1Version: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        version: string;
-                        date: string;
-                        commit: string;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1Networks: {
-        parameters: {
-            query?: {
-                /** @description Network ID to filter by<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                network?: string | string[];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        networks: {
-                            id: string;
-                            fullName: string;
-                            shortName: string;
-                            caip2Id: string;
-                            networkType: string;
-                            icon: {
-                                web3Icons: {
-                                    name: string;
-                                };
-                            };
-                            aliases: string[];
-                            indexed_to: {
-                                category: string;
-                                version: string;
-                                block_num: number;
-                                datetime: string;
-                                timestamp: number;
-                            }[];
-                        }[];
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1EvmTokens: {
+    getV1SvmTransfers: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                contract: string | string[];
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signature?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                source?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                destination?: string | string[];
+                /** @description Filter by authority address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                authority?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                mint?: string | string[];
+                /** @description Filter by SPL token program ID */
+                program_id?: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Filter by block number */
+                start_block?: number;
+                /** @description Filter by block number */
+                end_block?: number;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
             };
             header?: never;
             path?: never;
@@ -1178,30 +888,50 @@ export interface operations {
                 content: {
                     "application/json": {
                         data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
+                            block_num: number;
+                            datetime: string;
+                            timestamp: number;
+                            signature: string;
+                            transaction_index: number;
+                            instruction_index: number;
                             /**
-                             * @description Filter by contract address
-                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-                             */
-                            contract: string;
-                            name: string | null;
-                            symbol: string | null;
-                            decimals: number | null;
-                            circulating_supply: number;
-                            total_supply: number;
-                            holders: number;
-                            total_transfers: number;
-                            /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
+                             * @description Filter by SPL token program ID
+                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
                              * @enum {string}
                              */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                            icon?: {
-                                web3icon: string;
-                            };
+                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            mint: string;
+                            /**
+                             * @description Filter by authority address
+                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
+                             */
+                            authority: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            source: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            destination: string;
+                            amount: string;
+                            value: number;
+                            decimals: number | null;
+                            name: string | null;
+                            symbol: string | null;
+                            uri: string | null;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -1291,142 +1021,19 @@ export interface operations {
             };
         };
     };
-    getV1EvmTokensNative: {
+    getV1SvmBalances: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            name: string | null;
-                            symbol: string | null;
-                            decimals: number | null;
-                            circulating_supply: number;
-                            total_supply: number;
-                            holders: number;
-                            /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
-                             * @enum {string}
-                             */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                            icon?: {
-                                web3icon: string;
-                            };
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1EvmBalances: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                address: string | string[];
-                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                contract?: string | string[];
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by owner address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                owner: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                token_account?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                mint?: string | string[];
+                /** @description Filter by SPL token program ID */
+                program_id?: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                 /** @description Include zero/null balances in results */
                 include_null_balances?: boolean;
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
@@ -1452,26 +1059,38 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
-                             * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
-                             */
-                            address: string;
-                            /**
-                             * @description Filter by contract address
-                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-                             */
-                            contract: string;
-                            amount: string;
-                            value: number;
-                            name: string | null;
-                            symbol: string | null;
-                            decimals: number | null;
-                            /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
+                             * @description Filter by SPL token program ID
+                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
                              * @enum {string}
                              */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+                            /**
+                             * @description Filter by owner address
+                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
+                             */
+                            owner: string;
+                            /**
+                             * @description Filter by token account address
+                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
+                             */
+                            token_account: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            mint: string;
+                            amount: string;
+                            value: number;
+                            decimals: number | null;
+                            name: string | null;
+                            symbol: string | null;
+                            uri: string | null;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -1561,13 +1180,17 @@ export interface operations {
             };
         };
     };
-    getV1EvmBalancesNative: {
+    getV1SvmHolders: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                address: string | string[];
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by mint address */
+                mint: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
             };
             header?: never;
             path?: never;
@@ -1588,20 +1211,299 @@ export interface operations {
                             last_update_timestamp: number;
                             /**
                              * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             * @example So11111111111111111111111111111111111111112
                              */
-                            address: string;
+                            owner: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            mint: string;
+                            /**
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+                             * @enum {string}
+                             */
+                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
                             amount: string;
                             value: number;
+                            decimals: number | null;
                             name: string | null;
                             symbol: string | null;
+                            uri: string | null;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmOwner: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                account: string | string[];
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by token account address
+                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
+                             */
+                            account: string;
+                            /**
+                             * @description Filter by owner address
+                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
+                             */
+                            owner: string;
+                            is_closed: boolean;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmTokens: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                mint: string | string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by SPL token program ID
+                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+                             * @enum {string}
+                             */
+                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            mint: string;
                             decimals: number | null;
-                            /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
-                             * @enum {string}
-                             */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            circulating_supply: number;
+                            holders: number;
+                            name: string | null;
+                            symbol: string | null;
+                            uri: string | null;
+                            network: string;
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -1691,21 +1593,15 @@ export interface operations {
             };
         };
     };
-    getV1EvmBalancesHistorical: {
+    getV1SvmBalancesNative: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by address */
-                address: string;
-                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                contract?: string | string[];
-                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
-                interval?: "1h" | "4h" | "1d" | "1w";
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                start_time?: string;
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                end_time?: string;
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                address: string | string[];
+                /** @description Include zero/null balances in results */
+                include_null_balances?: boolean;
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -1725,30 +1621,37 @@ export interface operations {
                 content: {
                     "application/json": {
                         data: {
-                            datetime: string;
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by SPL token program ID
+                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+                             * @enum {string}
+                             */
+                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
                              * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             * @example So11111111111111111111111111111111111111112
                              */
                             address: string;
                             /**
-                             * @description Filter by contract address
-                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
-                            contract: string;
-                            decimals: number;
-                            open: number;
-                            high: number;
-                            low: number;
-                            close: number;
-                            name: string;
-                            symbol: string;
+                            mint: string;
+                            amount: string;
+                            value: number;
+                            decimals: number | null;
+                            name: string | null;
+                            symbol: string | null;
+                            uri: string | null;
                             /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
                              * @enum {string}
                              */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            network: "solana";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -1838,13 +1741,356 @@ export interface operations {
             };
         };
     };
-    getV1EvmBalancesHistoricalNative: {
+    getV1SvmSwaps: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by address */
-                address: string;
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signature?: string | string[];
+                /** @description Filter by AMM address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                amm?: string | string[];
+                /** @description Filter by AMM pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                amm_pool?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                input_mint?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                output_mint?: string | string[];
+                /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Filter by block number */
+                start_block?: number;
+                /** @description Filter by block number */
+                end_block?: number;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            datetime: string;
+                            timestamp: number;
+                            /**
+                             * @description Filter by transaction signature
+                             * @example 5pdoVcSiSBr3LMAijdRYKrL5RoLFjLgHxHbZ34dUBVubnsQt3q1v48LuPazebsSiBVuSbSTyJdzf3G9jqqn8o6jA
+                             */
+                            signature: string;
+                            transaction_index: number;
+                            instruction_index: number;
+                            /**
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+                             * @enum {string}
+                             */
+                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_name: string;
+                            /**
+                             * @description Filter by AMM address
+                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+                             */
+                            amm: string;
+                            /**
+                             * @description Filter by AMM pool address
+                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
+                             */
+                            amm_pool: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            user: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            input_mint: string;
+                            input_amount: number;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            output_mint: string;
+                            output_amount: number;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmPools: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by AMM address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                amm?: string | string[];
+                /** @description Filter by AMM pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                amm_pool?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                input_mint?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                output_mint?: string | string[];
+                /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /**
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+                             * @enum {string}
+                             */
+                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_name: string;
+                            /**
+                             * @description Filter by AMM address
+                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+                             */
+                            amm: string;
+                            amm_name: string;
+                            /**
+                             * @description Filter by AMM pool address
+                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
+                             */
+                            amm_pool: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            input_mint: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            output_mint: string;
+                            transactions: number;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmPoolsOhlc: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by AMM pool address */
+                amm_pool: string;
                 /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
                 interval?: "1h" | "4h" | "1d" | "1w";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -1872,28 +2118,162 @@ export interface operations {
                         data: {
                             datetime: string;
                             /**
-                             * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             * @description Filter by AMM address
+                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
-                            address: string;
+                            amm: string;
                             /**
-                             * @description Filter by contract address
-                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+                             * @description Filter by AMM pool address
+                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
-                            contract: string;
-                            decimals: number;
+                            amm_pool: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            token0: string;
+                            token0_decimals: number | null;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            token1: string;
+                            token1_decimals: number | null;
                             open: number;
                             high: number;
                             low: number;
                             close: number;
-                            name: string;
-                            symbol: string;
+                            volume: number;
+                            uaw: number;
+                            transactions: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmDexes: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
                             /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              * @enum {string}
                              */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_name: string;
+                            /**
+                             * @description Filter by AMM address
+                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+                             */
+                            amm: string;
+                            amm_name: string;
+                            is_aggregator: boolean;
+                            transactions: number;
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -2146,25 +2526,17 @@ export interface operations {
             };
         };
     };
-    getV1EvmTransfersNative: {
+    getV1EvmBalances: {
         parameters: {
             query: {
                 /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
                 network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Filter by transaction hash<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                transaction_id?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                from_address?: string | string[];
-                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                to_address?: string | string[];
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                start_time?: string;
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                end_time?: string;
-                /** @description Filter by block number */
-                start_block?: number;
-                /** @description Filter by block number */
-                end_block?: number;
+                address: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                contract?: string | string[];
+                /** @description Include zero/null balances in results */
+                include_null_balances?: boolean;
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -2184,29 +2556,24 @@ export interface operations {
                 content: {
                     "application/json": {
                         data: {
-                            block_num: number;
-                            datetime: string;
-                            timestamp: number;
-                            /**
-                             * @description Filter by transaction hash
-                             * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
-                             */
-                            transaction_id: string;
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
                             /**
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
-                            from: string;
+                            address: string;
                             /**
-                             * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             * @description Filter by contract address
+                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
-                            to: string;
+                            contract: string;
+                            amount: string;
+                            value: number;
                             name: string | null;
                             symbol: string | null;
                             decimals: number | null;
-                            amount: string;
-                            value: number;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -2441,6 +2808,574 @@ export interface operations {
             };
         };
     };
+    getV1EvmTokens: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                contract: string | string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by contract address
+                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+                             */
+                            contract: string;
+                            name: string | null;
+                            symbol: string | null;
+                            decimals: number | null;
+                            circulating_supply: number;
+                            total_supply: number;
+                            holders: number;
+                            total_transfers: number;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            icon?: {
+                                web3icon: string;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmBalancesHistorical: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Filter by address */
+                address: string;
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                contract?: string | string[];
+                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            datetime: string;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            address: string;
+                            /**
+                             * @description Filter by contract address
+                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+                             */
+                            contract: string;
+                            decimals: number;
+                            open: number;
+                            high: number;
+                            low: number;
+                            close: number;
+                            name: string;
+                            symbol: string;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmTransfersNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Filter by transaction hash<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                transaction_id?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                from_address?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                to_address?: string | string[];
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Filter by block number */
+                start_block?: number;
+                /** @description Filter by block number */
+                end_block?: number;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            datetime: string;
+                            timestamp: number;
+                            /**
+                             * @description Filter by transaction hash
+                             * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
+                             */
+                            transaction_id: string;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            from: string;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            to: string;
+                            name: string | null;
+                            symbol: string | null;
+                            decimals: number | null;
+                            amount: string;
+                            value: number;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmBalancesNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                address: string | string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            address: string;
+                            amount: string;
+                            value: number;
+                            name: string | null;
+                            symbol: string | null;
+                            decimals: number | null;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     getV1EvmHoldersNative: {
         parameters: {
             query: {
@@ -2478,6 +3413,278 @@ export interface operations {
                             name: string | null;
                             symbol: string | null;
                             decimals: number | null;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmTokensNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            name: string | null;
+                            symbol: string | null;
+                            decimals: number | null;
+                            circulating_supply: number;
+                            total_supply: number;
+                            holders: number;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                            icon?: {
+                                web3icon: string;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmBalancesHistoricalNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Filter by address */
+                address: string;
+                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            datetime: string;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            address: string;
+                            /**
+                             * @description Filter by contract address
+                             * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+                             */
+                            contract: string;
+                            decimals: number;
+                            open: number;
+                            high: number;
+                            low: number;
+                            close: number;
+                            name: string;
+                            symbol: string;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -2770,140 +3977,6 @@ export interface operations {
             };
         };
     };
-    getV1EvmDexes: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
-                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            /**
-                             * @description Filter by address
-                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
-                             */
-                            factory: string;
-                            /**
-                             * @description Protocol name
-                             * @example uniswap_v3
-                             * @enum {string}
-                             */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
-                            uaw: number;
-                            transactions: number;
-                            /** @description ISO 8601 datetime string */
-                            last_activity: string;
-                            /**
-                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
-                             * @example mainnet
-                             * @enum {string}
-                             */
-                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
     getV1EvmPools: {
         parameters: {
             query: {
@@ -3066,8 +4139,8 @@ export interface operations {
                 network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
                 /** @description Filter by pool address */
                 pool: string;
-                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
-                interval?: "1h" | "4h" | "1d" | "1w";
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -3105,6 +4178,140 @@ export interface operations {
                             volume: number;
                             uaw: number;
                             transactions: number;
+                            /**
+                             * @description The Graph Network ID for EVM networks https://thegraph.com/networks
+                             * @example mainnet
+                             * @enum {string}
+                             */
+                            network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1EvmDexes: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for EVM networks https://thegraph.com/networks */
+                network: "arbitrum-one" | "avalanche" | "base" | "bsc" | "mainnet" | "optimism" | "polygon" | "unichain";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            factory: string;
+                            /**
+                             * @description Protocol name
+                             * @example uniswap_v3
+                             * @enum {string}
+                             */
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            uaw: number;
+                            transactions: number;
+                            /** @description ISO 8601 datetime string */
+                            last_activity: string;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -4142,787 +5349,19 @@ export interface operations {
             };
         };
     };
-    getV1SvmTokens: {
+    getV1TvmTransfers: {
         parameters: {
             query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                mint: string | string[];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            /**
-                             * @description Filter by SPL token program ID
-                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-                             * @enum {string}
-                             */
-                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            mint: string;
-                            decimals: number | null;
-                            circulating_supply: number;
-                            holders: number;
-                            name: string | null;
-                            symbol: string | null;
-                            uri: string | null;
-                            network: string;
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmBalances: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by owner address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                owner: string | string[];
-                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                token_account?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                mint?: string | string[];
-                /** @description Filter by SPL token program ID */
-                program_id?: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                /** @description Include zero/null balances in results */
-                include_null_balances?: boolean;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            /**
-                             * @description Filter by SPL token program ID
-                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-                             * @enum {string}
-                             */
-                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                            /**
-                             * @description Filter by owner address
-                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
-                             */
-                            owner: string;
-                            /**
-                             * @description Filter by token account address
-                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
-                             */
-                            token_account: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            mint: string;
-                            amount: string;
-                            value: number;
-                            decimals: number | null;
-                            name: string | null;
-                            symbol: string | null;
-                            uri: string | null;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmBalancesNative: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
+                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
+                network: "tron";
+                /** @description Filter by transaction hash<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                transaction_id?: string | string[];
+                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                contract?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                address: string | string[];
-                /** @description Include zero/null balances in results */
-                include_null_balances?: boolean;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            /**
-                             * @description Filter by SPL token program ID
-                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-                             * @enum {string}
-                             */
-                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                            /**
-                             * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
-                             */
-                            address: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            mint: string;
-                            amount: string;
-                            value: number;
-                            decimals: number | null;
-                            name: string | null;
-                            symbol: string | null;
-                            uri: string | null;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmTransfers: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                signature?: string | string[];
-                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                source?: string | string[];
-                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                destination?: string | string[];
-                /** @description Filter by authority address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                authority?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                mint?: string | string[];
-                /** @description Filter by SPL token program ID */
-                program_id?: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                start_time?: string;
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                end_time?: string;
-                /** @description Filter by block number */
-                start_block?: number;
-                /** @description Filter by block number */
-                end_block?: number;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            block_num: number;
-                            datetime: string;
-                            timestamp: number;
-                            signature: string;
-                            transaction_index: number;
-                            instruction_index: number;
-                            /**
-                             * @description Filter by SPL token program ID
-                             * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-                             * @enum {string}
-                             */
-                            program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            mint: string;
-                            /**
-                             * @description Filter by authority address
-                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
-                             */
-                            authority: string;
-                            /**
-                             * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
-                             */
-                            source: string;
-                            /**
-                             * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
-                             */
-                            destination: string;
-                            amount: string;
-                            value: number;
-                            decimals: number | null;
-                            name: string | null;
-                            symbol: string | null;
-                            uri: string | null;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmHolders: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by mint address */
-                mint: string;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            /**
-                             * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
-                             */
-                            owner: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            mint: string;
-                            /**
-                             * @description Filter by program ID
-                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
-                             */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
-                            amount: string;
-                            value: number;
-                            decimals: number | null;
-                            name: string | null;
-                            symbol: string | null;
-                            uri: string | null;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmSwaps: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                signature?: string | string[];
-                /** @description Filter by AMM address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                amm?: string | string[];
-                /** @description Filter by AMM pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                amm_pool?: string | string[];
+                from_address?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                user?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                input_mint?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                output_mint?: string | string[];
-                /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
+                to_address?: string | string[];
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -4954,624 +5393,39 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
-                             * @description Filter by transaction signature
-                             * @example 5pdoVcSiSBr3LMAijdRYKrL5RoLFjLgHxHbZ34dUBVubnsQt3q1v48LuPazebsSiBVuSbSTyJdzf3G9jqqn8o6jA
+                             * @description Filter by transaction hash
+                             * @example daddbf0810fb73620ebb1ad3c915afd32f3cf13a267d740f27284583df97a01a
                              */
-                            signature: string;
+                            transaction_id: string;
                             transaction_index: number;
-                            instruction_index: number;
+                            log_index: number;
+                            log_ordinal: number;
                             /**
-                             * @description Filter by program ID
-                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
+                             * @description Filter by contract address
+                             * @example TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
                              */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
-                            program_name: string;
-                            /**
-                             * @description Filter by AMM address
-                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-                             */
-                            amm: string;
-                            /**
-                             * @description Filter by AMM pool address
-                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
-                             */
-                            amm_pool: string;
+                            contract: string;
                             /**
                              * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
-                            user: string;
+                            from: string;
                             /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
-                            input_mint: string;
-                            input_amount: number;
+                            to: string;
+                            amount: string;
+                            value: number;
+                            name: string | null;
+                            symbol: string | null;
+                            decimals: number | null;
                             /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            output_mint: string;
-                            output_amount: number;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
+                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
+                             * @example tron
                              * @enum {string}
                              */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmDexes: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            /**
-                             * @description Filter by program ID
-                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
-                             */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
-                            program_name: string;
-                            /**
-                             * @description Filter by AMM address
-                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-                             */
-                            amm: string;
-                            amm_name: string;
-                            is_aggregator: boolean;
-                            transactions: number;
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmPools: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by AMM address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                amm?: string | string[];
-                /** @description Filter by AMM pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                amm_pool?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                input_mint?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                output_mint?: string | string[];
-                /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            /**
-                             * @description Filter by program ID
-                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
-                             */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
-                            program_name: string;
-                            /**
-                             * @description Filter by AMM address
-                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-                             */
-                            amm: string;
-                            amm_name: string;
-                            /**
-                             * @description Filter by AMM pool address
-                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
-                             */
-                            amm_pool: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            input_mint: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            output_mint: string;
-                            transactions: number;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmPoolsOhlc: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by AMM pool address */
-                amm_pool: string;
-                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
-                interval?: "1h" | "4h" | "1d" | "1w";
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                start_time?: string;
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                end_time?: string;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            datetime: string;
-                            /**
-                             * @description Filter by AMM address
-                             * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-                             */
-                            amm: string;
-                            /**
-                             * @description Filter by AMM pool address
-                             * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
-                             */
-                            amm_pool: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            token0: string;
-                            token0_decimals: number | null;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
-                            token1: string;
-                            token1_decimals: number | null;
-                            open: number;
-                            high: number;
-                            low: number;
-                            close: number;
-                            volume: number;
-                            uaw: number;
-                            transactions: number;
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1SvmOwner: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
-                network: "solana";
-                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                account: string | string[];
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            /**
-                             * @description Filter by token account address
-                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
-                             */
-                            account: string;
-                            /**
-                             * @description Filter by owner address
-                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
-                             */
-                            owner: string;
-                            is_closed: boolean;
-                            /**
-                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
-                             * @example solana
-                             * @enum {string}
-                             */
-                            network: "solana";
+                            network: "tron";
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -5793,288 +5647,6 @@ export interface operations {
             };
         };
     };
-    getV1TvmTokensNative: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
-                network: "tron";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            last_update: string;
-                            last_update_block_num: number;
-                            last_update_timestamp: number;
-                            decimals: number | null;
-                            name: string | null;
-                            symbol: string | null;
-                            network: string;
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getV1TvmTransfers: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
-                network: "tron";
-                /** @description Filter by transaction hash<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                transaction_id?: string | string[];
-                /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                contract?: string | string[];
-                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                from_address?: string | string[];
-                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                to_address?: string | string[];
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                start_time?: string;
-                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
-                end_time?: string;
-                /** @description Filter by block number */
-                start_block?: number;
-                /** @description Filter by block number */
-                end_block?: number;
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            block_num: number;
-                            datetime: string;
-                            timestamp: number;
-                            /**
-                             * @description Filter by transaction hash
-                             * @example daddbf0810fb73620ebb1ad3c915afd32f3cf13a267d740f27284583df97a01a
-                             */
-                            transaction_id: string;
-                            transaction_index: number;
-                            log_index: number;
-                            log_ordinal: number;
-                            /**
-                             * @description Filter by contract address
-                             * @example TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
-                             */
-                            contract: string;
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            from: string;
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            to: string;
-                            amount: string;
-                            value: number;
-                            name: string | null;
-                            symbol: string | null;
-                            decimals: number | null;
-                            /**
-                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
-                             * @example tron
-                             * @enum {string}
-                             */
-                            network: "tron";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
     getV1TvmTransfersNative: {
         parameters: {
             query: {
@@ -6143,6 +5715,122 @@ export interface operations {
                              * @enum {string}
                              */
                             network: "tron";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1TvmTokensNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
+                network: "tron";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            decimals: number | null;
+                            name: string | null;
+                            symbol: string | null;
+                            network: string;
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -6439,139 +6127,6 @@ export interface operations {
             };
         };
     };
-    getV1TvmDexes: {
-        parameters: {
-            query: {
-                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
-                network: "tron";
-                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
-                limit?: number;
-                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
-                page?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            factory: string;
-                            /**
-                             * @description Protocol name
-                             * @example uniswap_v2
-                             * @enum {string}
-                             */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
-                            transactions: number;
-                            uaw: number;
-                            last_activity: string;
-                            /**
-                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
-                             * @example tron
-                             * @enum {string}
-                             */
-                            network: "tron";
-                        }[];
-                        statistics: {
-                            elapsed?: number;
-                            rows_read?: number;
-                            bytes_read?: number;
-                        };
-                        pagination: {
-                            previous_page: number;
-                            current_page: number;
-                        };
-                        results: number;
-                        /** @description ISO 8601 datetime string */
-                        request_time: string;
-                        duration_ms: number;
-                    };
-                };
-            };
-            /** @description Client side error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Authentication failed */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 400 | 401 | 403 | 404 | 405;
-                        /** @enum {string} */
-                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server side error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        status: 500 | 502 | 504;
-                        /** @enum {string} */
-                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
     getV1TvmPools: {
         parameters: {
             query: {
@@ -6735,8 +6290,8 @@ export interface operations {
                 network: "tron";
                 /** @description Filter by pool address */
                 pool: string;
-                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
-                interval?: "1h" | "4h" | "1d" | "1w";
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -6794,6 +6349,451 @@ export interface operations {
                         /** @description ISO 8601 datetime string */
                         request_time: string;
                         duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1TvmDexes: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for TVM networks https://thegraph.com/networks */
+                network: "tron";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /**
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            factory: string;
+                            /**
+                             * @description Protocol name
+                             * @example uniswap_v2
+                             * @enum {string}
+                             */
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "sunpump";
+                            transactions: number;
+                            uaw: number;
+                            last_activity: string;
+                            /**
+                             * @description The Graph Network ID for TVM networks https://thegraph.com/networks
+                             * @example tron
+                             * @enum {string}
+                             */
+                            network: "tron";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1Health: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description All database connections are healthy */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: string;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+            /** @description One or more database connections failed */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: string;
+                        error: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1Version: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        version: string;
+                        date: string;
+                        commit: string;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1Networks: {
+        parameters: {
+            query?: {
+                /** @description Network ID to filter by<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                network?: string | string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        networks: {
+                            id: string;
+                            fullName: string;
+                            shortName: string;
+                            caip2Id: string;
+                            networkType: string;
+                            icon: {
+                                web3Icons: {
+                                    name: string;
+                                };
+                            };
+                            aliases: string[];
+                            indexed_to: {
+                                category: string;
+                                version: string;
+                                block_num: number;
+                                datetime: string;
+                                timestamp: number;
+                            }[];
+                        }[];
                     };
                 };
             };
