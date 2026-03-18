@@ -7,6 +7,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
 import {
   TokenAPI,
+  APIError,
   createAPIClient,
   DEFAULT_BASE_URL,
   EVMChains,
@@ -944,6 +945,38 @@ describe('Error handling', () => {
     globalThis.fetch = originalFetch;
   });
 
+  it('should throw APIError when API returns a structured error', async () => {
+    globalThis.fetch = ((_request: Request) => {
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            status: 401,
+            code: 'unauthorized',
+            message: 'Invalid API token',
+          }),
+          {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+          },
+        ),
+      );
+    }) as typeof fetch;
+
+    const client = new TokenAPI({ apiToken: 'invalid-token' });
+
+    try {
+      await client.evm.tokens.getTransfers({ network: 'mainnet' });
+      throw new Error('Expected APIError to be thrown');
+    } catch (e) {
+      expect(e).toBeInstanceOf(APIError);
+      const apiError = e as APIError;
+      expect(apiError.status).toBe(401);
+      expect(apiError.code).toBe('unauthorized');
+      expect(apiError.message).toBe('Invalid API token');
+      expect(apiError.name).toBe('APIError');
+    }
+  });
+
   it('should throw error when API returns an error', async () => {
     globalThis.fetch = ((_request: Request) => {
       return Promise.resolve(
@@ -982,5 +1015,75 @@ describe('Error handling', () => {
     await expect(
       client.evm.tokens.getTransfers({ network: 'mainnet' }),
     ).rejects.toThrow('API Error: No data returned');
+  });
+
+  it('should set status 404 on APIError for not found responses', async () => {
+    globalThis.fetch = ((_request: Request) => {
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            status: 404,
+            code: 'not_found_data',
+            message: 'Resource not found',
+          }),
+          {
+            status: 404,
+            headers: { 'Content-Type': 'application/json' },
+          },
+        ),
+      );
+    }) as typeof fetch;
+
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    try {
+      await client.evm.tokens.getTransfers({ network: 'mainnet' });
+      throw new Error('Expected APIError to be thrown');
+    } catch (e) {
+      expect(e).toBeInstanceOf(APIError);
+      expect((e as APIError).status).toBe(404);
+      expect((e as APIError).code).toBe('not_found_data');
+    }
+  });
+
+  it('should set status 429 on APIError for rate-limit responses', async () => {
+    globalThis.fetch = ((_request: Request) => {
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            status: 429,
+            code: 'rate_limited',
+            message: 'Too many requests',
+          }),
+          {
+            status: 429,
+            headers: { 'Content-Type': 'application/json' },
+          },
+        ),
+      );
+    }) as typeof fetch;
+
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    try {
+      await client.evm.tokens.getTransfers({ network: 'mainnet' });
+      throw new Error('Expected APIError to be thrown');
+    } catch (e) {
+      expect(e).toBeInstanceOf(APIError);
+      expect((e as APIError).status).toBe(429);
+      expect((e as APIError).code).toBe('rate_limited');
+    }
+  });
+});
+
+describe('APIError', () => {
+  it('should be constructable with status, code, and message', () => {
+    const err = new APIError({ status: 400, code: 'bad_query_input', message: 'Invalid params' });
+    expect(err).toBeInstanceOf(APIError);
+    expect(err).toBeInstanceOf(Error);
+    expect(err.status).toBe(400);
+    expect(err.code).toBe('bad_query_input');
+    expect(err.message).toBe('Invalid params');
+    expect(err.name).toBe('APIError');
   });
 });

@@ -16,6 +16,36 @@ export type * from './openapi.d.ts';
 // Constants
 export const DEFAULT_BASE_URL = 'https://token-api.thegraph.com';
 
+/**
+ * Typed error class for API-level errors returned by the Token API.
+ *
+ * Network errors (DNS, socket, timeout) propagate as native `TypeError`/`Error`
+ * and do not go through `handleResponse`, so they are not wrapped in `APIError`.
+ *
+ * @example
+ * ```typescript
+ * try {
+ *   await client.evm.tokens.getHolders({ ... });
+ * } catch (e) {
+ *   if (e instanceof APIError) {
+ *     if (e.status === 429) { // retry }
+ *     if (e.status === 404) { // not found }
+ *   }
+ * }
+ * ```
+ */
+export class APIError extends Error {
+  status: number;
+  code: string;
+
+  constructor(error: { status: number; code: string; message: string }) {
+    super(error.message);
+    this.name = 'APIError';
+    this.status = error.status;
+    this.code = error.code;
+  }
+}
+
 // Response types inferred from operations
 export type EvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['tokens']['getTransfers']>>>;
 export type EvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['dexs']['getSwaps']>>>;
@@ -225,6 +255,18 @@ export function createAPIClient(options: PinaxClientOptions = {}) {
  */
 function handleResponse<T>(data: T | undefined | null, error: unknown): T {
   if (error) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'status' in error &&
+      'code' in error &&
+      'message' in error &&
+      typeof (error as Record<string, unknown>).status === 'number' &&
+      typeof (error as Record<string, unknown>).code === 'string' &&
+      typeof (error as Record<string, unknown>).message === 'string'
+    ) {
+      throw new APIError(error as { status: number; code: string; message: string });
+    }
     throw new Error(`API Error: ${JSON.stringify(error)}`);
   }
   if (data === undefined || data === null) {
