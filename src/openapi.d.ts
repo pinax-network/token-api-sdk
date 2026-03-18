@@ -3794,6 +3794,8 @@ export interface operations {
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 caller?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                transaction_from?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 recipient?: string | string[];
@@ -3802,7 +3804,7 @@ export interface operations {
                 /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_contract?: string | string[];
                 /** @description Protocol name */
-                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -3834,6 +3836,17 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             transaction_id: string;
+                            transaction_index: number;
+                            /**
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            transaction_from: string;
+                            call_index: number | null;
+                            log_index: number;
+                            log_ordinal: number;
+                            log_block_index: number;
+                            log_topic0: string;
                             /**
                              * @description Filter by factory address
                              * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
@@ -3880,7 +3893,7 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                             summary: string;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
@@ -3991,7 +4004,7 @@ export interface operations {
                 /** @description Filter by contract address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_token?: string | string[];
                 /** @description Protocol name */
-                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                protocol?: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -4026,7 +4039,7 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                             input_token: {
                                 address: string | null;
                                 symbol: string | null;
@@ -4176,7 +4189,6 @@ export interface operations {
                             low: number;
                             close: number;
                             volume: number;
-                            uaw: number;
                             transactions: number;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
@@ -4307,7 +4319,7 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                             uaw: number;
                             transactions: number;
                             /** @description ISO 8601 datetime string */
@@ -5932,7 +5944,7 @@ export interface operations {
                 /** @description Filter by pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 pool?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                caller?: string | string[];
+                transaction_from?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
@@ -5974,6 +5986,16 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             transaction_id: string;
+                            transaction_index: number;
+                            /**
+                             * @description Filter by address
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            transaction_from: string;
+                            log_index: number;
+                            log_ordinal: number;
+                            log_block_index: number;
+                            log_topic0: string;
                             /**
                              * @description Filter by factory address
                              * @example TKWJdrQkqHisa1X8HUdHEfREvTzw4pMAaY
@@ -6004,11 +6026,6 @@ export interface operations {
                                 name: string;
                                 decimals: number;
                             };
-                            /**
-                             * @description Filter by address
-                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
-                             */
-                            caller: string;
                             /**
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
@@ -6187,7 +6204,7 @@ export interface operations {
                              * @example uniswap_v3
                              * @enum {string}
                              */
-                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "bancor" | "curvefi" | "balancer";
+                            protocol: "uniswap_v1" | "uniswap_v2" | "uniswap_v3" | "uniswap_v4" | "curvefi" | "balancer" | "bancor" | "cow" | "aerodrome" | "dodo" | "woofi" | "traderjoe" | "kyber_elastic";
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -6327,7 +6344,6 @@ export interface operations {
                             low: number;
                             close: number;
                             volume: number;
-                            uaw: number;
                             transactions: number;
                             /**
                              * @description The Graph Network ID for TVM networks https://thegraph.com/networks
