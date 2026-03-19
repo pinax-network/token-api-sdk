@@ -55,8 +55,14 @@ export type EvmHoldersResponse = NonNullable<Awaited<ReturnType<InstanceType<typ
 export type EvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['evm']['dexs']['getPools']>>>;
 export type SvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getTransfers']>>>;
 export type SvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['dexs']['getSwaps']>>>;
+export type SvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getTokenMetadata']>>>;
+export type SvmBalancesResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getBalances']>>>;
+export type SvmHoldersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getHolders']>>>;
+export type SvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['dexs']['getPools']>>>;
 export type TvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['tokens']['getTransfers']>>>;
 export type TvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getSwaps']>>>;
+export type TvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['tokens']['getTokenMetadata']>>>;
+export type TvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getPools']>>>;
 
 // Network types
 export type EvmNetwork =
