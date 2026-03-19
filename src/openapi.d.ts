@@ -700,6 +700,8 @@ export interface paths {
         /**
          * Swap Events
          * @description Returns DEX swaps events with input & output token amounts.
+         *
+         *     Address semantics: `transaction_from` is the onchain transaction initiator and `user` is the normalized user-oriented swap address. `sender` and `recipient` remain available for legacy compatibility, but new integrations should prefer `user` and plan for `sender`/`recipient` deprecation in a future major release.
          */
         get: operations["getV1TvmSwaps"];
         put?: never;
@@ -3796,6 +3798,8 @@ export interface operations {
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 transaction_from?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 recipient?: string | string[];
@@ -3838,7 +3842,7 @@ export interface operations {
                             transaction_id: string;
                             transaction_index: number;
                             /**
-                             * @description Filter by address
+                             * @description Onchain transaction initiator address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             transaction_from: string;
@@ -3868,17 +3872,22 @@ export interface operations {
                                 decimals: number | null;
                             };
                             /**
-                             * @description Filter by address
+                             * @description Account or contract that calls the swap-relevant contract.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             caller: string;
                             /**
-                             * @description Filter by address
+                             * @description Normalized user-oriented swap address. Prefer this field for integrations; sender and recipient remain legacy compatibility fields and are planned for deprecation in a future major release.
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            user: string;
+                            /**
+                             * @description Legacy compatibility field for swap sender semantics. Prefer user for a normalized user-oriented swap address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             sender: string;
                             /**
-                             * @description Filter by address
+                             * @description Legacy compatibility field for swap recipient semantics. Prefer user for a normalized user-oriented swap address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             recipient: string;
@@ -5946,6 +5955,8 @@ export interface operations {
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 transaction_from?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 sender?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 recipient?: string | string[];
@@ -5988,7 +5999,7 @@ export interface operations {
                             transaction_id: string;
                             transaction_index: number;
                             /**
-                             * @description Filter by address
+                             * @description Onchain transaction initiator address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             transaction_from: string;
@@ -6027,12 +6038,17 @@ export interface operations {
                                 decimals: number;
                             };
                             /**
-                             * @description Filter by address
+                             * @description Normalized user-oriented swap address. Prefer this field for integrations; sender and recipient remain legacy compatibility fields and are planned for deprecation in a future major release.
+                             * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
+                             */
+                            user: string;
+                            /**
+                             * @description Legacy compatibility field for swap sender semantics. Prefer user for a normalized user-oriented swap address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             sender: string;
                             /**
-                             * @description Filter by address
+                             * @description Legacy compatibility field for swap recipient semantics. Prefer user for a normalized user-oriented swap address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             recipient: string;
