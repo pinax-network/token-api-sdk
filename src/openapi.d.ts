@@ -1212,10 +1212,15 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
-                             * @description Filter by address
-                             * @example So11111111111111111111111111111111111111112
+                             * @description Filter by owner address
+                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
                             owner: string;
+                            /**
+                             * @description Filter by token account address
+                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
+                             */
+                            token_account: string;
                             /**
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
