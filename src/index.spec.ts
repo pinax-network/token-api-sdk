@@ -43,6 +43,7 @@ describe('TokenAPI', () => {
       expect(client.evm).toBeDefined();
       expect(client.svm).toBeDefined();
       expect(client.tvm).toBeDefined();
+      expect(client.polymarket).toBeDefined();
     });
 
     it('should create a TokenAPI instance with custom options', () => {
@@ -107,10 +108,12 @@ describe('TokenAPI', () => {
     it('should expose svm.tokens API', () => {
       expect(client.svm.tokens).toBeDefined();
       expect(typeof client.svm.tokens.getTransfers).toBe('function');
+      expect(typeof client.svm.tokens.getNativeTransfers).toBe('function');
       expect(typeof client.svm.tokens.getTokenMetadata).toBe('function');
       expect(typeof client.svm.tokens.getBalances).toBe('function');
       expect(typeof client.svm.tokens.getNativeBalances).toBe('function');
       expect(typeof client.svm.tokens.getHolders).toBe('function');
+      expect(typeof client.svm.tokens.getNativeHolders).toBe('function');
       expect(typeof client.svm.tokens.getAccountOwner).toBe('function');
     });
 
@@ -172,6 +175,26 @@ describe('TokenAPI', () => {
 
     it('should expose getNetworks method', () => {
       expect(typeof client.getNetworks).toBe('function');
+    });
+  });
+
+  describe('Polymarket API structure', () => {
+    let client: TokenAPI;
+
+    beforeEach(() => {
+      client = new TokenAPI();
+    });
+
+    it('should expose polymarket API', () => {
+      expect(client.polymarket).toBeDefined();
+      expect(typeof client.polymarket.getMarkets).toBe('function');
+      expect(typeof client.polymarket.getMarketOHLC).toBe('function');
+      expect(typeof client.polymarket.getMarketOpenInterest).toBe('function');
+      expect(typeof client.polymarket.getMarketActivity).toBe('function');
+      expect(typeof client.polymarket.getMarketPositions).toBe('function');
+      expect(typeof client.polymarket.getPlatform).toBe('function');
+      expect(typeof client.polymarket.getUsers).toBe('function');
+      expect(typeof client.polymarket.getUserPositions).toBe('function');
     });
   });
 });
@@ -304,6 +327,19 @@ describe('API methods with mocked fetch', () => {
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/svm/transfers');
+    expect(capturedRequest!.url).toContain('network=solana');
+  });
+
+  it('should call the correct endpoint for SVM native transfers', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getNativeTransfers({
+      network: 'solana',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/transfers/native');
     expect(capturedRequest!.url).toContain('network=solana');
   });
 
@@ -792,6 +828,19 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('mint=');
   });
 
+  it('should call the correct endpoint for SVM native holders', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getNativeHolders({
+      network: 'solana',
+      limit: 10,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/holders/native');
+    expect(capturedRequest!.url).toContain('network=solana');
+  });
+
   it('should call the correct endpoint for SVM account owner', async () => {
     const client = new TokenAPI({ apiToken: 'test-token' });
 
@@ -931,6 +980,114 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/tvm/pools/ohlc');
     expect(capturedRequest!.url).toContain('pool=pool-address');
+  });
+
+  // --- Polymarket: all methods ---
+
+  it('should call the correct endpoint for Polymarket markets', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getMarkets({
+      market_slug: 'will-btc-hit-100k',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/markets');
+    expect(capturedRequest!.url).toContain('market_slug=will-btc-hit-100k');
+  });
+
+  it('should call the correct endpoint for Polymarket market OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getMarketOHLC({
+      token_id: '123',
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/markets/ohlc');
+    expect(capturedRequest!.url).toContain('token_id=123');
+    expect(capturedRequest!.url).toContain('interval=1d');
+  });
+
+  it('should call the correct endpoint for Polymarket open interest', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getMarketOpenInterest({
+      market_slug: 'will-btc-hit-100k',
+      interval: '1h',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/markets/oi');
+    expect(capturedRequest!.url).toContain('market_slug=will-btc-hit-100k');
+  });
+
+  it('should call the correct endpoint for Polymarket activity', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getMarketActivity({
+      user: '0xabc',
+      event_type: 'trade',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/markets/activity');
+    expect(capturedRequest!.url).toContain('user=0xabc');
+    expect(capturedRequest!.url).toContain('event_type=trade');
+  });
+
+  it('should call the correct endpoint for Polymarket market positions', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getMarketPositions({
+      token_id: '123',
+      closed: false,
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/markets/positions');
+    expect(capturedRequest!.url).toContain('token_id=123');
+  });
+
+  it('should call the correct endpoint for Polymarket platform aggregates', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getPlatform({
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/platform');
+    expect(capturedRequest!.url).toContain('interval=1d');
+  });
+
+  it('should call the correct endpoint for Polymarket users', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getUsers({
+      interval: '30d',
+      sort_by: 'total_volume',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/users');
+    expect(capturedRequest!.url).toContain('interval=30d');
+    expect(capturedRequest!.url).toContain('sort_by=total_volume');
+  });
+
+  it('should call the correct endpoint for Polymarket user positions', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.polymarket.getUserPositions({
+      user: '0xabc',
+      market_slug: 'will-btc-hit-100k',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/polymarket/users/positions');
+    expect(capturedRequest!.url).toContain('user=0xabc');
+    expect(capturedRequest!.url).toContain('market_slug=will-btc-hit-100k');
   });
 });
 

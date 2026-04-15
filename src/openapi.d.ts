@@ -24,6 +24,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/svm/transfers/native": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Native Transfers
+         * @description Returns Native transfers with transaction and block data.
+         */
+        get: operations["getV1SvmTransfersNative"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/svm/balances": {
         parameters: {
             query?: never;
@@ -56,6 +76,26 @@ export interface paths {
          * @description Returns top token holders ranked by balance.
          */
         get: operations["getV1SvmHolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/svm/holders/native": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Native Holders
+         * @description Returns top token holders ranked by Native balance.
+         */
+        get: operations["getV1SvmHoldersNative"];
         put?: never;
         post?: never;
         delete?: never;
@@ -774,6 +814,182 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/polymarket/markets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Lookup
+         * @description Returns market metadata including question, outcomes with token IDs, volume, and status. Each market has exactly two outcomes (binary); multi-outcome scenarios are modeled as multiple markets grouped under one event.
+         *
+         *     Use this to discover `token_id` values needed for OHLCV and position queries, or to resolve a slug to identifiers. When no identifier is provided, returns a paginated list for discovery.
+         */
+        get: operations["getV1PolymarketMarkets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/markets/ohlc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market OHLCV
+         * @description Returns OHLCV price data for a single outcome token. Each market has two outcome tokens (e.g. Yes and No) — use `/v1/polymarket/markets` to discover them.
+         *
+         *     Prices are in USD per share (0 to 1). Volume and fees are in USDC.
+         */
+        get: operations["getV1PolymarketMarketsOhlc"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/markets/oi": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Open Interest
+         * @description Returns open interest time-series for a market. Open interest is the USDC collateral locked into conditional token positions — it increases on splits (deposit USDC to mint Yes+No pairs) and decreases on merges (return pairs to withdraw USDC) or redemptions.
+         *
+         *     Provide **one** of `condition_id` or `market_slug`.
+         */
+        get: operations["getV1PolymarketMarketsOi"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/markets/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Activity
+         * @description Returns a chronological feed of on-chain trades, position splits, merges, and redemptions. Each row includes the transaction hash, block number, and scaled amounts.
+         *
+         *     For trades, `market.token_id` and `market.outcome_label` identify the specific outcome token. For splits, merges, and redemptions, these are null because the operation applies to the market as a whole.
+         *
+         *     At least one of `user`, `token_id`, or `condition_id` is required. Defaults to the last 24 hours when no time range is specified — provide `start_time` and `end_time` to query older data.
+         */
+        get: operations["getV1PolymarketMarketsActivity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/markets/positions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Positions
+         * @description Returns all user positions for a specific outcome token — a leaderboard view. Each row is one user's cumulative position: cost basis, PNL, shares held, and current value.
+         *
+         *     For a user's portfolio across all markets, use `/v1/polymarket/positions` instead.
+         */
+        get: operations["getV1PolymarketMarketsPositions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/platform": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Platform Aggregates
+         * @description Returns platform-wide time-series combining trading volume, open interest, and fee aggregates across all Polymarket markets.
+         */
+        get: operations["getV1PolymarketPlatform"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Lookup
+         * @description Returns trading statistics per user: volume, PNL (realized, unrealized, total), trade counts, and activity window. When no user address is provided, returns a paginated leaderboard for discovery.
+         *
+         *     Supports lookback windows via `interval`: `1h`, `1d`, `1w`, `30d`. Omit for all-time. Data refreshes hourly.
+         */
+        get: operations["getV1PolymarketUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/polymarket/users/positions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Positions
+         * @description Returns a user's positions with PNL breakdown per outcome token. Each row is one token's cumulative position: cost basis, realized PNL, net shares held, average entry price, and current market price.
+         *
+         *     Use `closed=false` for positions on live markets, or `closed=true` for resolved markets.
+         */
+        get: operations["getV1PolymarketUsersPositions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/health": {
         parameters: {
             query?: never;
@@ -853,16 +1069,20 @@ export interface operations {
                 network: "solana";
                 /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 signature?: string | string[];
+                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                mint?: string | string[];
                 /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 source?: string | string[];
                 /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 destination?: string | string[];
+                /** @description Filter by SPL token program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                program_id?: ("11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") | string | ("11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")[];
                 /** @description Filter by authority address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 authority?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                mint?: string | string[];
-                /** @description Filter by SPL token program ID */
-                program_id?: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                fee_payer?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signer?: string | string[];
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -896,6 +1116,15 @@ export interface operations {
                             signature: string;
                             transaction_index: number;
                             instruction_index: number;
+                            stack_height: number;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            signer: string;
+                            signers: string[];
+                            fee: number;
+                            compute_units_consumed: number;
                             /**
                              * @description Filter by SPL token program ID
                              * @example TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
@@ -908,10 +1137,195 @@ export interface operations {
                              */
                             mint: string;
                             /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            source: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            destination: string;
+                            /**
                              * @description Filter by authority address
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
                             authority: string;
+                            multisig_authority: string[];
+                            amount: string;
+                            value: number;
+                            decimals: number | null;
+                            name: string | null;
+                            symbol: string | null;
+                            uri: string | null;
+                            metadata: string | null;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmTransfersNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Filter by transaction signature<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signature?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                source?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                destination?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                fee_payer?: string | string[];
+                /** @description Filter by token account address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signer?: string | string[];
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Filter by block number */
+                start_block?: number;
+                /** @description Filter by block number */
+                end_block?: number;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            datetime: string;
+                            timestamp: number;
+                            signature: string;
+                            transaction_index: number;
+                            instruction_index: number;
+                            stack_height: number;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            fee_payer: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            signer: string;
+                            signers: string[];
+                            fee: number;
+                            compute_units_consumed: number;
+                            /**
+                             * @description Filter by address
+                             * @example 11111111111111111111111111111111
+                             */
+                            program_id: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111111
+                             */
+                            mint: string;
                             /**
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
@@ -927,7 +1341,6 @@ export interface operations {
                             decimals: number | null;
                             name: string | null;
                             symbol: string | null;
-                            uri: string | null;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
                              * @example solana
@@ -1071,10 +1484,7 @@ export interface operations {
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
                             owner: string;
-                            /**
-                             * @description Filter by token account address
-                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
-                             */
+                            /** @description Filter by token account address */
                             token_account: string;
                             /**
                              * @description Filter by mint address
@@ -1212,32 +1622,167 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
-                             * @description Filter by owner address
-                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
-                            owner: string;
-                            /**
-                             * @description Filter by token account address
-                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
-                             */
-                            token_account: string;
+                            program_id: string;
                             /**
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             mint: string;
                             /**
-                             * @description Filter by program ID
-                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
+                             * @description Filter by owner address
+                             * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            owner: string;
+                            /** @description Filter by token account address */
+                            token_account: string;
                             amount: string;
                             value: number;
-                            decimals: number | null;
+                            decimals: number;
                             name: string | null;
                             symbol: string | null;
                             uri: string | null;
+                            /**
+                             * @description The Graph Network ID for SVM networks https://thegraph.com/networks
+                             * @example solana
+                             * @enum {string}
+                             */
+                            network: "solana";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1SvmHoldersNative: {
+        parameters: {
+            query: {
+                /** @description The Graph Network ID for SVM networks https://thegraph.com/networks */
+                network: "solana";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            last_update: string;
+                            last_update_block_num: number;
+                            last_update_timestamp: number;
+                            /**
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+                             */
+                            program_id: string;
+                            /**
+                             * @description Filter by mint address
+                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
+                             */
+                            mint: string;
+                            /** @description Filter by token account address */
+                            token_account: string;
+                            amount: string;
+                            value: number;
+                            decimals: number;
+                            name: string | null;
+                            symbol: string | null;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
                              * @example solana
@@ -1362,10 +1907,7 @@ export interface operations {
                             last_update: string;
                             last_update_block_num: number;
                             last_update_timestamp: number;
-                            /**
-                             * @description Filter by token account address
-                             * @example 5UZfa66rzeDpD9wKs3Sn3iewmavxYvpAtiF2Lqd2n1wW
-                             */
+                            /** @description Filter by token account address */
                             account: string;
                             /**
                              * @description Filter by owner address
@@ -1647,12 +2189,11 @@ export interface operations {
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             mint: string;
-                            amount: string;
+                            amount: number;
                             value: number;
                             decimals: number | null;
                             name: string | null;
                             symbol: string | null;
-                            uri: string | null;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
                              * @example solana
@@ -1761,12 +2302,18 @@ export interface operations {
                 amm_pool?: string | string[];
                 /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 user?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                fee_payer?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                signer?: string | string[];
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 input_mint?: string | string[];
+                /** @description Protocol name */
+                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_mint?: string | string[];
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
+                program_id?: string | string[];
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -1804,12 +2351,25 @@ export interface operations {
                             signature: string;
                             transaction_index: number;
                             instruction_index: number;
+                            stack_height: number;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            fee_payer: string;
+                            /**
+                             * @description Filter by address
+                             * @example So11111111111111111111111111111111111111112
+                             */
+                            signer: string;
+                            signers: string[];
+                            fee: number;
+                            compute_units_consumed: number;
                             /**
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
                              */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_id: string;
                             program_name: string;
                             /**
                              * @description Filter by AMM address
@@ -1821,6 +2381,16 @@ export interface operations {
                              * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
                             amm_pool: string;
+                            input_token: {
+                                address: string | null;
+                                symbol: string | null;
+                                decimals: number | null;
+                            };
+                            output_token: {
+                                address: string | null;
+                                symbol: string | null;
+                                decimals: number | null;
+                            };
                             /**
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
@@ -1831,13 +2401,22 @@ export interface operations {
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             input_mint: string;
-                            input_amount: number;
+                            input_amount: string;
+                            input_value: number;
                             /**
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             output_mint: string;
-                            output_amount: number;
+                            output_amount: string;
+                            output_value: number;
+                            /**
+                             * @description Protocol name
+                             * @example raydium_amm_v4
+                             * @enum {string}
+                             */
+                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                            summary: string;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
                              * @example solana
@@ -1943,11 +2522,11 @@ export interface operations {
                 /** @description Filter by AMM pool address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 amm_pool?: string | string[];
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                input_mint?: string | string[];
-                /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                output_mint?: string | string[];
+                mint?: string | string[];
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
-                program_id?: ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P") | string | ("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")[];
+                program_id?: string | string[];
+                /** @description Protocol name */
+                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -1970,9 +2549,8 @@ export interface operations {
                             /**
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
                              */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_id: string;
                             program_name: string;
                             /**
                              * @description Filter by AMM address
@@ -2098,8 +2676,8 @@ export interface operations {
                 network: "solana";
                 /** @description Filter by AMM pool address */
                 amm_pool: string;
-                /** @description The interval* for which to aggregate price data (hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
-                interval?: "1h" | "4h" | "1d" | "1w";
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -2125,6 +2703,11 @@ export interface operations {
                         data: {
                             datetime: string;
                             /**
+                             * @description Filter by program ID
+                             * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+                             */
+                            program_id: string;
+                            /**
                              * @description Filter by AMM address
                              * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
@@ -2134,18 +2717,10 @@ export interface operations {
                              * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
                             amm_pool: string;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
                             token0: string;
-                            token0_decimals: number | null;
-                            /**
-                             * @description Filter by mint address
-                             * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
-                             */
+                            token0_decimals: number;
                             token1: string;
-                            token1_decimals: number | null;
+                            token1_decimals: number;
                             open: number;
                             high: number;
                             low: number;
@@ -2269,9 +2844,8 @@ export interface operations {
                             /**
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-                             * @enum {string}
                              */
-                            program_id: "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj" | "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C" | "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8" | "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK" | "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB" | "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4" | "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo" | "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG" | "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA" | "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB" | "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+                            program_id: string;
                             program_name: string;
                             /**
                              * @description Filter by AMM address
@@ -3000,8 +3574,8 @@ export interface operations {
                             high: number;
                             low: number;
                             close: number;
-                            name: string;
-                            symbol: string;
+                            name: string | null;
+                            symbol: string | null;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -3690,8 +4264,8 @@ export interface operations {
                             high: number;
                             low: number;
                             close: number;
-                            name: string;
-                            symbol: string;
+                            name: string | null;
+                            symbol: string | null;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -6505,6 +7079,1084 @@ export interface operations {
                              * @enum {string}
                              */
                             network: "tron";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketMarkets: {
+        parameters: {
+            query?: {
+                condition_id?: string;
+                market_slug?: string;
+                token_id?: string;
+                event_slug?: string;
+                closed?: boolean;
+                sort_by?: "volume" | "end_date" | "start_date";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            condition_id: string;
+                            market_slug: string;
+                            event_slug: string | null;
+                            event_title: string | null;
+                            question: string;
+                            description: string;
+                            outcomes: {
+                                label: string;
+                                token_id: string;
+                            }[];
+                            closed: boolean;
+                            neg_risk: boolean;
+                            accepting_orders: boolean;
+                            fees_enabled: boolean;
+                            volume: number;
+                            start_date: string;
+                            end_date: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketMarketsOhlc: {
+        parameters: {
+            query: {
+                token_id: string;
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            open: number;
+                            high: number;
+                            low: number;
+                            close: number;
+                            volume: number;
+                            trades: number;
+                            buys: number;
+                            sells: number;
+                            unique_makers: number;
+                            unique_takers: number;
+                            total_fees: number;
+                            fee_count: number;
+                            effective_fee_rate: number;
+                            market: {
+                                condition_id: string | null;
+                                market_slug: string | null;
+                                token_id: string;
+                                outcome_label: string | null;
+                                closed: boolean;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketMarketsOi: {
+        parameters: {
+            query?: {
+                condition_id?: string;
+                market_slug?: string;
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            net_open_interest: number;
+                            split_amount: number;
+                            merge_amount: number;
+                            split_count: number;
+                            merge_count: number;
+                            transactions: number;
+                            unique_stakeholders: number;
+                            market: {
+                                condition_id: string;
+                                market_slug: string | null;
+                                token_id: null;
+                                outcome_label: null;
+                                closed: boolean;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketMarketsActivity: {
+        parameters: {
+            query?: {
+                user?: string;
+                token_id?: string;
+                condition_id?: string;
+                /** @description Filter by event type */
+                event_type?: "trade" | "split" | "merge" | "redeem";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            event_type: string;
+                            timestamp: string;
+                            block_num: number;
+                            tx_hash: string;
+                            user: string;
+                            amount: string;
+                            value: number;
+                            fee_amount: string;
+                            fee_value: number;
+                            market: {
+                                condition_id: string | null;
+                                market_slug: string | null;
+                                token_id: string | null;
+                                outcome_label: string | null;
+                                closed: boolean;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketMarketsPositions: {
+        parameters: {
+            query: {
+                token_id: string;
+                closed?: boolean;
+                sort_by?: "position_value" | "realized_pnl" | "unrealized_pnl" | "total_pnl" | "pnl_pct" | "transactions" | "avg_price";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            buy_cost: number;
+                            sell_revenue: number;
+                            realized_pnl: number;
+                            unrealized_pnl: number;
+                            total_pnl: number;
+                            pnl_pct: number;
+                            net_position: number;
+                            avg_price: number;
+                            current_price: number;
+                            position_value: number;
+                            active: boolean;
+                            buys: number;
+                            sells: number;
+                            transactions: number;
+                            market: {
+                                condition_id: string | null;
+                                market_slug: string | null;
+                                token_id: string;
+                                outcome_label: string | null;
+                                closed: boolean;
+                            };
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketPlatform: {
+        parameters: {
+            query?: {
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            volume: number;
+                            buy_volume: number;
+                            sell_volume: number;
+                            trades: number;
+                            buys: number;
+                            sells: number;
+                            net_open_interest: number;
+                            split_amount: number;
+                            merge_amount: number;
+                            split_count: number;
+                            merge_count: number;
+                            oi_transactions: number;
+                            total_fees: number;
+                            fee_count: number;
+                            effective_fee_rate: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketUsers: {
+        parameters: {
+            query?: {
+                user?: string;
+                /** @description Lookback window for user statistics (1 hour, 1 day, 1 week, 30 days). Omit for all-time. */
+                interval?: "1h" | "1d" | "1w" | "30d";
+                sort_by?: "total_volume" | "realized_pnl" | "unrealized_pnl" | "total_pnl" | "transactions";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            buys: number;
+                            sells: number;
+                            transactions: number;
+                            volume_bought: number;
+                            volume_sold: number;
+                            total_volume: number;
+                            realized_pnl: number;
+                            unrealized_pnl: number;
+                            total_pnl: number;
+                            first_trade: string;
+                            last_trade: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1PolymarketUsersPositions: {
+        parameters: {
+            query: {
+                user: string;
+                token_id?: string;
+                condition_id?: string;
+                market_slug?: string;
+                closed?: boolean;
+                sort_by?: "position_value" | "realized_pnl" | "unrealized_pnl" | "total_pnl" | "pnl_pct" | "transactions" | "avg_price" | "current_price";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            buy_cost: number;
+                            sell_revenue: number;
+                            realized_pnl: number;
+                            unrealized_pnl: number;
+                            total_pnl: number;
+                            pnl_pct: number;
+                            net_position: number;
+                            avg_price: number;
+                            current_price: number;
+                            position_value: number;
+                            active: boolean;
+                            buys: number;
+                            sells: number;
+                            transactions: number;
+                            market: {
+                                condition_id: string | null;
+                                market_slug: string | null;
+                                token_id: string;
+                                outcome_label: string | null;
+                                closed: boolean;
+                            };
                         }[];
                         statistics: {
                             elapsed?: number;

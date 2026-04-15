@@ -8,7 +8,7 @@
  */
 
 import createClient, { type Middleware } from 'openapi-fetch';
-import type { paths, components } from './openapi.d.ts';
+import type { paths } from './openapi.d.ts';
 
 // Re-export types
 export type * from './openapi.d.ts';
@@ -63,6 +63,18 @@ export type TvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<t
 export type TvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getSwaps']>>>;
 export type TvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['tokens']['getTokenMetadata']>>>;
 export type TvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getPools']>>>;
+export type PolymarketMarketsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['polymarket']['getMarkets']>>>;
+export type PolymarketUsersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['polymarket']['getUsers']>>>;
+
+type GetQuery<P extends keyof paths> = paths[P] extends {
+  get: {
+    parameters: {
+      query?: infer Q;
+    };
+  };
+}
+  ? Q
+  : never;
 
 // Network types
 export type EvmNetwork =
@@ -79,8 +91,22 @@ export type SvmNetwork = 'solana';
 
 export type TvmNetwork = 'tron';
 
-export type EvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'bancor' | 'curvefi' | 'balancer';
+export type EvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'curvefi' | 'balancer' | 'bancor' | 'cow' | 'aerodrome' | 'dodo' | 'woofi' | 'traderjoe' | 'kyber_elastic';
 export type TvmDexProtocol = 'uniswap_v1' | 'uniswap_v2' | 'uniswap_v3' | 'uniswap_v4' | 'sunpump';
+export type SvmDexProtocol =
+  | 'jupiter_v4'
+  | 'jupiter_v6'
+  | 'pumpfun'
+  | 'pumpfun_amm'
+  | 'raydium_amm_v4'
+  | 'raydium_clmm'
+  | 'raydium_cpmm'
+  | 'raydium_launchpad'
+  | 'meteora_dllm'
+  | 'orca_whirlpool'
+  | 'boop'
+  | 'darklake'
+  | 'dumpfun';
 export type SvmTokenProgramId = '11111111111111111111111111111111' | 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' | 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 export type SvmDexProgramId =
   | 'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj'
@@ -731,6 +757,17 @@ class SvmTokens {
   }
 
   /**
+   * Get native SOL transfers
+   */
+  async getNativeTransfers(params: GetQuery<'/v1/svm/transfers/native'>) {
+    const { data, error } = await this.client.GET('/v1/svm/transfers/native', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
    * Get token metadata
    */
   async getTokenMetadata(params: {
@@ -798,6 +835,17 @@ class SvmTokens {
   }
 
   /**
+   * Get native SOL holders
+   */
+  async getNativeHolders(params: GetQuery<'/v1/svm/holders/native'>) {
+    const { data, error } = await this.client.GET('/v1/svm/holders/native', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
    * Get account owner lookup
    */
   async getAccountOwner(params: {
@@ -829,9 +877,12 @@ class SvmDexs {
     amm?: string | string[];
     amm_pool?: string | string[];
     user?: string | string[];
+    fee_payer?: string | string[];
+    signer?: string | string[];
     input_mint?: string | string[];
+    protocol?: SvmDexProtocol;
     output_mint?: string | string[];
-    program_id?: SvmDexProgramId | string | SvmDexProgramId[];
+    program_id?: string | string[];
     start_time?: string;
     end_time?: string;
     start_block?: number;
@@ -853,9 +904,9 @@ class SvmDexs {
     network: SvmNetwork;
     amm?: string | string[];
     amm_pool?: string | string[];
-    input_mint?: string | string[];
-    output_mint?: string | string[];
-    program_id?: SvmDexProgramId | string | SvmDexProgramId[];
+    mint?: string | string[];
+    program_id?: string | string[];
+    protocol?: Exclude<SvmDexProtocol, 'jupiter_v4' | 'jupiter_v6'>;
     page?: number;
     limit?: number;
   }) {
@@ -924,6 +975,101 @@ class SvmApi {
     this.tokens = new SvmTokens(client);
     this.dexs = new SvmDexs(client);
     this.nfts = new SvmNfts(client);
+  }
+}
+
+/**
+ * Polymarket API - Market, activity, platform, and user analytics
+ */
+class PolymarketApi {
+  constructor(private client: ReturnType<typeof createAPIClient>) { }
+
+  /**
+   * Get Polymarket market metadata
+   */
+  async getMarkets(params?: GetQuery<'/v1/polymarket/markets'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/markets', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get OHLCV data for a Polymarket outcome token
+   */
+  async getMarketOHLC(params: GetQuery<'/v1/polymarket/markets/ohlc'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/markets/ohlc', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get market open interest time-series
+   */
+  async getMarketOpenInterest(params?: GetQuery<'/v1/polymarket/markets/oi'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/markets/oi', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get on-chain Polymarket activity
+   */
+  async getMarketActivity(params?: GetQuery<'/v1/polymarket/markets/activity'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/markets/activity', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get leaderboard positions for a market outcome token
+   */
+  async getMarketPositions(params: GetQuery<'/v1/polymarket/markets/positions'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/markets/positions', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get platform-wide Polymarket aggregates
+   */
+  async getPlatform(params?: GetQuery<'/v1/polymarket/platform'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/platform', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Polymarket user stats
+   */
+  async getUsers(params?: GetQuery<'/v1/polymarket/users'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/users', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get positions for a Polymarket user
+   */
+  async getUserPositions(params: GetQuery<'/v1/polymarket/users/positions'>) {
+    const { data, error } = await this.client.GET('/v1/polymarket/users/positions', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
   }
 }
 
@@ -1020,7 +1166,7 @@ class TvmDexs {
     transaction_id?: string | string[];
     factory?: string | string[];
     pool?: string | string[];
-    caller?: string | string[];
+    transaction_from?: string | string[];
     sender?: string | string[];
     recipient?: string | string[];
     input_contract?: string | string[];
@@ -1161,11 +1307,17 @@ export class TokenAPI {
    */
   public readonly tvm: TvmApi;
 
+  /**
+   * Polymarket analytics API
+   */
+  public readonly polymarket: PolymarketApi;
+
   constructor(options: PinaxClientOptions = {}) {
     this.client = createAPIClient(options);
     this.evm = new EvmApi(this.client);
     this.svm = new SvmApi(this.client);
     this.tvm = new TvmApi(this.client);
+    this.polymarket = new PolymarketApi(this.client);
   }
 
   /**
