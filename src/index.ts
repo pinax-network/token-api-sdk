@@ -56,6 +56,7 @@ export type EvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeo
 export type SvmTransfersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getTransfers']>>>;
 export type SvmSwapsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['dexs']['getSwaps']>>>;
 export type SvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getTokenMetadata']>>>;
+export type SvmNativeTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getNativeTokenMetadata']>>>;
 export type SvmBalancesResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getBalances']>>>;
 export type SvmHoldersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['tokens']['getHolders']>>>;
 export type SvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['svm']['dexs']['getPools']>>>;
@@ -775,6 +776,17 @@ class SvmTokens {
     mint: string | string[];
   }) {
     const { data, error } = await this.client.GET('/v1/svm/tokens', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get native SOL token metadata
+   */
+  async getNativeTokenMetadata(params: GetQuery<'/v1/svm/tokens/native'>) {
+    const { data, error } = await this.client.GET('/v1/svm/tokens/native', {
       params: { query: params },
     });
 

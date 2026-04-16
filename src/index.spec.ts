@@ -110,6 +110,7 @@ describe('TokenAPI', () => {
       expect(typeof client.svm.tokens.getTransfers).toBe('function');
       expect(typeof client.svm.tokens.getNativeTransfers).toBe('function');
       expect(typeof client.svm.tokens.getTokenMetadata).toBe('function');
+      expect(typeof client.svm.tokens.getNativeTokenMetadata).toBe('function');
       expect(typeof client.svm.tokens.getBalances).toBe('function');
       expect(typeof client.svm.tokens.getNativeBalances).toBe('function');
       expect(typeof client.svm.tokens.getHolders).toBe('function');
@@ -788,6 +789,18 @@ describe('API methods with mocked fetch', () => {
 
     expect(capturedRequest).not.toBeNull();
     expect(capturedRequest!.url).toContain('/v1/svm/tokens');
+  });
+
+  it('should call the correct endpoint for SVM native token metadata', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.svm.tokens.getNativeTokenMetadata({
+      network: 'solana',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/svm/tokens/native');
+    expect(capturedRequest!.url).toContain('network=solana');
   });
 
   it('should call the correct endpoint for SVM balances', async () => {
