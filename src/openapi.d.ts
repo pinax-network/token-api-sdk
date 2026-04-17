@@ -2458,7 +2458,7 @@ export interface operations {
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 input_mint?: string | string[];
                 /** @description Protocol name */
-                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_mint?: string | string[];
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
@@ -2564,7 +2564,7 @@ export interface operations {
                              * @example raydium_amm_v4
                              * @enum {string}
                              */
-                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
                             summary: string;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
@@ -2675,7 +2675,7 @@ export interface operations {
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 program_id?: string | string[];
                 /** @description Protocol name */
-                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dllm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */

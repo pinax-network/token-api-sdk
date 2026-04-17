@@ -103,7 +103,7 @@ export type SvmDexProtocol =
   | 'raydium_clmm'
   | 'raydium_cpmm'
   | 'raydium_launchpad'
-  | 'meteora_dllm'
+  | 'meteora_dlmm'
   | 'orca_whirlpool'
   | 'boop'
   | 'darklake'
