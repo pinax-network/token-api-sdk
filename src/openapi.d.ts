@@ -834,6 +834,314 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/hyperliquid/dexes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Supported DEXs
+         * @description Returns the list of perpetuals DEXs and spot, each with 24h activity stats (volume, trade count, unique users, asset count). Hyperliquid hosts a core perpetuals venue (`dex=perps`) alongside builder-deployed perpetuals DEXs that each list their own asset universe — `xyz` (commodities and macro indices), `cash` (tokenized equities), `km`, and others.
+         *
+         *     Use this endpoint to discover valid `dex` filter values for venue-scoped queries on `/markets`, `/markets/activity`, `/markets/liquidations`, `/users`, and `/users/positions`.
+         *
+         *     For platform-wide totals across all DEXs over arbitrary intervals, use `/v1/hyperliquid/platform`.
+         *
+         *     **Public — no auth required.**
+         */
+        get: operations["getV1HyperliquidDexes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Lookup
+         * @description Returns the latest snapshot per market: last trade price, 24h change versus the prior-day close, 24h volume (split by side), trade and unique-user counts, and the most recent open interest and funding rate observed at the last funding snapshot.
+         *
+         *     Filters compose additively — pass `coin`, `dex`, `base_token`, and/or `quote_token` to narrow the scope. A mismatched combination (e.g. `coin=cash:TSLA&dex=xyz`) returns empty. Omit all for a full listing sorted by 24h volume.
+         *
+         *     `base_token` and `quote_token` are spot-discovery filters: `?base_token=HYPE` returns every spot pair where HYPE sits on the base side (HYPE/USDC, HYPE/USDT0, …). Use the `coin` from the result as the identifier on the rest of the `/v1/hyperliquid/*` endpoints.
+         */
+        get: operations["getV1HyperliquidMarkets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets/ohlc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market OHLCV
+         * @description Returns OHLCV candles for a single coin and interval, derived from regular trade fills. Volume is broken down both by side (`buy_volume`, `ask_volume`) and — on perpetuals — by directional intent (`open_long_volume`, `close_long_volume`, `open_short_volume`, `close_short_volume`) so consumers can distinguish whether price moves are driven by fresh exposure or position unwinds. On spot markets the directional-intent fields are zero; the side-volume fields carry the buy/sell breakdown directly.
+         *
+         *     For liquidation-only candles (with mark-price OHLC), use `/v1/hyperliquid/markets/liquidations/ohlc`.
+         */
+        get: operations["getV1HyperliquidMarketsOhlc"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets/oi": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Open Interest
+         * @description Returns the historical open-interest and funding-rate time series for a coin at the requested interval. `open_interest` is the sum of absolute signed position sizes across all users at each funding snapshot.
+         *
+         *     Each row also exposes the directional positioning split (`long_size`, `short_size`, `net_position`, plus `long_positions` and `short_positions` as user counts) and funding aggregates (`funding_rate`, `total_funding`, `positive_funding`, `negative_funding`) — useful for detecting crowded sides, funding pressure, and position flushes.
+         */
+        get: operations["getV1HyperliquidMarketsOi"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Activity
+         * @description Returns a chronological fill feed, filterable by `coin`, `dex`, and/or `user`. Each row is a single fill carrying price, size, side (`BID` or `ASK`), directional intent (`OPEN_LONG`, `CLOSE_SHORT`, `LIQUIDATED_CROSS_LONG`, `AUTO_DELEVERAGING`, and others), closed PnL, fees (negative values represent maker rebates), and order-level metadata (`order_id`, `client_order_id`, `twap_id`, `crossed`).
+         *
+         *     For balance-changing events on a user (deposits, withdrawals, funding payments, vault flows), use `/v1/hyperliquid/users/activity`.
+         *
+         *     At least one of `coin`, `dex`, or `user` is required. Filters compose additively — pass any combination to narrow further; a mismatched pair (e.g. `coin=cash:TSLA&dex=xyz`) returns empty.
+         *
+         *     Defaults to the last 24 hours when no time range is specified — provide `start_time` and `end_time` to query older data.
+         */
+        get: operations["getV1HyperliquidMarketsActivity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets/liquidations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Liquidations
+         * @description Returns one row per liquidation event, aggregated across the multiple fills that walk the book during a liquidation. Only the liquidated user's side is returned — counterparty fills are excluded.
+         *
+         *     Each row surfaces the coin, liquidated user, transaction hash, liquidation kind (`CROSS_LONG`, `ISOLATED_SHORT`, and others), total size and notional, size-weighted average fill price, the mark price at liquidation, and the liquidation method reported by the venue (`backstop` and others).
+         *
+         *     Filter by `coin`, `dex`, and/or `liquidated_user` — filters compose additively. Sort by `notional` (default — largest events first) or `time` (most recent first).
+         */
+        get: operations["getV1HyperliquidMarketsLiquidations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/markets/liquidations/ohlc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Market Liquidations OHLCV
+         * @description Returns liquidation-only OHLCV candles for a single coin and interval. Adds mark-price OHLC (`mark_price_open`, `mark_price_high`, `mark_price_low`, `mark_price_close`) — the price feed used for margining at liquidation time — alongside the standard trade-price OHLC. Volume and counts cover the liquidation fills only.
+         *
+         *     For all-fill candles, use `/v1/hyperliquid/markets/ohlc`.
+         */
+        get: operations["getV1HyperliquidMarketsLiquidationsOhlc"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Lookup
+         * @description Returns trading aggregates per user: fill count, volume broken down by side, total fees (negative values represent net maker rebates), realized PnL, net funding paid or received, liquidation-fill count, distinct coins traded, and first/last trade timestamps.
+         *
+         *     Omit `user` for leaderboard mode — returns a paginated list sorted by `sort_by`. Provide `user` for profile mode — returns a single row. Filters `coin` and `dex` compose additively — pass either or both to narrow the scope (`coin=BTC` for one market, `dex=xyz` for one venue, both together for redundancy). A mismatched combination (e.g. `coin=cash:TSLA&dex=xyz`) returns an empty result.
+         *
+         *     Aggregation windows are fixed via the `interval` parameter — `1h`, `1d`, `1w`, `30d`, or omit for all-time. Data is refreshed hourly, so `1h` lags up to 1h.
+         *
+         *     Vaults trade as normal accounts, so passing a vault address as `user` returns its trading performance — pair with `/v1/hyperliquid/vaults` for depositor-side stats.
+         */
+        get: operations["getV1HyperliquidUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/users/positions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Positions
+         * @description Returns the current signed position (`position_size`) per coin for a user, reconstructed from the latest funding snapshot per `(user, coin)` pair. Positive `position_size` indicates a long position, negative indicates a short. Each row also carries the funding rate applied at that snapshot and the snapshot timestamp.
+         *
+         *     Filter by `coin` for a single coin, or `dex` to return only positions on one venue (`xyz`, `cash`, etc.).
+         *
+         *     Caveat: positions opened and fully closed between two funding snapshots are never observed during settlement and will not appear here.
+         */
+        get: operations["getV1HyperliquidUsersPositions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/users/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Activity
+         * @description Returns a chronological feed of balance-changing events for a user — bridge deposits/withdrawals, on-chain account deposits/withdrawals, vault deposits/withdrawals, liquidations, and funding payments. Each row carries an `event_type` discriminator and a `notes` field with type-specific extras (e.g. funding rate and position size for funding events).
+         *
+         *     For trade fills, use `/v1/hyperliquid/markets/activity` instead.
+         *
+         *     Supply `event_types` (comma-separated) to filter to a subset. Defaults to the last 30 days when no time range is specified — provide `start_time` and `end_time` to query older data.
+         */
+        get: operations["getV1HyperliquidUsersActivity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/vaults": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Vault Listings
+         * @description Returns vault summaries — leader, lifetime flow totals (deposits, withdrawals, distributions, leader commissions), depositor and event counts, and last-activity timestamp.
+         *
+         *     Vault trading PnL/volume is exposed via `/v1/hyperliquid/users` with the vault address as `user` (vaults trade as normal accounts on Hyperliquid). Per-depositor breakdowns live on `/v1/hyperliquid/vaults/depositors`.
+         *
+         *     Vaults predating our indexer cutover (2026-02-02) have no `ledger_vault_creates` row and come back with `leader`/`created_at` as null and `initial_deposit`/`create_fee` as 0.
+         */
+        get: operations["getV1HyperliquidVaults"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/vaults/depositors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Vault Depositors
+         * @description Returns the per-depositor breakdown for a single vault — one row per `(user, vault)` pair with lifetime deposits, lifetime net withdrawals (after vault commission and closing cost), distributions received, deposit and withdrawal counts, and last-activity timestamp.
+         *
+         *     For the vault-level summary, see `/v1/hyperliquid/vaults`.
+         */
+        get: operations["getV1HyperliquidVaultsDepositors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/hyperliquid/platform": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Platform Activity
+         * @description Returns a platform-wide time series aggregating all coins and DEXs into one row per `timestamp`. Each row carries trade volume (split by side), trade and counterparty counts, distinct active coins, total fees, and a liquidation slice (`liquidations_volume`, `liquidations_count`, `unique_liquidated_users`).
+         *
+         *     Use this endpoint instead of summing per-coin or per-DEX data client-side when you need cross-market totals. Per-coin OHLCV lives on `/v1/hyperliquid/markets/ohlc`; per-DEX on `/v1/hyperliquid/dexes`.
+         */
+        get: operations["getV1HyperliquidPlatform"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/polymarket/markets": {
         parameters: {
             query?: never;
@@ -1070,6 +1378,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/SKILLS.md": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Agent Skills Reference
+         * @description Returns the public Markdown reference for AI agents integrating with Token API.
+         */
+        get: operations["getSkillsMarkdown"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/llms.txt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * LLM Documentation Index
+         * @description Returns the public llms.txt documentation index for AI tools discovering Token API.
+         */
+        get: operations["getLlmsText"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/openapi": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * OpenAPI Specification
+         * @description Returns the public OpenAPI specification for Token API.
+         */
+        get: operations["getOpenapiSpec"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1138,6 +1506,7 @@ export interface operations {
                             instruction_index: number;
                             stack_height: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
@@ -1152,21 +1521,25 @@ export interface operations {
                              */
                             program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             mint: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             source: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             destination: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by authority address
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
@@ -1318,13 +1691,18 @@ export interface operations {
                              */
                             program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
+                             * Format: svm-address
                              * @description Filter by owner address
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
                             owner: string;
-                            /** @description Filter by token account address */
+                            /**
+                             * Format: svm-address
+                             * @description Filter by token account address
+                             */
                             token_account: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -1460,21 +1838,27 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             mint: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by owner address
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
                             owner: string;
-                            /** @description Filter by token account address */
+                            /**
+                             * Format: svm-address
+                             * @description Filter by token account address
+                             */
                             token_account: string;
                             amount: string;
                             value: number;
@@ -1606,9 +1990,13 @@ export interface operations {
                             last_update: string;
                             last_update_block_num: number;
                             last_update_timestamp: number;
-                            /** @description Filter by token account address */
+                            /**
+                             * Format: svm-address
+                             * @description Filter by token account address
+                             */
                             account: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by owner address
                              * @example GXYBNgyYKbSLr938VJCpmGLCUaAHWsncTi7jDoQSdFR9
                              */
@@ -1741,6 +2129,7 @@ export interface operations {
                              */
                             program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -1891,11 +2280,13 @@ export interface operations {
                             instruction_index: number;
                             stack_height: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             fee_payer: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
@@ -1904,21 +2295,25 @@ export interface operations {
                             fee: number;
                             compute_units_consumed: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example 11111111111111111111111111111111
                              */
                             program_id: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111111
                              */
                             mint: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             source: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
@@ -2061,11 +2456,13 @@ export interface operations {
                              */
                             program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             address: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -2198,16 +2595,21 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             mint: string;
-                            /** @description Filter by token account address */
+                            /**
+                             * Format: svm-address
+                             * @description Filter by token account address
+                             */
                             token_account: string;
                             amount: string;
                             value: number;
@@ -2339,6 +2741,7 @@ export interface operations {
                              */
                             program_id: "11111111111111111111111111111111" | "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" | "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -2458,7 +2861,7 @@ export interface operations {
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 input_mint?: string | string[];
                 /** @description Protocol name */
-                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_mint?: string | string[];
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
@@ -2494,6 +2897,7 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: svm-signature
                              * @description Filter by transaction signature
                              * @example 5pdoVcSiSBr3LMAijdRYKrL5RoLFjLgHxHbZ34dUBVubnsQt3q1v48LuPazebsSiBVuSbSTyJdzf3G9jqqn8o6jA
                              */
@@ -2502,11 +2906,13 @@ export interface operations {
                             instruction_index: number;
                             stack_height: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             fee_payer: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
@@ -2515,17 +2921,20 @@ export interface operations {
                             fee: number;
                             compute_units_consumed: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             program_name: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM address
                              * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
                             amm: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM pool address
                              * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
@@ -2541,11 +2950,13 @@ export interface operations {
                                 decimals: number | null;
                             };
                             /**
+                             * Format: svm-address
                              * @description Filter by address
                              * @example So11111111111111111111111111111111111111112
                              */
                             user: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -2553,6 +2964,7 @@ export interface operations {
                             input_amount: string;
                             input_value: number;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -2564,7 +2976,7 @@ export interface operations {
                              * @example raydium_amm_v4
                              * @enum {string}
                              */
-                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
                             summary: string;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
@@ -2675,7 +3087,7 @@ export interface operations {
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 program_id?: string | string[];
                 /** @description Protocol name */
-                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_dlmm" | "orca_whirlpool" | "boop" | "darklake" | "dumpfun";
+                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -2696,28 +3108,33 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             program_name: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM address
                              * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
                             amm: string;
                             amm_name: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM pool address
                              * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
                             amm_pool: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             input_mint: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
@@ -2852,16 +3269,19 @@ export interface operations {
                         data: {
                             datetime: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM address
                              * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
                             amm: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM pool address
                              * @example AmmpSnW5xVeKHTAU9fMjyKEMPgrzmUj3ah5vgvHhAB5J
                              */
@@ -2991,12 +3411,14 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: svm-address
                              * @description Filter by program ID
                              * @example JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
                              */
                             program_id: string;
                             program_name: string;
                             /**
+                             * Format: svm-address
                              * @description Filter by AMM address
                              * @example 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
                              */
@@ -3137,21 +3559,25 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: evm-tx-hash
                              * @description Filter by transaction hash
                              * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
                              */
                             transaction_id: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
                             contract: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             from: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -3290,11 +3716,13 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -3429,11 +3857,13 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -3564,6 +3994,7 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -3709,11 +4140,13 @@ export interface operations {
                         data: {
                             datetime: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -3862,16 +4295,19 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: evm-tx-hash
                              * @description Filter by transaction hash
                              * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
                              */
                             transaction_id: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             from: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -4002,6 +4438,7 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -4134,6 +4571,7 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -4399,11 +4837,13 @@ export interface operations {
                         data: {
                             datetime: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -4570,6 +5010,7 @@ export interface operations {
                             transaction_id: string;
                             transaction_index: number;
                             /**
+                             * Format: evm-address
                              * @description Onchain transaction initiator address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -4580,6 +5021,7 @@ export interface operations {
                             log_block_index: number;
                             log_topic0: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by factory address
                              * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
                              */
@@ -4600,21 +5042,25 @@ export interface operations {
                                 decimals: number | null;
                             };
                             /**
+                             * Format: evm-address
                              * @description Account or contract that calls the swap-relevant contract.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             caller: string;
                             /**
+                             * Format: evm-address
                              * @description Normalized user-oriented swap address. Prefer this field for integrations; sender and recipient remain legacy compatibility fields and are planned for deprecation in a future major release.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             user: string;
                             /**
+                             * Format: evm-address
                              * @description Legacy compatibility field for swap sender semantics. Prefer user for a normalized user-oriented swap address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             sender: string;
                             /**
+                             * Format: evm-address
                              * @description Legacy compatibility field for swap recipient semantics. Prefer user for a normalized user-oriented swap address.
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -4767,6 +5213,7 @@ export interface operations {
                              */
                             pool: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by factory address
                              * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
                              */
@@ -5047,6 +5494,7 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -5184,11 +5632,13 @@ export interface operations {
                         data: {
                             contract_creation: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             contract_creator: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5321,6 +5771,7 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5332,6 +5783,7 @@ export interface operations {
                              */
                             token_standard: "ERC721" | "ERC1155";
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -5466,11 +5918,13 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5625,11 +6079,13 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             address: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5790,11 +6246,13 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: evm-tx-hash
                              * @description Filter by transaction hash
                              * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
                              */
                             transaction_id: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5807,11 +6265,13 @@ export interface operations {
                             name: string | null;
                             symbol: string | null;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             offerer: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -5970,11 +6430,13 @@ export interface operations {
                             "@type": "BURN" | "MINT" | "TRANSFER";
                             transfer_type: string;
                             /**
+                             * Format: evm-tx-hash
                              * @description Filter by transaction hash
                              * @example 0xf6374799c227c9db38ff5ac1d5bebe8b607a1de1238cd861ebd1053ec07305ca
                              */
                             transaction_id: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by contract address
                              * @example 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
                              */
@@ -5993,11 +6455,13 @@ export interface operations {
                              */
                             token_standard: "ERC721" | "ERC1155";
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             from: string;
                             /**
+                             * Format: evm-address
                              * @description Filter by address
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
@@ -6142,6 +6606,7 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: tvm-tx-hash
                              * @description Filter by transaction hash
                              * @example daddbf0810fb73620ebb1ad3c915afd32f3cf13a267d740f27284583df97a01a
                              */
@@ -6150,16 +6615,19 @@ export interface operations {
                             log_index: number;
                             log_ordinal: number;
                             /**
+                             * Format: tvm-address
                              * @description Filter by contract address
                              * @example TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
                              */
                             contract: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             from: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
@@ -6290,6 +6758,7 @@ export interface operations {
                             last_update_block_num: number;
                             last_update_timestamp: number;
                             /**
+                             * Format: tvm-address
                              * @description Filter by contract address
                              * @example TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
                              */
@@ -6438,17 +6907,20 @@ export interface operations {
                             datetime: string;
                             timestamp: number;
                             /**
+                             * Format: tvm-tx-hash
                              * @description Filter by transaction hash
                              * @example daddbf0810fb73620ebb1ad3c915afd32f3cf13a267d740f27284583df97a01a
                              */
                             transaction_id: string;
                             transaction_index: number;
                             /**
+                             * Format: tvm-address
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             from: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
@@ -6727,6 +7199,7 @@ export interface operations {
                             transaction_id: string;
                             transaction_index: number;
                             /**
+                             * Format: tvm-address
                              * @description Onchain transaction initiator address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
@@ -6736,17 +7209,20 @@ export interface operations {
                             log_block_index: number;
                             log_topic0: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by factory address
                              * @example TKWJdrQkqHisa1X8HUdHEfREvTzw4pMAaY
                              */
                             factory: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by pool address
                              * @example TFGDbUyP8xez44C76fin3bn3Ss6jugoUwJ
                              */
                             pool: string;
                             input_token: {
                                 /**
+                                 * Format: tvm-address
                                  * @description Filter by address
                                  * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                                  */
@@ -6757,6 +7233,7 @@ export interface operations {
                             };
                             output_token: {
                                 /**
+                                 * Format: tvm-address
                                  * @description Filter by address
                                  * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                                  */
@@ -6766,16 +7243,19 @@ export interface operations {
                                 decimals: number;
                             };
                             /**
+                             * Format: tvm-address
                              * @description Normalized user-oriented swap address. Prefer this field for integrations; sender and recipient remain legacy compatibility fields and are planned for deprecation in a future major release.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             user: string;
                             /**
+                             * Format: tvm-address
                              * @description Legacy compatibility field for swap sender semantics. Prefer user for a normalized user-oriented swap address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
                             sender: string;
                             /**
+                             * Format: tvm-address
                              * @description Legacy compatibility field for swap recipient semantics. Prefer user for a normalized user-oriented swap address.
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
@@ -6923,6 +7403,7 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: evm-address
                              * @description Filter by factory address
                              * @example 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
                              */
@@ -7079,6 +7560,7 @@ export interface operations {
                             datetime: string;
                             ticker: string;
                             /**
+                             * Format: tvm-address
                              * @description Filter by pool address
                              * @example TFGDbUyP8xez44C76fin3bn3Ss6jugoUwJ
                              */
@@ -7209,6 +7691,7 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
+                             * Format: tvm-address
                              * @description Filter by address
                              * @example TRX9Uehj3GuFVh5jjVjNqb6q9cgVHJ4jGX
                              */
@@ -7228,6 +7711,1751 @@ export interface operations {
                              * @enum {string}
                              */
                             network: "tron";
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidDexes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /**
+                             * @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set.
+                             * @example perps
+                             * @example spot
+                             * @example xyz
+                             * @example cash
+                             * @example km
+                             * @example hyna
+                             * @example flx
+                             * @example vntl
+                             * @example para
+                             */
+                            dex: string;
+                            assets: number;
+                            volume_24h: number;
+                            trades_24h: number;
+                            unique_users_24h: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarkets: {
+        parameters: {
+            query?: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin?: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`. */
+                base_token?: string;
+                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`. */
+                quote_token?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            base_token: string | null;
+                            quote_token: string | null;
+                            price: number;
+                            price_24h: number | null;
+                            price_24h_change: number;
+                            volume_24h: number;
+                            buy_volume_24h: number;
+                            sell_volume_24h: number;
+                            trades_24h: number;
+                            unique_users_24h: number;
+                            open_interest: number | null;
+                            funding_rate: number | null;
+                            funding_snapshot_time: string | null;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarketsOhlc: {
+        parameters: {
+            query: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            interval_min: number;
+                            open: number;
+                            high: number;
+                            low: number;
+                            close: number;
+                            buy_volume: number;
+                            sell_volume: number;
+                            gross_volume: number;
+                            net_volume: number;
+                            open_long_volume: number;
+                            close_long_volume: number;
+                            open_short_volume: number;
+                            close_short_volume: number;
+                            transactions: number;
+                            buys: number;
+                            sells: number;
+                            unique_users: number;
+                            total_fees: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarketsOi: {
+        parameters: {
+            query: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            interval_min: number;
+                            open_interest: number;
+                            net_position: number;
+                            long_size: number;
+                            short_size: number;
+                            long_positions: number;
+                            short_positions: number;
+                            funding_rate: number;
+                            total_funding: number;
+                            positive_funding: number;
+                            negative_funding: number;
+                            funding_events: number;
+                            unique_users: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarketsActivity: {
+        parameters: {
+            query?: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin?: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description Filter by address */
+                user?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            timestamp: string;
+                            transaction_hash: string;
+                            transaction_id: number;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            user: string;
+                            side: string;
+                            direction: string;
+                            price: number;
+                            size: number;
+                            notional: number;
+                            start_position: string;
+                            closed_pnl: number;
+                            fee: number;
+                            fee_token: string;
+                            order_id: number;
+                            client_order_id: string;
+                            twap_id: number;
+                            crossed: boolean;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarketsLiquidations: {
+        parameters: {
+            query?: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin?: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description Filter by address */
+                liquidated_user?: string;
+                sort_by?: "notional" | "time";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            timestamp: string;
+                            event_hash: string;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            liquidated_user: string;
+                            direction: string;
+                            liquidation_kind: string;
+                            fills: number;
+                            total_size: number;
+                            notional: number;
+                            avg_fill_price: number;
+                            mark_price: number;
+                            liquidation_method: string;
+                            total_fees: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidMarketsLiquidationsOhlc: {
+        parameters: {
+            query: {
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            interval_min: number;
+                            open: number;
+                            high: number;
+                            low: number;
+                            close: number;
+                            mark_price_open: number;
+                            mark_price_high: number;
+                            mark_price_low: number;
+                            mark_price_close: number;
+                            buy_volume: number;
+                            sell_volume: number;
+                            gross_volume: number;
+                            net_volume: number;
+                            open_long_volume: number;
+                            close_long_volume: number;
+                            open_short_volume: number;
+                            close_short_volume: number;
+                            transactions: number;
+                            buys: number;
+                            sells: number;
+                            unique_liquidators: number;
+                            unique_liquidated: number;
+                            total_fees: number;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidUsers: {
+        parameters: {
+            query?: {
+                /** @description Filter by address */
+                user?: string;
+                /** @description Lookback window for user statistics (1 hour, 1 day, 1 week, 30 days). Omit for all-time. */
+                interval?: "1h" | "1d" | "1w" | "30d";
+                sort_by?: "total_volume" | "transactions" | "total_fees" | "realized_pnl" | "total_funding" | "liquidation_fills";
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin?: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            coin: string | null;
+                            dex: string | null;
+                            interval: string | null;
+                            transactions: number;
+                            buys: number;
+                            sells: number;
+                            volume_bought: number;
+                            volume_sold: number;
+                            total_volume: number;
+                            total_fees: number;
+                            realized_pnl: number;
+                            total_funding: number;
+                            liquidation_fills: number;
+                            coins_traded: number;
+                            first_trade: string;
+                            last_trade: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidUsersPositions: {
+        parameters: {
+            query: {
+                /** @description Filter by address */
+                user: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
+                coin?: string;
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                dex?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            coin: string;
+                            market_name: string;
+                            dex: string;
+                            position_size: number;
+                            funding_rate: number;
+                            last_update: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidUsersActivity: {
+        parameters: {
+            query: {
+                /** @description Filter by address */
+                user: string;
+                /** @description Filter by balance-event type.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                event_types?: "bridge_deposit" | "bridge_withdraw_pending" | "bridge_withdraw_finalized" | "deposit" | "withdraw" | "vault_deposit" | "vault_withdraw" | "liquidation" | "funding";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            block_num: number;
+                            timestamp: string;
+                            transaction_hash: string;
+                            event_index: number;
+                            /**
+                             * @description Filter by balance-event type.
+                             * @enum {string}
+                             */
+                            event_type: "bridge_deposit" | "bridge_withdraw_pending" | "bridge_withdraw_finalized" | "deposit" | "withdraw" | "vault_deposit" | "vault_withdraw" | "liquidation" | "funding";
+                            user: string;
+                            counterparty: string;
+                            amount: number;
+                            token: string;
+                            notes: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidVaults: {
+        parameters: {
+            query?: {
+                /** @description Filter by address */
+                vault?: string;
+                sort_by?: "lifetime_deposits" | "lifetime_withdrawals" | "lifetime_distributions" | "depositor_count" | "last_activity_at";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            vault: string;
+                            leader: string | null;
+                            created_at: string | null;
+                            initial_deposit: number;
+                            create_fee: number;
+                            lifetime_deposits: number;
+                            lifetime_withdrawals: number;
+                            lifetime_distributions: number;
+                            lifetime_leader_commissions: number;
+                            depositor_count: number;
+                            deposit_count: number;
+                            withdrawal_count: number;
+                            last_activity_at: string | null;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidVaultsDepositors: {
+        parameters: {
+            query: {
+                /** @description Filter by address */
+                vault: string;
+                sort_by?: "deposits" | "withdrawals" | "distributions_received" | "last_activity_at";
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            user: string;
+                            /**
+                             * Format: evm-address
+                             * @description Filter by address
+                             * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+                             */
+                            vault: string;
+                            deposits: number;
+                            deposit_count: number;
+                            withdrawals: number;
+                            withdrawal_count: number;
+                            distributions_received: number;
+                            last_activity_at: string;
+                        }[];
+                        statistics: {
+                            elapsed?: number;
+                            rows_read?: number;
+                            bytes_read?: number;
+                        };
+                        pagination: {
+                            previous_page: number;
+                            current_page: number;
+                        };
+                        results: number;
+                        /** @description ISO 8601 datetime string */
+                        request_time: string;
+                        duration_ms: number;
+                    };
+                };
+            };
+            /** @description Client side error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Authentication failed */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 400 | 401 | 403 | 404 | 405;
+                        /** @enum {string} */
+                        code: "authentication_failed" | "bad_header" | "missing_required_header" | "bad_query_input" | "forbidden" | "method_not_allowed" | "route_not_found" | "unauthorized" | "not_found_data";
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server side error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 500 | 502 | 504;
+                        /** @enum {string} */
+                        code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getV1HyperliquidPlatform: {
+        parameters: {
+            query?: {
+                /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
+                interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                start_time?: string;
+                /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
+                end_time?: string;
+                /** @description Number of items* returned in a single request.<br>*Plan restricted. */
+                limit?: number;
+                /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            timestamp: string;
+                            interval_min: number;
+                            volume: number;
+                            buy_volume: number;
+                            sell_volume: number;
+                            transactions: number;
+                            buys: number;
+                            sells: number;
+                            active_coins: number;
+                            total_fees: number;
+                            liquidations_volume: number;
+                            liquidations_count: number;
+                            unique_liquidated_users: number;
                         }[];
                         statistics: {
                             elapsed?: number;
@@ -8703,6 +10931,66 @@ export interface operations {
                         code: "bad_database_response" | "connection_refused" | "database_timeout" | "internal_server_error";
                         message: string;
                     };
+                };
+            };
+        };
+    };
+    getSkillsMarkdown: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/markdown; charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    getLlmsText: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/markdown; charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    getOpenapiSpec: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
                 };
             };
         };

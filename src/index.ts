@@ -66,6 +66,8 @@ export type TvmTokensResponse = NonNullable<Awaited<ReturnType<InstanceType<type
 export type TvmPoolsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['tvm']['dexs']['getPools']>>>;
 export type PolymarketMarketsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['polymarket']['getMarkets']>>>;
 export type PolymarketUsersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['polymarket']['getUsers']>>>;
+export type HyperliquidMarketsResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['hyperliquid']['getMarkets']>>>;
+export type HyperliquidUsersResponse = NonNullable<Awaited<ReturnType<InstanceType<typeof TokenAPI>['hyperliquid']['getUsers']>>>;
 
 type GetQuery<P extends keyof paths> = paths[P] extends {
   get: {
@@ -103,11 +105,16 @@ export type SvmDexProtocol =
   | 'raydium_clmm'
   | 'raydium_cpmm'
   | 'raydium_launchpad'
+  | 'meteora_daam'
   | 'meteora_dlmm'
+  | 'meteora_amm'
   | 'orca_whirlpool'
   | 'boop'
+  | 'byreal'
   | 'darklake'
-  | 'dumpfun';
+  | 'dumpfun'
+  | 'moonshot'
+  | 'pancakeswap';
 export type SvmTokenProgramId = '11111111111111111111111111111111' | 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' | 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 export type SvmDexProgramId =
   | 'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj'
@@ -1086,6 +1093,154 @@ class PolymarketApi {
 }
 
 /**
+ * Hyperliquid API - Markets, users, vaults, liquidations, and platform analytics
+ */
+class HyperliquidApi {
+  constructor(private client: ReturnType<typeof createAPIClient>) { }
+
+  /**
+   * Get Hyperliquid DEX aggregates
+   */
+  async getDexes() {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/dexes', {});
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid market metadata
+   */
+  async getMarkets(params?: GetQuery<'/v1/hyperliquid/markets'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid market OHLC
+   */
+  async getMarketOHLC(params: GetQuery<'/v1/hyperliquid/markets/ohlc'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets/ohlc', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid market open interest
+   */
+  async getMarketOpenInterest(params: GetQuery<'/v1/hyperliquid/markets/oi'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets/oi', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid market activity
+   */
+  async getMarketActivity(params?: GetQuery<'/v1/hyperliquid/markets/activity'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets/activity', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid liquidation events
+   */
+  async getLiquidations(params?: GetQuery<'/v1/hyperliquid/markets/liquidations'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets/liquidations', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid liquidation OHLC
+   */
+  async getLiquidationOHLC(params: GetQuery<'/v1/hyperliquid/markets/liquidations/ohlc'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/markets/liquidations/ohlc', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid user stats
+   */
+  async getUsers(params?: GetQuery<'/v1/hyperliquid/users'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/users', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid user positions
+   */
+  async getUserPositions(params: GetQuery<'/v1/hyperliquid/users/positions'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/users/positions', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid user balance-changing activity
+   */
+  async getUserActivity(params: GetQuery<'/v1/hyperliquid/users/activity'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/users/activity', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid vault stats
+   */
+  async getVaults(params?: GetQuery<'/v1/hyperliquid/vaults'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/vaults', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid vault depositors
+   */
+  async getVaultDepositors(params: GetQuery<'/v1/hyperliquid/vaults/depositors'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/vaults/depositors', {
+      params: { query: params },
+    });
+
+    return handleResponse(data, error);
+  }
+
+  /**
+   * Get Hyperliquid platform-wide aggregates
+   */
+  async getPlatform(params?: GetQuery<'/v1/hyperliquid/platform'>) {
+    const { data, error } = await this.client.GET('/v1/hyperliquid/platform', {
+      params: { query: params ?? {} },
+    });
+
+    return handleResponse(data, error);
+  }
+}
+
+/**
  * TVM Tokens API - Token operations on Tron Virtual Machine networks
  */
 class TvmTokens {
@@ -1324,12 +1479,18 @@ export class TokenAPI {
    */
   public readonly polymarket: PolymarketApi;
 
+  /**
+   * Hyperliquid analytics API
+   */
+  public readonly hyperliquid: HyperliquidApi;
+
   constructor(options: PinaxClientOptions = {}) {
     this.client = createAPIClient(options);
     this.evm = new EvmApi(this.client);
     this.svm = new SvmApi(this.client);
     this.tvm = new TvmApi(this.client);
     this.polymarket = new PolymarketApi(this.client);
+    this.hyperliquid = new HyperliquidApi(this.client);
   }
 
   /**
