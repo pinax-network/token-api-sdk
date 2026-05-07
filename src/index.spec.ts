@@ -44,6 +44,7 @@ describe('TokenAPI', () => {
       expect(client.svm).toBeDefined();
       expect(client.tvm).toBeDefined();
       expect(client.polymarket).toBeDefined();
+      expect(client.hyperliquid).toBeDefined();
     });
 
     it('should create a TokenAPI instance with custom options', () => {
@@ -196,6 +197,31 @@ describe('TokenAPI', () => {
       expect(typeof client.polymarket.getPlatform).toBe('function');
       expect(typeof client.polymarket.getUsers).toBe('function');
       expect(typeof client.polymarket.getUserPositions).toBe('function');
+    });
+  });
+
+  describe('Hyperliquid API structure', () => {
+    let client: TokenAPI;
+
+    beforeEach(() => {
+      client = new TokenAPI();
+    });
+
+    it('should expose hyperliquid API', () => {
+      expect(client.hyperliquid).toBeDefined();
+      expect(typeof client.hyperliquid.getDexes).toBe('function');
+      expect(typeof client.hyperliquid.getMarkets).toBe('function');
+      expect(typeof client.hyperliquid.getMarketOHLC).toBe('function');
+      expect(typeof client.hyperliquid.getMarketOpenInterest).toBe('function');
+      expect(typeof client.hyperliquid.getMarketActivity).toBe('function');
+      expect(typeof client.hyperliquid.getLiquidations).toBe('function');
+      expect(typeof client.hyperliquid.getLiquidationOHLC).toBe('function');
+      expect(typeof client.hyperliquid.getUsers).toBe('function');
+      expect(typeof client.hyperliquid.getUserPositions).toBe('function');
+      expect(typeof client.hyperliquid.getUserActivity).toBe('function');
+      expect(typeof client.hyperliquid.getVaults).toBe('function');
+      expect(typeof client.hyperliquid.getVaultDepositors).toBe('function');
+      expect(typeof client.hyperliquid.getPlatform).toBe('function');
     });
   });
 });
@@ -1101,6 +1127,177 @@ describe('API methods with mocked fetch', () => {
     expect(capturedRequest!.url).toContain('/v1/polymarket/users/positions');
     expect(capturedRequest!.url).toContain('user=0xabc');
     expect(capturedRequest!.url).toContain('market_slug=will-btc-hit-100k');
+  });
+
+  // --- Hyperliquid: all methods ---
+
+  it('should call the correct endpoint for Hyperliquid dexes', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getDexes();
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/dexes');
+  });
+
+  it('should call the correct endpoint for Hyperliquid markets', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getMarkets({
+      base_token: 'HYPE',
+      quote_token: 'USDC',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets');
+    expect(capturedRequest!.url).toContain('base_token=HYPE');
+    expect(capturedRequest!.url).toContain('quote_token=USDC');
+  });
+
+  it('should call the correct endpoint for Hyperliquid market OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getMarketOHLC({
+      coin: 'BTC',
+      interval: '1h',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets/ohlc');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+    expect(capturedRequest!.url).toContain('interval=1h');
+  });
+
+  it('should call the correct endpoint for Hyperliquid market open interest', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getMarketOpenInterest({
+      coin: 'BTC',
+      interval: '1h',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets/oi');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+  });
+
+  it('should call the correct endpoint for Hyperliquid market activity', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getMarketActivity({
+      coin: 'BTC',
+      dex: 'perps',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets/activity');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+    expect(capturedRequest!.url).toContain('dex=perps');
+  });
+
+  it('should call the correct endpoint for Hyperliquid liquidations', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getLiquidations({
+      coin: 'BTC',
+      dex: 'perps',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets/liquidations');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+  });
+
+  it('should call the correct endpoint for Hyperliquid liquidation OHLC', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getLiquidationOHLC({
+      coin: 'BTC',
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/markets/liquidations/ohlc');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+    expect(capturedRequest!.url).toContain('interval=1d');
+  });
+
+  it('should call the correct endpoint for Hyperliquid users', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getUsers({
+      user: '0xabc',
+      interval: '30d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/users');
+    expect(capturedRequest!.url).toContain('user=0xabc');
+    expect(capturedRequest!.url).toContain('interval=30d');
+  });
+
+  it('should call the correct endpoint for Hyperliquid user positions', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getUserPositions({
+      user: '0xabc',
+      coin: 'BTC',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/users/positions');
+    expect(capturedRequest!.url).toContain('user=0xabc');
+    expect(capturedRequest!.url).toContain('coin=BTC');
+  });
+
+  it('should call the correct endpoint for Hyperliquid user activity', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getUserActivity({
+      user: '0xabc',
+      event_types: 'funding',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/users/activity');
+    expect(capturedRequest!.url).toContain('user=0xabc');
+    expect(capturedRequest!.url).toContain('event_types=funding');
+  });
+
+  it('should call the correct endpoint for Hyperliquid vaults', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getVaults({
+      vault: '0xvault',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/vaults');
+    expect(capturedRequest!.url).toContain('vault=0xvault');
+  });
+
+  it('should call the correct endpoint for Hyperliquid vault depositors', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getVaultDepositors({
+      vault: '0xvault',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/vaults/depositors');
+    expect(capturedRequest!.url).toContain('vault=0xvault');
+  });
+
+  it('should call the correct endpoint for Hyperliquid platform aggregates', async () => {
+    const client = new TokenAPI({ apiToken: 'test-token' });
+
+    await client.hyperliquid.getPlatform({
+      interval: '1d',
+    });
+
+    expect(capturedRequest).not.toBeNull();
+    expect(capturedRequest!.url).toContain('/v1/hyperliquid/platform');
+    expect(capturedRequest!.url).toContain('interval=1d');
   });
 });
 
