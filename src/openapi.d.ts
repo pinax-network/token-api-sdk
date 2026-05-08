@@ -8249,7 +8249,6 @@ export interface operations {
                             positive_funding: number;
                             negative_funding: number;
                             funding_events: number;
-                            unique_users: number;
                         }[];
                         statistics: {
                             elapsed?: number;
