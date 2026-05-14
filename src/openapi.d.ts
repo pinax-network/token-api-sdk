@@ -1546,6 +1546,7 @@ export interface operations {
                             authority: string;
                             multisig_authority: string[];
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number | null;
                             name: string | null;
@@ -1708,6 +1709,7 @@ export interface operations {
                              */
                             mint: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number | null;
                             name: string | null;
@@ -1861,6 +1863,7 @@ export interface operations {
                              */
                             token_account: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number;
                             name: string | null;
@@ -2319,6 +2322,7 @@ export interface operations {
                              */
                             destination: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number | null;
                             name: string | null;
@@ -2468,6 +2472,7 @@ export interface operations {
                              */
                             mint: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number | null;
                             name: string | null;
@@ -2612,6 +2617,7 @@ export interface operations {
                              */
                             token_account: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             decimals: number;
                             name: string | null;
@@ -2861,7 +2867,7 @@ export interface operations {
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 input_mint?: string | string[];
                 /** @description Protocol name */
-                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
+                protocol?: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap" | "spl_token_swap" | "okx_dex";
                 /** @description Filter by mint address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 output_mint?: string | string[];
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
@@ -2976,7 +2982,7 @@ export interface operations {
                              * @example raydium_amm_v4
                              * @enum {string}
                              */
-                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
+                            protocol: "jupiter_v4" | "jupiter_v6" | "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap" | "spl_token_swap" | "okx_dex";
                             summary: string;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
@@ -3087,7 +3093,7 @@ export interface operations {
                 /** @description Filter by program ID<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
                 program_id?: string | string[];
                 /** @description Protocol name */
-                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap";
+                protocol?: "pumpfun" | "pumpfun_amm" | "raydium_amm_v4" | "raydium_clmm" | "raydium_cpmm" | "raydium_launchpad" | "meteora_daam" | "meteora_dlmm" | "meteora_amm" | "orca_whirlpool" | "boop" | "byreal" | "darklake" | "dumpfun" | "moonshot" | "pancakeswap" | "spl_token_swap" | "okx_dex";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -3133,12 +3139,14 @@ export interface operations {
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             input_mint: string;
+                            input_decimals: number | null;
                             /**
                              * Format: svm-address
                              * @description Filter by mint address
                              * @example pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn
                              */
                             output_mint: string;
+                            output_decimals: number | null;
                             transactions: number;
                             /**
                              * @description The Graph Network ID for SVM networks https://thegraph.com/networks
@@ -3586,6 +3594,7 @@ export interface operations {
                             symbol: string | null;
                             decimals: number | null;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
@@ -3728,6 +3737,7 @@ export interface operations {
                              */
                             contract: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             name: string | null;
                             symbol: string | null;
@@ -3869,7 +3879,9 @@ export interface operations {
                              */
                             contract: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
+                            is_contract: boolean;
                             name: string | null;
                             symbol: string | null;
                             decimals: number | null;
@@ -4316,6 +4328,7 @@ export interface operations {
                             symbol: string | null;
                             decimals: number | null;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
@@ -4444,6 +4457,7 @@ export interface operations {
                              */
                             address: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             name: string | null;
                             symbol: string | null;
@@ -4577,7 +4591,9 @@ export interface operations {
                              */
                             address: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
+                            is_contract: boolean;
                             name: string | null;
                             symbol: string | null;
                             decimals: number | null;
@@ -6466,7 +6482,7 @@ export interface operations {
                              * @example 0xd8da6bf26964af9d7eed9e03e53415d37aa96045
                              */
                             to: string;
-                            amount: number;
+                            amount: string;
                             /**
                              * @description The Graph Network ID for EVM networks https://thegraph.com/networks
                              * @example mainnet
@@ -6633,6 +6649,7 @@ export interface operations {
                              */
                             to: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             name: string | null;
                             symbol: string | null;
@@ -6926,6 +6943,7 @@ export interface operations {
                              */
                             to: string;
                             amount: string;
+                            /** @description Decimal-scaled token amount (= amount / 10^decimals). Not a USD value. */
                             value: number;
                             name: string | null;
                             symbol: string | null;
@@ -7818,7 +7836,7 @@ export interface operations {
                     "application/json": {
                         data: {
                             /**
-                             * @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set.
+                             * @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.
                              * @example perps
                              * @example spot
                              * @example xyz
@@ -7926,14 +7944,14 @@ export interface operations {
     getV1HyperliquidMarkets: {
         parameters: {
             query?: {
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin?: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
-                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`. */
-                base_token?: string;
-                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`. */
-                quote_token?: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin?: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
+                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                base_token?: string | string[];
+                /** @description Spot token symbol (e.g. `HYPE`, `USDC`). Use to discover all spot pairs with this token on a given side via `/v1/hyperliquid/markets?base_token=...` or `?quote_token=...`.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                quote_token?: string | string[];
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -8063,7 +8081,7 @@ export interface operations {
             query: {
                 /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
                 coin: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set. */
                 dex?: string;
                 /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
                 interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
@@ -8204,10 +8222,10 @@ export interface operations {
     getV1HyperliquidMarketsOi: {
         parameters: {
             query: {
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
                 /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
                 interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -8341,12 +8359,12 @@ export interface operations {
     getV1HyperliquidMarketsActivity: {
         parameters: {
             query?: {
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin?: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
-                /** @description Filter by address */
-                user?: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin?: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
@@ -8483,12 +8501,12 @@ export interface operations {
     getV1HyperliquidMarketsLiquidations: {
         parameters: {
             query?: {
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin?: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
-                /** @description Filter by address */
-                liquidated_user?: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin?: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                liquidated_user?: string | string[];
                 sort_by?: "notional" | "time";
                 /** @description UNIX timestamp in seconds or date string (e.g. "2025-01-01T00:00:00Z", "2025-01-01", ...). */
                 start_time?: string;
@@ -8623,7 +8641,7 @@ export interface operations {
             query: {
                 /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
                 coin: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set. */
                 dex?: string;
                 /** @description The interval* for which to aggregate price data (1-minute, 5-minutes, 10-minutes, 30-minutes, hourly, 4-hours, daily or weekly).<br>*Plan restricted. */
                 interval?: "1m" | "5m" | "10m" | "30m" | "1h" | "4h" | "1d" | "1w";
@@ -8769,15 +8787,15 @@ export interface operations {
     getV1HyperliquidUsers: {
         parameters: {
             query?: {
-                /** @description Filter by address */
-                user?: string;
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
                 /** @description Lookback window for user statistics (1 hour, 1 day, 1 week, 30 days). Omit for all-time. */
                 interval?: "1h" | "1d" | "1w" | "30d";
                 sort_by?: "total_volume" | "transactions" | "total_fees" | "realized_pnl" | "total_funding" | "liquidation_fills";
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin?: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin?: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -8906,12 +8924,12 @@ export interface operations {
     getV1HyperliquidUsersPositions: {
         parameters: {
             query: {
-                /** @description Filter by address */
-                user: string;
-                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`). */
-                coin?: string;
-                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (e.g. `xyz`, `cash`). New builder DEXs are added on Hyperliquid permissionlessly — call `/v1/hyperliquid/dexes` for the live set. */
-                dex?: string;
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user: string | string[];
+                /** @description Hyperliquid coin identifier. Core perps have no prefix (`BTC`, `HYPE`); spot pairs use `@N` (`@107`); builder DEXs prefix the symbol with the DEX name (`xyz:SILVER`).<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                coin?: string | string[];
+                /** @description DEX identifier. `perps` for core perps, `spot` for `@N` spot pairs, or a builder DEX name (`xyz`, `cash`, …). Call `/v1/hyperliquid/dexes` for the live set.<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                dex?: string | string[];
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
                 /** @description Page number to fetch.<br>Empty `data` array signifies end of results. */
@@ -9163,8 +9181,8 @@ export interface operations {
     getV1HyperliquidVaults: {
         parameters: {
             query?: {
-                /** @description Filter by address */
-                vault?: string;
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                vault?: string | string[];
                 sort_by?: "lifetime_deposits" | "lifetime_withdrawals" | "lifetime_distributions" | "depositor_count" | "last_activity_at";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
@@ -9290,8 +9308,8 @@ export interface operations {
     getV1HyperliquidVaultsDepositors: {
         parameters: {
             query: {
-                /** @description Filter by address */
-                vault: string;
+                /** @description Filter by address<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                vault: string | string[];
                 sort_by?: "deposits" | "withdrawals" | "distributions_received" | "last_activity_at";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
                 limit?: number;
@@ -9547,10 +9565,14 @@ export interface operations {
     getV1PolymarketMarkets: {
         parameters: {
             query?: {
-                condition_id?: string;
-                market_slug?: string;
-                token_id?: string;
-                event_slug?: string;
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                condition_id?: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                market_slug?: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                token_id?: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                event_slug?: string | string[];
                 closed?: boolean;
                 sort_by?: "volume" | "end_date" | "start_date";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
@@ -9719,7 +9741,10 @@ export interface operations {
                             unique_makers: number;
                             unique_takers: number;
                             total_fees: number;
+                            total_refunds: number;
+                            net_fees: number;
                             fee_count: number;
+                            effective_fee_rate_gross: number;
                             effective_fee_rate: number;
                             market: {
                                 condition_id: string | null;
@@ -10265,7 +10290,10 @@ export interface operations {
                             merge_count: number;
                             oi_transactions: number;
                             total_fees: number;
+                            total_refunds: number;
+                            net_fees: number;
                             fee_count: number;
+                            effective_fee_rate_gross: number;
                             effective_fee_rate: number;
                         }[];
                         statistics: {
@@ -10359,7 +10387,8 @@ export interface operations {
     getV1PolymarketUsers: {
         parameters: {
             query?: {
-                user?: string;
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user?: string | string[];
                 /** @description Lookback window for user statistics (1 hour, 1 day, 1 week, 30 days). Omit for all-time. */
                 interval?: "1h" | "1d" | "1w" | "30d";
                 sort_by?: "total_volume" | "realized_pnl" | "unrealized_pnl" | "total_pnl" | "transactions";
@@ -10486,10 +10515,14 @@ export interface operations {
     getV1PolymarketUsersPositions: {
         parameters: {
             query: {
-                user: string;
-                token_id?: string;
-                condition_id?: string;
-                market_slug?: string;
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                user: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                token_id?: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                condition_id?: string | string[];
+                /** @description undefined<br>Single value or array of values* (separate multiple values with `,`)<br>*Plan restricted. */
+                market_slug?: string | string[];
                 closed?: boolean;
                 sort_by?: "position_value" | "realized_pnl" | "unrealized_pnl" | "total_pnl" | "pnl_pct" | "transactions" | "avg_price" | "current_price";
                 /** @description Number of items* returned in a single request.<br>*Plan restricted. */
